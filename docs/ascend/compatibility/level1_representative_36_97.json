@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "cann": "9.0.1",
+    "hardware": "Ascend910B3",
+    "level": 1,
+    "torch": "2.7.1+cpu",
+    "torch_npu": "2.7.1.post4"
+  },
+  "results": [
+    {
+      "cann": "9.0.1",
+      "cold_ms": 473.90727885067463,
+      "elapsed_wall_s": 119.531,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          112,
+          64,
+          512,
+          512
+        ],
+        "type": "Tensor"
+      },
+      "problem": "36_RMSNorm_.py",
+      "problem_id": 36,
+      "source_hash": "8f6ee1b9ee212f3cee1069eff2b7935482713c99596b1024801868065e5a2b1d",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        33.56560134887695,
+        33.6031608581543
+      ]
+    },
+    {
+      "cann": "9.0.1",
+      "cold_ms": 823.4561178833246,
+      "elapsed_wall_s": 66.333,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          32,
+          32,
+          512,
+          1024
+        ],
+        "type": "Tensor"
+      },
+      "problem": "97_ScaledDotProductAttention.py",
+      "problem_id": 97,
+      "source_hash": "a07ca5135657c2ea29f7b7a66ec1815560858ad69fa88221bfc0f82bd5648091",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        33.401241302490234,
+        33.69205856323242
+      ]
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "metadata": {
+    "cann": "9.0.1",
+    "hardware": "Ascend910B3",
+    "level": 1,
+    "torch": "2.7.1+cpu",
+    "torch_npu": "2.7.1.post4"
+  },
+  "results": [
+    {
+      "cann": "9.0.1",
+      "cold_ms": 178.826077375561,
+      "elapsed_wall_s": 19.665,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          4096,
+          4096
+        ],
+        "type": "Tensor"
+      },
+      "problem": "1_Square_matrix_multiplication_.py",
+      "problem_id": 1,
+      "source_hash": "7626d611b8f2c97a71ae40d731da8cb7ba067dc43cc2f3e8185ad85c68533f30",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        1.928279995918274,
+        1.98580002784729
+      ]
+    },
+    {
+      "cann": "9.0.1",
+      "cold_ms": 528.7012150511146,
+      "elapsed_wall_s": 25.306,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          128,
+          512,
+          2048
+        ],
+        "type": "Tensor"
+      },
+      "problem": "3_Batched_matrix_multiplication.py",
+      "problem_id": 3,
+      "source_hash": "310fb3bdf4f69ea178a5b5868bf204e83196cba71e4750be3fbbcb68b78d37f7",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        4.349239826202393,
+        4.2967400550842285
+      ]
+    },
+    {
+      "cann": "9.0.1",
+      "cold_ms": 343.78206823021173,
+      "elapsed_wall_s": 75.296,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          65536,
+          16384
+        ],
+        "type": "Tensor"
+      },
+      "problem": "5_Matrix_scalar_multiplication.py",
+      "problem_id": 5,
+      "source_hash": "f4d52425a8f72b4b22375494064f2ab1675e2caf29376c47a102211ce66d6987",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        7.001959800720215,
+        7.051179885864258
+      ]
+    },
+    {
+      "cann": "9.0.1",
+      "cold_ms": 443.76819115132093,
+      "elapsed_wall_s": 71.221,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          4096,
+          393216
+        ],
+        "type": "Tensor"
+      },
+      "problem": "23_Softmax.py",
+      "problem_id": 23,
+      "source_hash": "c9fa418447f2d64d5aeb4763d817137c1cb5a6b411a580f0b6291a7b29301d75",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        18.178279876708984,
+        18.057519912719727
+      ]
+    },
+    {
+      "cann": "9.0.1",
+      "cold_ms": 197.11240381002426,
+      "elapsed_wall_s": 87.352,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          128,
+          1,
+          4095
+        ],
+        "type": "Tensor"
+      },
+      "problem": "47_Sum_reduction_over_a_dimension.py",
+      "problem_id": 47,
+      "source_hash": "537d2ff381740bdb54b5208f82187564f6733a30df918edbbf7a49d64bef17ab",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        7.459680080413818,
+        7.184500217437744
+      ]
+    },
+    {
+      "cann": "9.0.1",
+      "cold_ms": 188.0913800559938,
+      "elapsed_wall_s": 84.159,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.int64",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          128,
+          4095
+        ],
+        "type": "Tensor"
+      },
+      "problem": "51_Argmax_over_a_dimension.py",
+      "problem_id": 51,
+      "source_hash": "d6a2057c4c95a9737985b2b8ffda23595f812557c26a2263fec8edd594c61fbe",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        24.60028076171875,
+        24.651020050048828
+      ]
+    },
+    {
+      "cann": "9.0.1",
+      "cold_ms": 428.9819519035518,
+      "elapsed_wall_s": 51.568,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          32768,
+          32768
+        ],
+        "type": "Tensor"
+      },
+      "problem": "89_cumsum.py",
+      "problem_id": 89,
+      "source_hash": "24eea19436dc41aa36ae3364b422d784c4f20175903f894e06beeb9cff15c02d",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        84.1874771118164,
+        84.07386016845703
+      ]
+    }
+  ]
+}

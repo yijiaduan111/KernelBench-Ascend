@@ -22,6 +22,7 @@ import torch.nn as nn
 from pydantic import BaseModel
 
 from . import timing, dataset
+from .runtimes import get_runtime_for_backend
 
 REPO_TOP_PATH = os.path.abspath(
     os.path.join(
@@ -62,10 +63,14 @@ def fetch_ref_arch_from_level_problem_id(level, problem_id, with_name=False):
     return fetch_ref_arch_from_problem_id(problem_id, kb_dataset, with_name)
 
 
-def set_seed(seed: int):
+def set_seed(seed: int, runtime=None):
     torch.manual_seed(seed)
-    # NOTE: this only sets on current cuda device
-    torch.cuda.manual_seed(seed)
+    # Keep device-specific RNG setup behind the runtime adapter.  The default
+    # preserves the historical CUDA behavior for callers outside the evaluator.
+    if runtime is None:
+        torch.cuda.manual_seed(seed)
+    else:
+        runtime.manual_seed(seed)
 
 def get_torch_dtype_from_string(precision: str) -> torch.dtype:
     """
@@ -223,21 +228,19 @@ def graceful_eval_cleanup(
     curr_context: dict,
     device: torch.device,
     tempfile: tempfile.NamedTemporaryFile = None,
+    runtime=None,
 ):
     """
     Clean up env, gpu cache, and compiled CUDA extensions after evaluation
     """  # delete ran-specific function definitions before next eval run
     del curr_context
-    # Clear CUDA cache and reset GPU state
-    with torch.cuda.device(device):
-        torch.cuda.empty_cache()
-
-        # does this help?
-        torch.cuda.reset_peak_memory_stats(device=device)
-
-        torch.cuda.synchronize(
-            device=device
-        )  # Wait for all CUDA operations to complete
+    if runtime is None:
+        runtime = get_runtime_for_backend("ascendc" if getattr(device, "type", "") == "npu" else "cuda")
+    # Clear allocator cache and reset device state through the selected runtime.
+    runtime.set_device(device)
+    runtime.empty_cache()
+    runtime.reset_peak_memory_stats(device=device)
+    runtime.synchronize(device=device)
     if tempfile:
         tempfile.close()
         os.remove(tempfile.name)
@@ -380,7 +383,14 @@ def _process_input_tensor(input, device, backend="cuda", precision=torch.float32
         Processed tensor on correct device with correct dtype, or original value if not a tensor
     """
 
-    # sometimes things like init inputs are floats (like in the case of labels / targets, classification losses, etc.) 
+    if isinstance(input, tuple):
+        return tuple(_process_input_tensor(item, device, backend, precision) for item in input)
+    if isinstance(input, list):
+        return [_process_input_tensor(item, device, backend, precision) for item in input]
+    if isinstance(input, dict):
+        return {key: _process_input_tensor(item, device, backend, precision) for key, item in input.items()}
+
+    # sometimes things like init inputs are floats (like in the case of labels / targets, classification losses, etc.)
     if not isinstance(input, torch.Tensor):
         return input
     
@@ -401,11 +411,11 @@ def eval_kernel_against_ref(
     timing_method: str = "cuda_event", # see timing.py
     verbose: bool = False,
     build_dir: os.PathLike = None,
-    device: Union[torch.device, int] = (
-        torch.cuda.current_device() if torch.cuda.is_available() else None
-    ),  # have to run on GPU
+    device: Union[torch.device, int] = None,
     backend: str = "cuda",  # can be 'cuda', 'triton', 'tilelang', or 'cute'
     precision: torch.dtype = torch.float32,
+    level: int | None = None,
+    problem_id: int | None = None,
 
     # Guard against potential reward hacking [optional but ongoing enhancement]
     check_for_excessive_speedup: bool = True,
@@ -426,13 +436,20 @@ def eval_kernel_against_ref(
 
     ONGOING EFFORT to refactor and modularize this, and adding more tests for eval.
     """
-    # TODO: check device is busy
-    assert torch.cuda.is_available(), "CUDA is not available, cannot run Eval"
-    
-    # Backend-GPU vendor validation
-    from .utils import get_gpu_vendor
-    vendor = get_gpu_vendor(device)
     backend_lower = backend.lower()
+    runtime = get_runtime_for_backend(backend_lower)
+    runtime.require_available()
+    if device is None:
+        device = runtime.device(runtime.current_device())
+    elif isinstance(device, int):
+        device = runtime.device(device)
+
+    # Backend-GPU vendor validation applies only to CUDA/ROCm code-generation
+    # backends.  Ascend C has no CUDA vendor probe and uses the NPU runtime.
+    vendor = None
+    if backend_lower != "ascendc":
+        from .utils import get_gpu_vendor
+        vendor = get_gpu_vendor(device)
     # HIP is AMD-only
     if backend_lower == "hip" and vendor != "amd":
         raise ValueError(f"HIP backend requires AMD GPU, got {vendor}")
@@ -451,34 +468,90 @@ def eval_kernel_against_ref(
     )
 
     # set CUDA device
-    torch.cuda.set_device(device)
+    runtime.set_device(device)
     
     # Backends that use tempfile approach and need CUDA_VISIBLE_DEVICES
     # TileLang, Triton, and CuTe all use tempfile for proper module loading
     uses_tempfile = backend.lower() in ["triton", "tilelang", "cute"]
     
     metadata = {}  # for storing result metadata
-    metadata["hardware"] = torch.cuda.get_device_name(device=device)
+    metadata["hardware"] = runtime.device_name(device=device)
     metadata["device"] = str(device)  # for debugging
+    metadata["runtime"] = runtime.name
+
+    if backend_lower == "ascendc":
+        # Build and evaluate in a fresh worker. CANN discovers custom OPPs at
+        # process startup, so importing the binding in this process is unsafe.
+        try:
+            from .backends.builder import AscendCBuilder
+            from .backends.ascendc import evaluate_ascendc_artifact
+
+            artifact = AscendCBuilder(
+                build_dir or os.path.join(REPO_TOP_PATH, "cache", "ascendc")
+            ).build(
+                custom_model_src,
+                level=level,
+                problem_id=problem_id,
+            )
+            metadata["artifact_root"] = str(artifact.root)
+            precision_name = {
+                torch.float32: "fp32",
+                torch.float16: "fp16",
+                torch.bfloat16: "bf16",
+            }.get(precision)
+            if precision_name is None:
+                raise ValueError(f"unsupported Ascend C precision: {precision}")
+            device_index = device.index if isinstance(device, torch.device) else int(device)
+            report = evaluate_ascendc_artifact(
+                artifact,
+                original_model_src,
+                device_index=device_index or 0,
+                precision=precision_name,
+                seed=seed_num,
+                num_correct_trials=num_correct_trials,
+                num_perf_trials=num_perf_trials if measure_performance else 1,
+            )
+            metadata.update(
+                {
+                    "failure_type": report.get("failure_type"),
+                    "custom_op_call_count": report.get("custom_op_call_count", 0),
+                    "correctness_trials": report.get("correctness_trials", []),
+                    "first_call_ms": report.get("first_call_ms"),
+                    "warmup_ms": report.get("warmup_ms", []),
+                    "cold_warm_divergence": report.get("cold_warm_divergence"),
+                    "eligible_for_performance": report.get(
+                        "eligible_for_performance", False
+                    ),
+                    "speedup": report.get("speedup"),
+                    "build": artifact.metadata.get("timings", {}),
+                    "build_cache_hit": artifact.metadata.get("cache_hit", False),
+                    "evaluation_root": report.get("evaluation_root"),
+                }
+            )
+            if report.get("error"):
+                metadata["runtime_error"] = report["error"]
+                metadata["runtime_traceback"] = report.get("traceback")
+            candidate_stats = report.get("candidate", {})
+            reference_stats = report.get("reference", {})
+            return KernelExecResult(
+                compiled=bool(report.get("compiled", True)),
+                correctness=bool(report.get("correctness", False)),
+                runtime=float(candidate_stats.get("p50_ms", -1.0)),
+                runtime_stats=candidate_stats,
+                ref_runtime=float(reference_stats.get("p50_ms", -1.0)),
+                ref_runtime_stats=reference_stats,
+                metadata=metadata,
+            )
+        except Exception as exc:
+            metadata["failure_type"] = getattr(exc, "failure_type", "ascendc_error")
+            metadata["ascendc_error"] = str(exc)
+            return KernelExecResult(compiled=False, correctness=False, metadata=metadata)
 
     if uses_tempfile:
         # need to set env var for triton/cute code to guarantee no wrong device shenanigans
-        if isinstance(device, int):
-            device_num = device
-        elif isinstance(device, torch.device):
-            assert (
-                device.type == "cuda"
-            ), "CUDA is not availible on device, cannot run Eval"
-            device_num = device.index
-        else:
-            raise ValueError(
-                f"device must be an int or torch.device, got {type(device)}"
-            )
-        # NVIDIA uses CUDA_VISIBLE_DEVICES, AMD uses HIP_VISIBLE_DEVICES
-        if vendor == "amd":
-            os.environ["HIP_VISIBLE_DEVICES"] = str(device_num)
-        else:
-            os.environ["CUDA_VISIBLE_DEVICES"] = str(device_num)
+        device_num = device.index if isinstance(device, torch.device) else int(device)
+        env_name, env_value = runtime.visible_devices_env(device_num)
+        os.environ[env_name] = env_value
     context = {}
 
     if verbose:
@@ -488,14 +561,14 @@ def eval_kernel_against_ref(
     Model, get_init_inputs, get_inputs = load_original_model_and_inputs(
         original_model_src, context
     )
-    set_seed(seed_num)  # set seed for reproducible input
+    set_seed(seed_num, runtime)  # set seed for reproducible input
     init_inputs = get_init_inputs()
     
     # Convert inputs to appropriate dtypes for GPU computation
     init_inputs = [_process_input_tensor(x, device, backend, precision) for x in init_inputs]
     
     with torch.no_grad():
-        set_seed(seed_num)  # set seed for reproducible weights
+        set_seed(seed_num, runtime)  # set seed for reproducible weights
         original_model = Model(*init_inputs)
         assert hasattr(original_model, "forward")
         if verbose:
@@ -520,7 +593,7 @@ def eval_kernel_against_ref(
         else:
             # Default CUDA backend
             ModelNew = load_custom_model(custom_model_src, context, build_dir)
-        torch.cuda.synchronize(device=device)  # not sure if this is too much
+        runtime.synchronize(device=device)
     except Exception as e:
         print(
             f"Failed to compile custom CUDA kernel: Record as compilation failure. \nError: {e}"
@@ -533,12 +606,12 @@ def eval_kernel_against_ref(
             print(
                 f"[Eval] Lock file error during compilation, Please retry. Error: {e}"
             )
-            graceful_eval_cleanup(context, device, tempfile)
+            graceful_eval_cleanup(context, device, tempfile, runtime)
             return None
         else:
             metadata["compilation_error_name"] = get_error_name(e)
             metadata["compilation_error"] = e
-            graceful_eval_cleanup(context, device, tempfile)
+            graceful_eval_cleanup(context, device, tempfile, runtime)
             return KernelExecResult(
                 compiled=False, metadata=metadata
             )  # skip further steps
@@ -550,7 +623,7 @@ def eval_kernel_against_ref(
         )
         metadata["compilation_error_name"] = "SyntaxError"
         metadata["compilation_error"] = "Syntax error in custom generated code or ModelNew not found"
-        graceful_eval_cleanup(context, device, tempfile)
+        graceful_eval_cleanup(context, device, tempfile, runtime)
         return KernelExecResult(
             compiled=False, metadata=metadata
         )  # skip further steps
@@ -558,12 +631,12 @@ def eval_kernel_against_ref(
     # at this point we passed compilation
     try:
         with torch.no_grad():
-            set_seed(seed_num)  # set seed for reproducible weights
+            set_seed(seed_num, runtime)  # set seed for reproducible weights
             custom_model = ModelNew(*init_inputs)
             assert hasattr(custom_model, "forward")
             original_model = original_model.to(device=device, dtype=precision)
             custom_model = custom_model.to(device=device, dtype=precision)
-            torch.cuda.synchronize(device=device)
+            runtime.synchronize(device=device)
         if verbose:
             print("[Eval] New Model with Custom CUDA Kernel Loaded")
     except RuntimeError as e:
@@ -571,7 +644,7 @@ def eval_kernel_against_ref(
             f"Failed to load custom CUDA kernel; Compiled but not able to run, count as runtime error. \nError: {e}"
         )
         # TODO: add metadata for runtime error e.g. error in launching kernel, illegal memory access, ...
-        graceful_eval_cleanup(context, device, tempfile)
+        graceful_eval_cleanup(context, device, tempfile, runtime)
         metadata["runtime_error"] = e
         metadata["runtime_error_name"] = get_error_name(e)
         return KernelExecResult(
@@ -611,14 +684,14 @@ def eval_kernel_against_ref(
                 if verbose:
                     print("[Eval] Measuring Performance as Sample is Correct")
 
-                torch.cuda.synchronize(device=device)
-                set_seed(seed_num)
+                runtime.synchronize(device=device)
+                set_seed(seed_num, runtime)
                 inputs = get_inputs()
                 # Convert inputs for performance measurement
                 inputs = [_process_input_tensor(x, device, backend, precision) for x in inputs]
                 
                 model_new = custom_model.to(device=device, dtype=precision)
-                torch.cuda.synchronize(device=device)
+                runtime.synchronize(device=device)
 
                 # support multiple timing backend
                 timing_fn = timing.get_timing_function(timing_method)
@@ -656,14 +729,14 @@ def eval_kernel_against_ref(
         if verbose:
             print("[Eval] Additional checks to flag excessive speedup")
 
-        torch.cuda.synchronize(device=device)
-        set_seed(seed_num)
+        runtime.synchronize(device=device)
+        set_seed(seed_num, runtime)
         inputs = get_inputs()
         # Convert inputs for performance measurement
         inputs = [_process_input_tensor(x, device, backend, precision) for x in inputs]
         
         model_new = custom_model.to(device=device, dtype=precision)
-        torch.cuda.synchronize(device=device)
+        runtime.synchronize(device=device)
 
         # time PyTorch reference function
         # same timing_fn as specified from before
@@ -695,7 +768,7 @@ def eval_kernel_against_ref(
             print(f"[WARNING] Double check your kernel carefully to ensure it is not reward hacking.")
 
 
-    graceful_eval_cleanup(context, device, tempfile)
+    graceful_eval_cleanup(context, device, tempfile, runtime)
     return kernel_exec_result
 
 
@@ -746,6 +819,7 @@ def run_and_check_correctness(
     precision: torch.dtype
     """
     pass_count = 0
+    runtime = get_runtime_for_backend(backend)
 
     # Generate num_correct_trials seeds deterministically from the initial seed
     torch.manual_seed(seed)
@@ -761,57 +835,60 @@ def run_and_check_correctness(
             if verbose:
                 print(f"[Eval] Generating Random Input with seed {trial_seed}")
 
-            set_seed(trial_seed)
+            set_seed(trial_seed, runtime)
             inputs = get_inputs_fn()
             # Convert inputs to appropriate dtypes for GPU computation
             inputs = [_process_input_tensor(x, device, backend, precision) for x in inputs]
 
-            set_seed(trial_seed)
+            set_seed(trial_seed, runtime)
     
             model = original_model_instance.to(device=device, dtype=precision)
 
-            set_seed(trial_seed)
+            set_seed(trial_seed, runtime)
      
             model_new = new_model_instance.to(device=device, dtype=precision)
 
             output = model(*inputs)
-            torch.cuda.synchronize(device=device)
+            runtime.synchronize(device=device)
             # ensure all GPU operations are completed before checking results
 
             try:
                 output_new = model_new(*inputs)
-                torch.cuda.synchronize(device=device)
-                if output.shape != output_new.shape:
-                    metadata = register_and_format_exception(
-                        "correctness_issue",
-                        f"Output shape mismatch: Expected {output.shape}, got {output_new.shape}",
-                        metadata,
-                    )
-                    metadata["correctness_issue_name"] = "correctness_issue"
-                    if verbose:
-                        print(
-                            f"[FAIL] trial {trial}: Output shape mismatch: Expected {output.shape}, got {output_new.shape}"
-                        )
-                    return KernelExecResult(
-                        compiled=True, correctness=False, metadata=metadata
-                    )
+                runtime.synchronize(device=device)
 
-                # in torchbench, they use both precisions for atol and rtol
-                # kernelbench v0 and v0.1 uses fp32, atol = rtol = 1e-02
-                # now we will return the tolerance from get_tolerance_for_precision
-                tolerance = get_tolerance_for_precision(precision)
-                # check output value difference
-                if not torch.allclose(
-                    output, output_new, atol=tolerance, rtol=tolerance
-                ):  # fail
-                    max_diff = torch.max(torch.abs(output - output_new)).item()
-                    avg_diff = torch.mean(torch.abs(output - output_new)).item()
-                    metadata.setdefault("max_difference", []).append(f"{max_diff:.6f}")
-                    metadata.setdefault("avg_difference", []).append(f"{avg_diff:.6f}")
-                    metadata["correctness_issue"] = "Output mismatch"
+                def compare(a, b, path="output"):
+                    """Compare the output containers without assuming a Tensor root."""
+                    if isinstance(a, torch.Tensor) and isinstance(b, torch.Tensor):
+                        if a.shape != b.shape or a.dtype != b.dtype:
+                            return False, f"{path}: shape/dtype {tuple(a.shape)}/{a.dtype} != {tuple(b.shape)}/{b.dtype}"
+                        if getattr(a, "device", None).type != getattr(b, "device", None).type:
+                            return False, f"{path}: device {a.device} != {b.device}"
+                        if not torch.isfinite(a).all() or not torch.isfinite(b).all():
+                            return False, f"{path}: NaN/Inf detected"
+                        if a.dtype in (torch.bool, torch.int8, torch.uint8, torch.int16, torch.int32, torch.int64):
+                            return (torch.equal(a, b), f"{path}: integer/boolean values differ")
+                        tolerance = get_tolerance_for_precision(a.dtype)
+                        return (bool(torch.allclose(a, b, atol=tolerance, rtol=tolerance)), f"{path}: values differ")
+                    if isinstance(a, (tuple, list)) and isinstance(b, type(a)) and len(a) == len(b):
+                        for i, (x, y) in enumerate(zip(a, b)):
+                            ok, reason = compare(x, y, f"{path}[{i}]")
+                            if not ok:
+                                return ok, reason
+                        return True, ""
+                    if isinstance(a, dict) and isinstance(b, dict) and list(a.keys()) == list(b.keys()):
+                        for key in a:
+                            ok, reason = compare(a[key], b[key], f"{path}[{key!r}]")
+                            if not ok:
+                                return ok, reason
+                        return True, ""
+                    return False, f"{path}: output structure mismatch ({type(a).__name__} vs {type(b).__name__})"
+
+                equal, reason = compare(output, output_new)
+                if not equal:
+                    metadata.setdefault("correctness_issue", []).append(reason)
                     if verbose:
-                        print(f"[FAIL] trial {trial}: Output mismatch")
-                else:  # pass
+                        print(f"[FAIL] trial {trial}: {reason}")
+                else:
                     pass_count += 1
                     if verbose:
                         print(f"[PASS] trial {trial}: New Model matches Model")

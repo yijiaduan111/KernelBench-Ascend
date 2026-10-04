@@ -292,6 +292,21 @@ def check_tilelang_impl(code: str) -> Tuple[bool, str]:
     return (False, "")
 
 
+# <========= ASCEND C CHECKS =========>
+def check_ascendc_impl(code: str) -> Tuple[bool, str]:
+    """Validate the declarative Ascend C candidate boundary.
+
+    This intentionally validates Python/spec/security only.  CANN compilation
+    and runtime correctness are evaluated by the isolated backend builder.
+    """
+    try:
+        from .backends.security import validate_candidate_source
+        validate_candidate_source(code)
+    except Exception as exc:
+        return (True, str(exc))
+    return (False, "")
+
+
 # =============================================================================
 # TIMING MANIPULATION CHECKS - Reward Hacking Patterns
 # From adversarial hack PR and DeepReinforce blog
@@ -583,6 +598,7 @@ CHECK_FUNCTIONS: Dict[str, Union[Callable[[str], Tuple[bool, str]], Callable[[st
     "tk_impl": check_tk_impl,
     "cute_impl": check_cute_impl,
     "tilelang_impl": check_tilelang_impl,
+    "ascendc_impl": check_ascendc_impl,
 }
 
 # Checks that require additional parameters beyond just code
@@ -608,6 +624,7 @@ BACKEND_IMPL_CHECK = {
     "cute": "cute_impl",
     "cutlass": "cute_impl",  # alias
     "tilelang": "tilelang_impl",
+    "ascendc": "ascendc_impl",
 }
 
 # These are optional checks (by user's decision) - flagged as warnings

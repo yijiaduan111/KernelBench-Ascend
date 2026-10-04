@@ -5,6 +5,8 @@ import time
 from typing import Any, Optional, Union
 import os
 
+from .runtimes import get_runtime_for_backend
+
 
 def measure_ref_program_time(
     ref_arch_name: str,
@@ -17,7 +19,7 @@ def measure_ref_program_time(
     use_torch_compile: bool = False,
     torch_compile_backend: str = "inductor",
     torch_compile_options: str = "default",
-    device: torch.device = torch.device("cuda:0"),
+    device: torch.device = None,
     verbose: bool = False,
     precision: Union[str, torch.dtype] = "fp32", # fp16, fp32, bf16 or torch.dtype
 ) -> dict:
@@ -40,16 +42,21 @@ def measure_ref_program_time(
 
     try:
         with torch.no_grad():
-            if isinstance(device, str):
+            if device is None:
+                runtime = get_runtime_for_backend("ascend" if timing_method == "npu_event" else "cuda")
+                device = runtime.device(runtime.current_device())
+            elif isinstance(device, str):
                 device = torch.device(device)
             elif isinstance(device, int):
-                device = torch.device(f"cuda:{device}")
-            torch.cuda.set_device(device)
+                device = _runtime_for_device(device).device(device)
+            runtime = _runtime_for_device(device)
+            runtime.require_available()
+            runtime.set_device(device)
 
-            torch.cuda.synchronize(device=device)
-            set_seed(42)
+            runtime.synchronize(device=device)
+            set_seed(42, runtime)
             inputs = get_inputs()
-            set_seed(42)
+            set_seed(42, runtime)
             init_inputs = get_init_inputs()
 
             from kernelbench.eval import get_torch_dtype_from_string
@@ -88,7 +95,7 @@ def measure_ref_program_time(
             else:
                 print(f"Using PyTorch Eager Execution on {ref_arch_name}")
 
-            torch.cuda.synchronize(device=device)
+            runtime.synchronize(device=device)
 
             timing_fn = get_timing_function(timing_method)
             elapsed_times = timing_fn(
@@ -178,6 +185,8 @@ def get_timing_function(
     match method:
         case "cuda_event":
             return time_execution_with_cuda_event
+        case "npu_event":
+            return time_execution_with_npu_event
         case "do_bench":
             # caveat: just using do_bench as it is 
             # do not have precise control over number of trials
@@ -192,6 +201,85 @@ def get_timing_function(
         # we might add other methods in the future
         case _: 
             raise ValueError(f"Unsupported timing method: {method}")
+
+
+def _runtime_for_device(device):
+    """Infer a runtime from a torch device while keeping old CUDA defaults."""
+    device_type = getattr(device, "type", "cuda")
+    return get_runtime_for_backend("ascendc" if device_type == "npu" else "cuda")
+
+
+def time_execution_with_npu_event(
+    kernel_fn: callable,
+    args: list[Any],
+    num_warmup: int = 3,
+    num_trials: int = 10,
+    discard_first: int = 1,
+    verbose: bool = True,
+    device: torch.device = None,
+) -> list[float]:
+    """Measure steady-state NPU latency with ``torch.npu.Event``.
+
+    Unlike the CUDA path this deliberately does not thrash L2 with a synthetic
+    tensor.  Warm-up plus synchronized device events is the stable first-stage
+    metric for Ascend.
+    """
+    runtime = get_runtime_for_backend("ascend")
+    runtime.require_available()
+    if device is None:
+        device = runtime.device(runtime.current_device())
+    elif isinstance(device, int):
+        device = runtime.device(device)
+    runtime.set_device(device)
+
+    # Keep a diagnostic first-call sample separate from the steady-state
+    # samples.  A list subclass preserves the historical timing_fn contract.
+    class TimingSamples(list):
+        first_call_ms = None
+        warmup_ms = []
+        host_ms = []
+
+    first_start = runtime.event(enable_timing=True)
+    first_end = runtime.event(enable_timing=True)
+    runtime.synchronize(device=device)
+    first_start.record()
+    kernel_fn(*args)
+    first_end.record()
+    runtime.synchronize(device=device)
+    first_call_ms = float(first_start.elapsed_time(first_end))
+
+    warmup_times = []
+    for _ in range(num_warmup):
+        warm_start = runtime.event(enable_timing=True)
+        warm_end = runtime.event(enable_timing=True)
+        warm_start.record()
+        kernel_fn(*args)
+        warm_end.record()
+        runtime.synchronize(device=device)
+        warmup_times.append(float(warm_start.elapsed_time(warm_end)))
+    runtime.empty_cache()
+    if verbose:
+        print(f"[Profiling] Using NPU: {device} {runtime.device_name(device)}, warm up {num_warmup}, trials {num_trials}")
+
+    elapsed_times = TimingSamples()
+    elapsed_times.first_call_ms = first_call_ms
+    elapsed_times.warmup_ms = warmup_times
+    for trial in range(num_trials + discard_first):
+        runtime.synchronize(device=device)
+        start_event = runtime.event(enable_timing=True)
+        end_event = runtime.event(enable_timing=True)
+        host_start = time.perf_counter()
+        start_event.record()
+        kernel_fn(*args)
+        end_event.record()
+        runtime.synchronize(device=device)
+        elapsed_times.host_ms.append((time.perf_counter() - host_start) * 1000.0)
+        elapsed_ms = float(start_event.elapsed_time(end_event))
+        if trial >= discard_first:
+            elapsed_times.append(elapsed_ms)
+            if verbose:
+                print(f"Trial {trial - discard_first + 1}: {elapsed_ms:.3g} ms")
+    return elapsed_times
 
 """
 Kernel Timing Functions
@@ -615,12 +703,25 @@ def get_timing_stats(elapsed_times: list[float], device: torch.device = None) ->
         "std": float(f"{np.std(elapsed_times):.3g}"),
         "min": float(f"{np.min(elapsed_times):.3g}"),
         "max": float(f"{np.max(elapsed_times):.3g}"),
+        "p50": float(f"{np.percentile(elapsed_times, 50):.3g}"),
+        "p90": float(f"{np.percentile(elapsed_times, 90):.3g}"),
         "num_trials": len(elapsed_times),
     }
 
+    if hasattr(elapsed_times, "first_call_ms"):
+        stats["first_call_ms"] = elapsed_times.first_call_ms
+        stats["warmup_ms"] = list(elapsed_times.warmup_ms)
+        if elapsed_times.warmup_ms:
+            stats["warmup_mean_ms"] = float(np.mean(elapsed_times.warmup_ms))
+        stats["steady_state_p50_ms"] = stats["p50"]
+        stats["steady_state_p90_ms"] = stats["p90"]
+        if elapsed_times.host_ms:
+            stats["host_e2e_ms"] = float(np.mean(elapsed_times.host_ms))
+
     if device:
-        stats["hardware"] = torch.cuda.get_device_name(device=device)
+        runtime = _runtime_for_device(device)
+        stats["hardware"] = runtime.device_name(device=device)
         stats["device"] = str(device)  # for debugging
+        stats["runtime"] = runtime.name
 
     return stats
-

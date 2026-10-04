@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "cann": "9.0.1",
+    "hardware": "Ascend910B3",
+    "level": 1,
+    "torch": "2.7.1+cpu",
+    "torch_npu": "2.7.1.post4"
+  },
+  "results": [
+    {
+      "cann": "9.0.1",
+      "cold_ms": 402.3307538591325,
+      "elapsed_wall_s": 64.41,
+      "hardware": "Ascend910B3",
+      "level": 1,
+      "nan_inf": false,
+      "output": {
+        "device": "npu:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "path": "output",
+        "shape": [
+          4096,
+          393216
+        ],
+        "type": "Tensor"
+      },
+      "problem": "19_ReLU.py",
+      "problem_id": 19,
+      "source_hash": "cbbfc9409662168ee7a5d3e7f7a59bf56e0faf9d763197e7f6a41fb5942dd63a",
+      "status": "supported",
+      "torch": "2.7.1+cpu",
+      "torch_npu": "2.7.1.post4",
+      "warmup_ms": [
+        10.347860336303711,
+        10.325519561767578
+      ]
+    }
+  ]
+}

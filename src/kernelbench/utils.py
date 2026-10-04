@@ -19,8 +19,14 @@ import torch
 from importlib.resources import files, as_file
 
 # API clients
-from openai import OpenAI
-from litellm import completion
+try:
+    from openai import OpenAI
+except ImportError:  # Optional for evaluator-only installations.
+    OpenAI = None
+try:
+    from litellm import completion
+except ImportError:  # Optional for evaluator-only installations.
+    completion = None
 
 import numpy as np
 from contextlib import contextmanager
@@ -110,6 +116,8 @@ def query_server(
     """
     # Local Server (SGLang, vLLM, Tokasaurus) - special handling
     if server_type == "local":
+        if OpenAI is None:
+            raise RuntimeError("The 'openai' package is required for local LLM generation.")
         url = f"http://{server_address}:{server_port}"
         client = OpenAI(
             api_key=SGLANG_KEY, base_url=f"{url}/v1", timeout=None, max_retries=0
@@ -141,6 +149,9 @@ def query_server(
         else:
             return outputs
     
+    if completion is None:
+        raise RuntimeError("The 'litellm' package is required for remote LLM generation.")
+
     # All other providers - use LiteLLM unified interface
     # Build messages list with system prompt first (if not already present)
     messages = []
