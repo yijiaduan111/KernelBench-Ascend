@@ -1,0 +1,4756 @@
+{
+  "schema_version": 1,
+  "generated_from_commit": "6651b15417b12b4d5222409bbafbc8e088394166",
+  "metadata": {
+    "hardware": "Ascend910B3",
+    "cann": "9.0.1",
+    "torch": "2.7.1+cpu",
+    "torch_npu": "2.7.1.post4",
+    "levels": [
+      1,
+      2,
+      3
+    ],
+    "devices": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "warmup": 1,
+    "repeats": 3,
+    "timeout_s": 120.0,
+    "retry_timeout_s": 300.0,
+    "retries": 1,
+    "total_discovered": 250,
+    "status_policy": "244 supported, 6 excluded after targeted rechecks"
+  },
+  "results": [
+    {
+      "level": 1,
+      "problem_id": 1,
+      "problem": "1_Square_matrix_multiplication_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "7626d611b8f2c97a71ae40d731da8cb7ba067dc43cc2f3e8185ad85c68533f30",
+      "cold_ms": 177.01126635074615,
+      "reference_runtime_ms": {
+        "mean": 1.9895400206247966,
+        "p50": 1.9875400066375732,
+        "p90": 2.032140016555786
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 2,
+      "problem": "2_Standard_matrix_multiplication_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "136a33c4d598d07cd7931ef8c0eff4e683c221af6fc43c2d89b6632d3f9902a0",
+      "cold_ms": 171.0217697545886,
+      "reference_runtime_ms": {
+        "mean": 1.9851933717727661,
+        "p50": 2.0,
+        "p90": 2.011660099029541
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 3,
+      "problem": "3_Batched_matrix_multiplication.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "310fb3bdf4f69ea178a5b5868bf204e83196cba71e4750be3fbbcb68b78d37f7",
+      "cold_ms": 555.623491294682,
+      "reference_runtime_ms": {
+        "mean": 4.332126617431641,
+        "p50": 4.3401198387146,
+        "p90": 4.385479927062988
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 4,
+      "problem": "4_Matrix_vector_multiplication_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5f1476dfcbd291f393d469a2645ff628f1e393bd720c2fe36d5fa4f9181dd8a1",
+      "cold_ms": 496.1644224822521,
+      "reference_runtime_ms": {
+        "mean": 38.995506286621094,
+        "p50": 38.902618408203125,
+        "p90": 39.224220275878906
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 5,
+      "problem": "5_Matrix_scalar_multiplication.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "f4d52425a8f72b4b22375494064f2ab1675e2caf29376c47a102211ce66d6987",
+      "cold_ms": 355.4811030626297,
+      "reference_runtime_ms": {
+        "mean": 7.010979970296224,
+        "p50": 7.010059833526611,
+        "p90": 7.034060001373291
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 6,
+      "problem": "6_Matmul_with_large_K_dimension_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "18287323c43d000af0eaf384d8e142424182fb48e17cc317fc7009bb345bd7b0",
+      "cold_ms": 216.6310092434287,
+      "reference_runtime_ms": {
+        "mean": 3.0631200472513833,
+        "p50": 3.0495200157165527,
+        "p90": 3.122040033340454
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 7,
+      "problem": "7_Matmul_with_small_K_dimension_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "66b12b830db873ab706900ffb52abd9fa43321829eee40a27d395441db2f2966",
+      "cold_ms": 293.3194935321808,
+      "reference_runtime_ms": {
+        "mean": 3.781560023625692,
+        "p50": 3.773360013961792,
+        "p90": 3.811340093612671
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 8,
+      "problem": "8_Matmul_with_irregular_shapes_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "717f98e135d8c11b5005bd869b36843960de2c06151beb3d7dd6a760a987223c",
+      "cold_ms": 179.30840328335762,
+      "reference_runtime_ms": {
+        "mean": 5.1348066329956055,
+        "p50": 5.024839878082275,
+        "p90": 5.411640167236328
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 9,
+      "problem": "9_Tall_skinny_matrix_multiplication_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "06a133f60f0d704b70014b210031e3937d7a183c90ea11800357ce6b55c89c18",
+      "cold_ms": 291.6480815038085,
+      "reference_runtime_ms": {
+        "mean": 3.3866466681162515,
+        "p50": 3.3854000568389893,
+        "p90": 3.4127399921417236
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 10,
+      "problem": "10_3D_tensor_matrix_multiplication.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "bd4013a4d5563e3a0a7da6c055dd9c83fbedb5fdd2842e8610a84a510f75e0af",
+      "cold_ms": 464.1274977475405,
+      "reference_runtime_ms": {
+        "mean": 0.763699988524119,
+        "p50": 0.7832599878311157,
+        "p90": 0.7899199724197388
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 11,
+      "problem": "11_4D_tensor_matrix_multiplication.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "f4e0b2e7721b68c8cf3d7109ae24690b0761eb01c79601f4330bbeffe8471bc8",
+      "cold_ms": 666.2686439231038,
+      "reference_runtime_ms": {
+        "mean": 34.63306713104248,
+        "p50": 6.330780029296875,
+        "p90": 91.2785415649414
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 12,
+      "problem": "12_Matmul_with_diagonal_matrices_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "868bc16b165dd00232690d06ff7f50578ee64769b16b9c53b7069b2df1b36cf3",
+      "cold_ms": 155.6139113381505,
+      "reference_runtime_ms": {
+        "mean": 0.12636000166336694,
+        "p50": 0.1410199999809265,
+        "p90": 0.15036000311374664
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 13,
+      "problem": "13_Matmul_for_symmetric_matrices.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5ee7c49134f3ed1d0af9a54ddcb3c00f57c91e1e3d28f1c1c9bbeb79e448c9cb",
+      "cold_ms": 171.75496648997068,
+      "reference_runtime_ms": {
+        "mean": 1.9764066537221272,
+        "p50": 1.970900058746338,
+        "p90": 2.000119924545288
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 14,
+      "problem": "14_Matmul_for_upper_triangular_matrices.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "b661589687579a277b660c781f6f1e65921f7005e5fe85fb3de87e4cf9ea73aa",
+      "cold_ms": 182.8892668709159,
+      "reference_runtime_ms": {
+        "mean": 2.048260052998861,
+        "p50": 2.0641400814056396,
+        "p90": 2.0646800994873047
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 15,
+      "problem": "15_Matmul_for_lower_triangular_matrices.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "eb1491ef5450d332f680c390e23fb6bed47bb09702f0027168ce5b121b6077d3",
+      "cold_ms": 173.17733634263277,
+      "reference_runtime_ms": {
+        "mean": 2.042359987894694,
+        "p50": 2.0384600162506104,
+        "p90": 2.0555200576782227
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 16,
+      "problem": "16_Matmul_with_transposed_A.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d3b2abe010f0732a889c8ccf21ac56885e7e013957a421c197de3681d56b4be9",
+      "cold_ms": 173.4546972438693,
+      "reference_runtime_ms": {
+        "mean": 2.003853360811869,
+        "p50": 2.0289199352264404,
+        "p90": 2.032560110092163
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 17,
+      "problem": "17_Matmul_with_transposed_B.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "00ef34b7e76d97b7cc95599fd2ff93d4d90f53c348fcc3c4cb657c2126f026b1",
+      "cold_ms": 165.80859012901783,
+      "reference_runtime_ms": {
+        "mean": 2.0315733750661216,
+        "p50": 2.0393600463867188,
+        "p90": 2.052180051803589
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 18,
+      "problem": "18_Matmul_with_transposed_both.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "58f61b728890855d009329dbdbd0da4ac7d9390e46f7199b27dc353dd512ad19",
+      "cold_ms": 170.64989544451237,
+      "reference_runtime_ms": {
+        "mean": 2.0104199647903442,
+        "p50": 2.0313398838043213,
+        "p90": 2.0645999908447266
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 19,
+      "problem": "19_ReLU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "cbbfc9409662168ee7a5d3e7f7a59bf56e0faf9d763197e7f6a41fb5942dd63a",
+      "cold_ms": 407.47247356921434,
+      "reference_runtime_ms": {
+        "mean": 10.322380065917969,
+        "p50": 10.314379692077637,
+        "p90": 10.373700141906738
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 20,
+      "problem": "20_LeakyReLU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5dea58d2392f446e0139e6cfb58bec3a1ac23cee90bb5c3e8a6ddab2909b7fbf",
+      "cold_ms": 406.1390133574605,
+      "reference_runtime_ms": {
+        "mean": 10.31904665629069,
+        "p50": 10.30408000946045,
+        "p90": 10.373180389404297
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 21,
+      "problem": "21_Sigmoid.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8f3ae78284ddd70b5c2fff66e066e967780245dee262fbf8cd2432498833796a",
+      "cold_ms": 406.28317184746265,
+      "reference_runtime_ms": {
+        "mean": 10.364493370056152,
+        "p50": 10.390439987182617,
+        "p90": 10.400799751281738
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 22,
+      "problem": "22_Tanh.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8d47a07cbd045c944bb0bbd613e9375ca8032f7062e36f7a5d3c427c30e88490",
+      "cold_ms": 419.30854599922895,
+      "reference_runtime_ms": {
+        "mean": 15.812206586201986,
+        "p50": 15.80016040802002,
+        "p90": 15.837479591369629
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 23,
+      "problem": "23_Softmax.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "c9fa418447f2d64d5aeb4763d817137c1cb5a6b411a580f0b6291a7b29301d75",
+      "cold_ms": 419.58342120051384,
+      "reference_runtime_ms": {
+        "mean": 18.0476131439209,
+        "p50": 18.029739379882812,
+        "p90": 18.123220443725586
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 24,
+      "problem": "24_LogSoftmax.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "2aa5cac0c12474ed17fad018fee6ccbb09ca7d200ece7981bb8a608200b81fb8",
+      "cold_ms": 435.3645173832774,
+      "reference_runtime_ms": {
+        "mean": 17.793132781982422,
+        "p50": 17.805559158325195,
+        "p90": 18.204099655151367
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 25,
+      "problem": "25_Swish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "dbc25cc89be043065594c2882809b129a442af34ecdc280b9be2bc04597d653a",
+      "cold_ms": 623.4778827056289,
+      "reference_runtime_ms": {
+        "mean": 27.44499969482422,
+        "p50": 27.445600509643555,
+        "p90": 27.47123908996582
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 26,
+      "problem": "26_GELU_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "6c08367ffb8a4153714fb8390ece47d8f0294f9e2152245840f3a9764ac8b69b",
+      "cold_ms": 411.0573334619403,
+      "reference_runtime_ms": {
+        "mean": 10.477993329366049,
+        "p50": 10.464920043945312,
+        "p90": 10.505220413208008
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 27,
+      "problem": "27_SELU_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "21aad8c91144bee2c507d134ffc9c365d555a6035dfea71e3044a9cdad8adf99",
+      "cold_ms": 412.6394744962454,
+      "reference_runtime_ms": {
+        "mean": 10.40527311960856,
+        "p50": 10.414999961853027,
+        "p90": 10.42251968383789
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 28,
+      "problem": "28_HardSigmoid.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "fc773884c6c52af0fd6d41c610ca5bd15f66c4c47f0d4e9fad24564afea4c50a",
+      "cold_ms": 413.33141550421715,
+      "reference_runtime_ms": {
+        "mean": 10.327386856079102,
+        "p50": 10.319680213928223,
+        "p90": 10.392780303955078
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 29,
+      "problem": "29_Softplus.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "dadaed23e8f0194fc4840b5af4d10d397f96f2034eca0e36653078b270ce8539",
+      "cold_ms": 447.73664977401495,
+      "reference_runtime_ms": {
+        "mean": 31.565153121948242,
+        "p50": 31.55385971069336,
+        "p90": 31.58922004699707
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 30,
+      "problem": "30_Softsign.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "1c7b8e7dd71284dbfbcc33bf87b94c962b3cca6da90bbd2b5c5e8900b1354a75",
+      "cold_ms": 675.1368129625916,
+      "reference_runtime_ms": {
+        "mean": 37.81210072835287,
+        "p50": 37.839561462402344,
+        "p90": 37.84796142578125
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 31,
+      "problem": "31_ELU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "295e84c51758555d26571f14353c8c4a02a1c7eb213406129e6ea601385e6fd8",
+      "cold_ms": 414.7550379857421,
+      "reference_runtime_ms": {
+        "mean": 10.425626754760742,
+        "p50": 10.445079803466797,
+        "p90": 10.447540283203125
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 32,
+      "problem": "32_HardTanh.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "b73a2ed250f2d9fec69a5899ddae3a15f41a9225b73a20ef6de5b8f8ef05fcf5",
+      "cold_ms": 431.30509462207556,
+      "reference_runtime_ms": {
+        "mean": 24.72511355082194,
+        "p50": 24.792720794677734,
+        "p90": 24.81294059753418
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 33,
+      "problem": "33_BatchNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "0b7f5ca58d6ec76a6faef2f583fa84ab2c14c0bfd09e7faf8c6289187a56cfc4",
+      "cold_ms": 345.08855920284986,
+      "reference_runtime_ms": {
+        "mean": 10.545693397521973,
+        "p50": 10.51576042175293,
+        "p90": 10.608539581298828
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 34,
+      "problem": "34_InstanceNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "2e0d8b3c14a731ba9051a7487949e6bcb52e36eee6b707499cdc670332aedcad",
+      "cold_ms": 420.3167827799916,
+      "reference_runtime_ms": {
+        "mean": 17.85850715637207,
+        "p50": 17.83563995361328,
+        "p90": 18.154260635375977
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 35,
+      "problem": "35_GroupNorm_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e4462f85b3eaadd05bdce8655305f5bcddc49dd31ef0a3bba1b85a1cbb2d19bb",
+      "cold_ms": 425.127568654716,
+      "reference_runtime_ms": {
+        "mean": 18.97642644246419,
+        "p50": 18.375019073486328,
+        "p90": 20.273059844970703
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 36,
+      "problem": "36_RMSNorm_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8f6ee1b9ee212f3cee1069eff2b7935482713c99596b1024801868065e5a2b1d",
+      "cold_ms": 464.6980268880725,
+      "reference_runtime_ms": {
+        "mean": 33.600573221842446,
+        "p50": 33.617401123046875,
+        "p90": 33.675880432128906
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 37,
+      "problem": "37_FrobeniusNorm_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "cf45f93a2a75102fdcc78a77833cbf6a2f40080fec5c7437ff1471b4092360ba",
+      "cold_ms": 446.0813980549574,
+      "reference_runtime_ms": {
+        "mean": 17.227993647257488,
+        "p50": 17.22138023376465,
+        "p90": 17.272720336914062
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 38,
+      "problem": "38_L1Norm_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "02d29f98ba28001a4274fe713bf0b985ffc088aef1e83581ad11e4dbe239dfda",
+      "cold_ms": 508.3495303988457,
+      "reference_runtime_ms": {
+        "mean": 35.16776657104492,
+        "p50": 35.18824005126953,
+        "p90": 35.22972106933594
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 39,
+      "problem": "39_L2Norm_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "fb8153fbe2a50679fcbbc3114f46c4157547138679fb6ecbabec0497e90a55c3",
+      "cold_ms": 483.70435647666454,
+      "reference_runtime_ms": {
+        "mean": 21.83519999186198,
+        "p50": 21.841060638427734,
+        "p90": 21.862619400024414
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 40,
+      "problem": "40_LayerNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8d975d7cee6946513dcfb6ba84c971e53a890f9d9c6f0a4fb828904941f25975",
+      "cold_ms": 169.50905602425337,
+      "reference_runtime_ms": {
+        "mean": 2.90720001856486,
+        "p50": 2.924299955368042,
+        "p90": 2.96016001701355
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 41,
+      "problem": "41_Max_Pooling_1D.py",
+      "status": "excluded",
+      "failure_type": "unsupported_operator",
+      "source_hash": "65bbc7b4b8c999990dacd9be04823886fecfec981a5d7484ddcf53302b04584d",
+      "cold_ms": null,
+      "reference_runtime_ms": null,
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": null,
+      "nan_inf": null,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 42,
+      "problem": "42_Max_Pooling_2D.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "615a5a6d6baa0d13774cc17b305dd0588625e13a829bdef16395f5cd101e06bc",
+      "cold_ms": 916.1309096962214,
+      "reference_runtime_ms": {
+        "mean": 43.39415995279948,
+        "p50": 43.2436408996582,
+        "p90": 43.76818084716797
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 43,
+      "problem": "43_Max_Pooling_3D.py",
+      "status": "excluded",
+      "failure_type": "unsupported_operator",
+      "source_hash": "c684de6a8afdb3e555952e692f07744531394f2ccd8ea5f34b68793f7f71b709",
+      "cold_ms": null,
+      "reference_runtime_ms": null,
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": null,
+      "nan_inf": null,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 44,
+      "problem": "44_Average_Pooling_1D.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "2c55c057fff2439d7bf30ad1cd33b9e72da6b9996cfc2f2bbde981e114a5b774",
+      "cold_ms": 440.54034259170294,
+      "reference_runtime_ms": {
+        "mean": 23.11392656962077,
+        "p50": 23.088699340820312,
+        "p90": 23.284740447998047
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 45,
+      "problem": "45_Average_Pooling_2D.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "3abae4a4776630cc55e066f3878c268e9338b4a936d50a38d8bd62d3bdefe1ba",
+      "cold_ms": 4686.603316105902,
+      "reference_runtime_ms": {
+        "mean": 4564.75048828125,
+        "p50": 4564.75048828125,
+        "p90": 4564.75048828125
+      },
+      "input_bytes": 17179869184,
+      "repeat_check_skipped": true,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 46,
+      "problem": "46_Average_Pooling_3D.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "bb683a01c421e1e289b7cd765a7c199317984f4fccad885e69acf32fa97ce3d3",
+      "cold_ms": 387.3174311593175,
+      "reference_runtime_ms": {
+        "mean": 195.4389851888021,
+        "p50": 195.26025390625,
+        "p90": 195.85084533691406
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 47,
+      "problem": "47_Sum_reduction_over_a_dimension.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "537d2ff381740bdb54b5208f82187564f6733a30df918edbbf7a49d64bef17ab",
+      "cold_ms": 189.79103676974773,
+      "reference_runtime_ms": {
+        "mean": 7.1519467035929365,
+        "p50": 7.155020236968994,
+        "p90": 7.241640090942383
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 48,
+      "problem": "48_Mean_reduction_over_a_dimension.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5fedf7c91096731d6d0edf00ade5b31b835c07e39be159512446fb4479fd5b35",
+      "cold_ms": 193.21992062032223,
+      "reference_runtime_ms": {
+        "mean": 7.683160146077474,
+        "p50": 7.667960166931152,
+        "p90": 7.746520042419434
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 49,
+      "problem": "49_Max_reduction_over_a_dimension.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "12982f0f62a711d355a4f037edff6b92581032bec387e5b40f3e0d8c384f9b9f",
+      "cold_ms": 179.22464665025473,
+      "reference_runtime_ms": {
+        "mean": 24.61559295654297,
+        "p50": 24.60491943359375,
+        "p90": 24.64620018005371
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 50,
+      "problem": "50_conv_standard_2D__square_input__square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "86ecad0e77b2c9f81d6c171f1325e85f4f23ae9ad4410bbfd096fca62e84d673",
+      "cold_ms": 223.47708977758884,
+      "reference_runtime_ms": {
+        "mean": 3.2103532950083413,
+        "p50": 3.2451999187469482,
+        "p90": 3.2498199939727783
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 51,
+      "problem": "51_Argmax_over_a_dimension.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d6a2057c4c95a9737985b2b8ffda23595f812557c26a2263fec8edd594c61fbe",
+      "cold_ms": 185.85909344255924,
+      "reference_runtime_ms": {
+        "mean": 25.01211992899577,
+        "p50": 24.694780349731445,
+        "p90": 25.73192024230957
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 52,
+      "problem": "52_Argmin_over_a_dimension.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e1764caddce33679126f225b4da455a95978be85ccf79a372e3ef549ee35ba8f",
+      "cold_ms": 237.39031329751015,
+      "reference_runtime_ms": {
+        "mean": 85.3819071451823,
+        "p50": 85.39192199707031,
+        "p90": 85.44143676757812
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 53,
+      "problem": "53_Min_reduction_over_a_dimension.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "db0c4b3f62e99ffc3a2cacd10c919db886f49c6ec9d97b9fc1ce14ff1e0925a7",
+      "cold_ms": 183.1402787938714,
+      "reference_runtime_ms": {
+        "mean": 24.615372975667317,
+        "p50": 24.627439498901367,
+        "p90": 24.643539428710938
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 54,
+      "problem": "54_conv_standard_3D__square_input__square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "98b074edf89802ed79b9b99c37d94eb1d781ab46037614390046ebf92a1f2f0d",
+      "cold_ms": 220.69841623306274,
+      "reference_runtime_ms": {
+        "mean": 4.637379964192708,
+        "p50": 4.656620025634766,
+        "p90": 4.689599990844727
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 55,
+      "problem": "55_conv_standard_2D__asymmetric_input__square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "47145a97c980da1d78d88da5b63d2c6aab9a4b172509f3b3663137865b9485ee",
+      "cold_ms": 414.5263181999326,
+      "reference_runtime_ms": {
+        "mean": 12.773079872131348,
+        "p50": 12.76688003540039,
+        "p90": 12.793519973754883
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 56,
+      "problem": "56_conv_standard_2D__asymmetric_input__asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "c04ef3c4088981e9d3547eed0a0620e8ede3d0af4bff935e4a3e7ba9ba9aa652",
+      "cold_ms": 246.42984196543694,
+      "reference_runtime_ms": {
+        "mean": 5.832159996032715,
+        "p50": 5.826900005340576,
+        "p90": 5.87962007522583
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 57,
+      "problem": "57_conv_transposed_2D__square_input__square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "9e84df45806e4fa36bef9b8ef98f255d86470ff81735e9ee98d2c721634fde52",
+      "cold_ms": 576.3900363817811,
+      "reference_runtime_ms": {
+        "mean": 24.48098627726237,
+        "p50": 24.448820114135742,
+        "p90": 24.608539581298828
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 58,
+      "problem": "58_conv_transposed_3D__asymmetric_input__asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "1673075fe1a9d3fa00f625f0059011c9aa7aa864d8030311673dab91fb9b3564",
+      "cold_ms": 179.0412561967969,
+      "reference_runtime_ms": {
+        "mean": 7.6302134195963545,
+        "p50": 7.648859977722168,
+        "p90": 7.679180145263672
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 59,
+      "problem": "59_conv_standard_3D__asymmetric_input__square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "fc6c48ace0b1c31d0eedd3c9ff5eca70dd5c84c0b50b9ce01a27eb8df51ca684",
+      "cold_ms": 397.13971968740225,
+      "reference_runtime_ms": {
+        "mean": 8.827566782633463,
+        "p50": 8.84395980834961,
+        "p90": 8.87302017211914
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 60,
+      "problem": "60_conv_standard_3D__square_input__asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "3f7204c138ec6d09c25c38f39be1d5b7f43f4fa5270d68fe0323ad9b3149ffb9",
+      "cold_ms": 224.62779097259045,
+      "reference_runtime_ms": {
+        "mean": 9.006719907124838,
+        "p50": 9.019720077514648,
+        "p90": 9.049599647521973
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 61,
+      "problem": "61_conv_transposed_3D__square_input__square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e60fffd91a6a43eeefb5069f4dd0f2316c7114f5bd3ca5264723b5d0531e9c76",
+      "cold_ms": 211.32416743785143,
+      "reference_runtime_ms": {
+        "mean": 7.698626677195231,
+        "p50": 7.678279876708984,
+        "p90": 7.8089799880981445
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 62,
+      "problem": "62_conv_standard_2D__square_input__asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "033e91bf69225f07e61484d14450903e3d67e7cee1a119abd8b19d3e73a0c849",
+      "cold_ms": 267.0675227418542,
+      "reference_runtime_ms": {
+        "mean": 4.733946641286214,
+        "p50": 4.714620113372803,
+        "p90": 4.775479793548584
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 63,
+      "problem": "63_conv_standard_2D__square_input__square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "18b1d4ea7b3a52714f3607268b8a38b7457b2adcce2dc918bcdbf33cc267b463",
+      "cold_ms": 916.8331110849977,
+      "reference_runtime_ms": {
+        "mean": 24.198766708374023,
+        "p50": 24.205419540405273,
+        "p90": 24.30459976196289
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 64,
+      "problem": "64_conv_transposed_1D.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "0ad1a7811c8916691ae516c366a1ac888b011cf5699dd8b2e2a569cbef697c75",
+      "cold_ms": 571.0377609357238,
+      "reference_runtime_ms": {
+        "mean": 13.435446739196777,
+        "p50": 13.485380172729492,
+        "p90": 13.487380027770996
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 65,
+      "problem": "65_conv_transposed_2D__square_input__asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5a2f6a47e83931e2c3d1e78cff3f6793415f963308ba0c2eb5c1a27596c3cfde",
+      "cold_ms": 345.63999995589256,
+      "reference_runtime_ms": {
+        "mean": 6.948919932047526,
+        "p50": 6.930339813232422,
+        "p90": 7.004280090332031
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 66,
+      "problem": "66_conv_standard_3D__asymmetric_input__asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "649fc141b68b3cd3fa83cdd3dda9a0e02f0367eb0a8307fe7fbe8b5968a305eb",
+      "cold_ms": 181.5056474879384,
+      "reference_runtime_ms": {
+        "mean": 5.191386699676514,
+        "p50": 5.200980186462402,
+        "p90": 5.228099822998047
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 67,
+      "problem": "67_conv_standard_1D.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d0ddb9f06cbe48f3930a31062b12514fb23eb9bb23500160f1085f795044b205",
+      "cold_ms": 411.2445740029216,
+      "reference_runtime_ms": {
+        "mean": 8.359999974568685,
+        "p50": 8.351400375366211,
+        "p90": 8.414259910583496
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 68,
+      "problem": "68_conv_transposed_3D__square_input__asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "eb318ee386ec2d3581938f4099366a8872936949104eabe312ec325ffdc0abbc",
+      "cold_ms": 369.46768313646317,
+      "reference_runtime_ms": {
+        "mean": 82.67523193359375,
+        "p50": 82.5848388671875,
+        "p90": 83.04035949707031
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 69,
+      "problem": "69_conv_transposed_2D__asymmetric_input__asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "6014891f7ba7a66ef05c012ab98e086b042fc10ec8a2d6af4f89b00f95861095",
+      "cold_ms": 384.7143677994609,
+      "reference_runtime_ms": {
+        "mean": 7.903239885965983,
+        "p50": 7.925039768218994,
+        "p90": 7.934639930725098
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 70,
+      "problem": "70_conv_transposed_3D__asymmetric_input__square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8b56475485149dc43e7475f12434b687dbd9f05fa10738cf7595337aff7adff3",
+      "cold_ms": 267.6020422950387,
+      "reference_runtime_ms": {
+        "mean": 22.11231295267741,
+        "p50": 22.148019790649414,
+        "p90": 22.222259521484375
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 71,
+      "problem": "71_conv_transposed_2D__asymmetric_input__square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "02bb0b2e7744eb4c7d6576e135400b03da21efa4b999cef2ab4e5a44f49fd295",
+      "cold_ms": 338.2359528914094,
+      "reference_runtime_ms": {
+        "mean": 4.094633420308431,
+        "p50": 4.103240013122559,
+        "p90": 4.145080089569092
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 72,
+      "problem": "72_conv_transposed_3D_asymmetric_input_asymmetric_kernel___strided_padded_grouped_.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e157db716a0915aa5ce7a23dc4c4b249e856cba1980cfd21c335630577382dc1",
+      "cold_ms": 171.25446815043688,
+      "reference_runtime_ms": {
+        "mean": 11.418839772542318,
+        "p50": 11.443479537963867,
+        "p90": 11.45359992980957
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 73,
+      "problem": "73_conv_transposed_3D_asymmetric_input_square_kernel__strided_padded__grouped.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "4622db3c59f819c43af8ac286c1e5b52d5464d0a502745688fe07c5cac087a9a",
+      "cold_ms": 212.98742853105068,
+      "reference_runtime_ms": {
+        "mean": 9.133479754130045,
+        "p50": 9.140959739685059,
+        "p90": 9.141679763793945
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 74,
+      "problem": "74_conv_transposed_1D_dilated.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "25c5106ef9f520916e0d8e778aad984fc6e88008951f0c9458f90dec80976e5e",
+      "cold_ms": 381.22482411563396,
+      "reference_runtime_ms": {
+        "mean": 4.695053418477376,
+        "p50": 4.701519966125488,
+        "p90": 4.844180107116699
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 75,
+      "problem": "75_conv_transposed_2D_asymmetric_input_asymmetric_kernel_strided__grouped____padded____dilated__.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "1926419776cf1be2030acb76de1e4a78d3cb8b8f172ffa74786bf3947a4c2bca",
+      "cold_ms": 337.21244242042303,
+      "reference_runtime_ms": {
+        "mean": 4.8937398592631025,
+        "p50": 4.907839775085449,
+        "p90": 4.920839786529541
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 76,
+      "problem": "76_conv_standard_1D_dilated_strided__.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "83736e4c38632e0f72bcba6b3b74065b2dba668913e1b1161f9b5ad8b37e64e3",
+      "cold_ms": 927.8581524267793,
+      "reference_runtime_ms": {
+        "mean": 37.83960723876953,
+        "p50": 37.81882095336914,
+        "p90": 37.9653205871582
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 77,
+      "problem": "77_conv_transposed_3D_square_input_square_kernel___padded____dilated____strided__.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "a16f0026c2249c9f6e3a151fbf3b42db29dd17640a0ef9f001cbd1d09d5f9444",
+      "cold_ms": 164.01483118534088,
+      "reference_runtime_ms": {
+        "mean": 3.7349599997202554,
+        "p50": 3.761460065841675,
+        "p90": 3.7646799087524414
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 78,
+      "problem": "78_conv_transposed_2D_asymmetric_input_asymmetric_kernel___padded__.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "0044003d489f732f5679fe7ea162d4a8a10a647503d097826b53fc3e255a8a51",
+      "cold_ms": 333.84120743721724,
+      "reference_runtime_ms": {
+        "mean": 6.415780067443848,
+        "p50": 6.394460201263428,
+        "p90": 6.461699962615967
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 79,
+      "problem": "79_conv_transposed_1D_asymmetric_input_square_kernel___padded____strided____dilated__.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "9e1baebd13c14f9b6883023e6ca7881f8d95aa529f01b4c95e54ad713295cc89",
+      "cold_ms": 376.21829006820917,
+      "reference_runtime_ms": {
+        "mean": 4.756106694539388,
+        "p50": 4.745540142059326,
+        "p90": 4.783959865570068
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 80,
+      "problem": "80_conv_standard_2D_square_input_asymmetric_kernel___dilated____padded__.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "4706128a7dfef02da3d2ebb72874eb81db833c6b6369b5413d40985e8ad0ea39",
+      "cold_ms": 237.73680441081524,
+      "reference_runtime_ms": {
+        "mean": 6.523806730906169,
+        "p50": 6.520840167999268,
+        "p90": 6.599400043487549
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 81,
+      "problem": "81_conv_transposed_2D_asymmetric_input_square_kernel___dilated____padded____strided__.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8f292796522673552a00abd3f89843964ea9e60b06770c4554c9cba602c3499e",
+      "cold_ms": 339.0147536993027,
+      "reference_runtime_ms": {
+        "mean": 5.8389865557352705,
+        "p50": 5.862939834594727,
+        "p90": 5.867159843444824
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 82,
+      "problem": "82_conv_depthwise_2D_square_input_square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "23578d4c1257ee9c2b86ab8969eb91292aca2b9699ab15b2b72ea7e8d438078f",
+      "cold_ms": 330.2485151216388,
+      "reference_runtime_ms": {
+        "mean": 6.446760018666585,
+        "p50": 6.408760070800781,
+        "p90": 6.525199890136719
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 83,
+      "problem": "83_conv_depthwise_2D_square_input_asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "09f5690aceba6d92769440e5a2698a76aec7b1f45d63e3198af5884c4d40ea10",
+      "cold_ms": 250.3590751439333,
+      "reference_runtime_ms": {
+        "mean": 3.0133066972096763,
+        "p50": 2.9992001056671143,
+        "p90": 3.047060012817383
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 84,
+      "problem": "84_conv_depthwise_2D_asymmetric_input_square_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "1af31dab803ef4f4e5b94f7bbe54260ef23930715610d1cbd8e7cdcd88e5c45c",
+      "cold_ms": 672.8567006066442,
+      "reference_runtime_ms": {
+        "mean": 24.21432622273763,
+        "p50": 24.21299934387207,
+        "p90": 24.23695945739746
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 85,
+      "problem": "85_conv_depthwise_2D_asymmetric_input_asymmetric_kernel.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5538e14c57c791611e5e6a663cbed1051af510257a603100a25cbebc78b7a8aa",
+      "cold_ms": 240.13774562627077,
+      "reference_runtime_ms": {
+        "mean": 4.2080732981363935,
+        "p50": 4.193319797515869,
+        "p90": 4.245920181274414
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 86,
+      "problem": "86_conv_depthwise_separable_2D.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "cee48ffdb13900385835c6390154a3886bd9ad8b84154ae1d37f0148cd8feabe",
+      "cold_ms": 463.1764953956008,
+      "reference_runtime_ms": {
+        "mean": 14.330660184224447,
+        "p50": 14.330240249633789,
+        "p90": 14.378640174865723
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 87,
+      "problem": "87_conv_pointwise_2D.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5608fbde926998ce10992790b9c1b09a15481cbd005472b0ad54d70db41eb1d8",
+      "cold_ms": 995.3005872666836,
+      "reference_runtime_ms": {
+        "mean": 32.5107676188151,
+        "p50": 32.48868179321289,
+        "p90": 32.57154083251953
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 88,
+      "problem": "88_MinGPTNewGelu.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "4c715023579e2edc7d7af2a6799ea6cb9ef1b9278670cfbe2d0e61d111003c4f",
+      "cold_ms": 185.69824285805225,
+      "reference_runtime_ms": {
+        "mean": 4.3819732666015625,
+        "p50": 4.370999813079834,
+        "p90": 4.424980163574219
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 89,
+      "problem": "89_cumsum.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "24eea19436dc41aa36ae3364b422d784c4f20175903f894e06beeb9cff15c02d",
+      "cold_ms": 399.804113432765,
+      "reference_runtime_ms": {
+        "mean": 84.48084004720052,
+        "p50": 84.47662353515625,
+        "p90": 84.49833679199219
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 90,
+      "problem": "90_cumprod.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "17408793b4846d75bef22fff5c2a16c7d836409eabc0476c8060f75183a64665",
+      "cold_ms": 18161.171939224005,
+      "reference_runtime_ms": {
+        "mean": 17892.315104166668,
+        "p50": 17909.853515625,
+        "p90": 17949.080078125
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 91,
+      "problem": "91_cumsum_reverse.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "170f4bb30f01abdec9b149d78a816e66bdc93967253ade8244dca1b8372038fd",
+      "cold_ms": 1907.4704442173243,
+      "reference_runtime_ms": {
+        "mean": 1589.5861002604167,
+        "p50": 1589.52880859375,
+        "p90": 1589.72900390625
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 92,
+      "problem": "92_cumsum_exclusive.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "ec1551c196130f5d7fae707f0750016c35b988e76aa3f1657da4347f463ced86",
+      "cold_ms": 694.1322423517704,
+      "reference_runtime_ms": {
+        "mean": 193.08283487955728,
+        "p50": 137.22695922851562,
+        "p90": 304.8245849609375
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 93,
+      "problem": "93_masked_cumsum.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8b1591c5c8242968acc0677a4a1308b7a704534724782c3858b4cb0b10828769",
+      "cold_ms": 592.540449462831,
+      "reference_runtime_ms": {
+        "mean": 154.43195343017578,
+        "p50": 99.99263763427734,
+        "p90": 263.3829650878906
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 94,
+      "problem": "94_MSELoss.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "1bc23c8534d817cd5acff184eb8d3849f43b96b6dffcde6ab78a1c71a8fe64f3",
+      "cold_ms": 487.1471468359232,
+      "reference_runtime_ms": {
+        "mean": 21.219839731852215,
+        "p50": 21.20587921142578,
+        "p90": 21.254240036010742
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 95,
+      "problem": "95_CrossEntropyLoss.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "4cdfaaf1c2118369987c7a0c24b4487fee4bb90fdce50f592bded59cf61ae9bd",
+      "cold_ms": 178.08422911912203,
+      "reference_runtime_ms": {
+        "mean": 1.3810799916585286,
+        "p50": 1.3770400285720825,
+        "p90": 1.3934199810028076
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 96,
+      "problem": "96_HuberLoss.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "51a7c78a527206ba8da2b24cbbfd3c8a043146a9d690d4304c5e95a199425747",
+      "cold_ms": 171.7026624828577,
+      "reference_runtime_ms": {
+        "mean": 15.443766911824545,
+        "p50": 14.509119987487793,
+        "p90": 17.402860641479492
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 97,
+      "problem": "97_ScaledDotProductAttention.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "a07ca5135657c2ea29f7b7a66ec1815560858ad69fa88221bfc0f82bd5648091",
+      "cold_ms": 835.3146966546774,
+      "reference_runtime_ms": {
+        "mean": 33.6958262125651,
+        "p50": 33.69295883178711,
+        "p90": 33.714778900146484
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 98,
+      "problem": "98_KLDivLoss.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "ff13e10c26851cc7262cd993dd289ad21b18dbb1dd65bb2159d7052582b1ccd5",
+      "cold_ms": 297.77838569134474,
+      "reference_runtime_ms": {
+        "mean": 36.2988543510437,
+        "p50": 7.452980041503906,
+        "p90": 94.04292297363281
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 99,
+      "problem": "99_TripletMarginLoss.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "07fce40303b9ba5fdc3e5b6ae61c35ed47ac291e9e0f4e62c21a8ba2763cea0c",
+      "cold_ms": 298.16212598234415,
+      "reference_runtime_ms": {
+        "mean": 11.10862668355306,
+        "p50": 11.130800247192383,
+        "p90": 11.185259819030762
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 1,
+      "problem_id": 100,
+      "problem": "100_HingeLoss.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8e7ab261247e266e1b765957db04ea6972ac5dc9544607c059848d2417d5d3a1",
+      "cold_ms": 523.9988854154944,
+      "reference_runtime_ms": {
+        "mean": 32.91588592529297,
+        "p50": 33.15161895751953,
+        "p90": 34.63005828857422
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 1,
+      "problem": "1_Conv2D_ReLU_BiasAdd.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "45ee3a3db038396c982207b36812086bf1b94472ebbf229c5e76c5ea0b90f89f",
+      "cold_ms": 317.14081671088934,
+      "reference_runtime_ms": {
+        "mean": 8.689786911010742,
+        "p50": 8.690320014953613,
+        "p90": 8.74254035949707
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 2,
+      "problem": "2_ConvTranspose2d_BiasAdd_Clamp_Scaling_Clamp_Divide.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "2b69e31d12d28d291fb5b56634176269ba6513e8d240fc01d6f8a7b706abc109",
+      "cold_ms": 498.0433890596032,
+      "reference_runtime_ms": {
+        "mean": 39.08047866821289,
+        "p50": 38.94641876220703,
+        "p90": 39.69123840332031
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 3,
+      "problem": "3_ConvTranspose3d_Sum_LayerNorm_AvgPool_GELU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "43613691d1dec5ccfab8b70311ec83621c1f305ecceea490a053859d3c5b10a5",
+      "cold_ms": 282.2169493883848,
+      "reference_runtime_ms": {
+        "mean": 17.948439915974934,
+        "p50": 17.96272087097168,
+        "p90": 18.00741958618164
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 4,
+      "problem": "4_Conv2d_Mish_Mish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "7a234db325da9476ea44646c12e54dab1a84d8d16d993fa1061564e7f5ec0afa",
+      "cold_ms": 441.776848398149,
+      "reference_runtime_ms": {
+        "mean": 22.38848622639974,
+        "p50": 22.401859283447266,
+        "p90": 22.406139373779297
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 5,
+      "problem": "5_ConvTranspose2d_Subtract_Tanh.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "442f35521753e48196379d5a4659d13d979817fd605cfb1a1a205b536faa90cc",
+      "cold_ms": 495.2432354912162,
+      "reference_runtime_ms": {
+        "mean": 35.16776784261068,
+        "p50": 34.811161041259766,
+        "p90": 35.944480895996094
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 6,
+      "problem": "6_Conv3d_Softmax_MaxPool_MaxPool.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "55322b483d9bf27e0fefcdfd0e25f53172c194da6b47154d40bd39f781c60a46",
+      "cold_ms": 198.2122603803873,
+      "reference_runtime_ms": {
+        "mean": 1.9453266461690266,
+        "p50": 1.9673199653625488,
+        "p90": 1.9713399410247803
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 7,
+      "problem": "7_Conv3d_ReLU_LeakyReLU_GELU_Sigmoid_BiasAdd.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "cd0390e07dda478af0316a61bd1a407677992229ffdf3fa857d143e40a8533d7",
+      "cold_ms": 288.1592055782676,
+      "reference_runtime_ms": {
+        "mean": 15.020119984944662,
+        "p50": 15.034640312194824,
+        "p90": 15.05403995513916
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 8,
+      "problem": "8_Conv3d_Divide_Max_GlobalAvgPool_BiasAdd_Sum.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "80e0126cbb0f9287f7118cba2e8bfa73c1c3401b6f590e10bc240bdd0223d06a",
+      "cold_ms": 282.6698189601302,
+      "reference_runtime_ms": {
+        "mean": 7.5960001945495605,
+        "p50": 7.596380233764648,
+        "p90": 7.639540195465088
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 9,
+      "problem": "9_Matmul_Subtract_Multiply_ReLU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "110e75834cd898f532262ce516e318b8e7a9e85acda705baefcebe687ff85b21",
+      "cold_ms": 543.9250273630023,
+      "reference_runtime_ms": {
+        "mean": 2.1724866231282554,
+        "p50": 2.192579984664917,
+        "p90": 2.2180399894714355
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 10,
+      "problem": "10_ConvTranspose2d_MaxPool_Hardtanh_Mean_Tanh.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "a8f0fab54e125017083473ddee3bcff6546b4eda28ba98cacbebfbe14ae8130b",
+      "cold_ms": 580.7650266215205,
+      "reference_runtime_ms": {
+        "mean": 22.12504005432129,
+        "p50": 22.081600189208984,
+        "p90": 22.316360473632812
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 11,
+      "problem": "11_ConvTranspose2d_BatchNorm_Tanh_MaxPool_GroupNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e10fa44d0dbc6f6d9b7fff411dae2730502c2b15236d9ec1097e7deff37f1981",
+      "cold_ms": 330.6338805705309,
+      "reference_runtime_ms": {
+        "mean": 8.122419834136963,
+        "p50": 7.998839855194092,
+        "p90": 8.40697956085205
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 12,
+      "problem": "12_Gemm_Multiply_LeakyReLU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "0150537a4e53a29b1436d22667aa05b26c30301dd865d5ccf0f929b2c0cc29f6",
+      "cold_ms": 528.0867302790284,
+      "reference_runtime_ms": {
+        "mean": 2.176040013631185,
+        "p50": 2.1953001022338867,
+        "p90": 2.211319923400879
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 13,
+      "problem": "13_ConvTranspose3d_Mean_Add_Softmax_Tanh_Scaling.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "f33a027962c4ffa7b73bc48fe1e26e38d878c21b084e0c2a0a94c0bc290bd4f3",
+      "cold_ms": 461.2583089619875,
+      "reference_runtime_ms": {
+        "mean": 18.47158686319987,
+        "p50": 18.469879150390625,
+        "p90": 18.567840576171875
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 14,
+      "problem": "14_Gemm_Divide_Sum_Scaling.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8bd6a36d6dafc8916d9b47d413f668fb7a4c25444378717a4c09f495b3891cd2",
+      "cold_ms": 641.3117907941341,
+      "reference_runtime_ms": {
+        "mean": 2.0849200089772544,
+        "p50": 2.1029000282287598,
+        "p90": 2.1068599224090576
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 15,
+      "problem": "15_ConvTranspose3d_BatchNorm_Subtract.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "43f63a8c7edfdde89349af7fb8c8820a73586cb28d6057c46d5e562f374cef6a",
+      "cold_ms": 205.2249275147915,
+      "reference_runtime_ms": {
+        "mean": 20.22066632906596,
+        "p50": 3.6810600757598877,
+        "p90": 53.3755989074707
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 16,
+      "problem": "16_ConvTranspose2d_Mish_Add_Hardtanh_Scaling.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "3a5a97178dad5b980b33f35b7712826a08a92a5fd8a486a22cdabc84b97dcc15",
+      "cold_ms": 496.29565607756376,
+      "reference_runtime_ms": {
+        "mean": 33.8893191019694,
+        "p50": 33.811458587646484,
+        "p90": 35.03861999511719
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 17,
+      "problem": "17_Conv2d_InstanceNorm_Divide.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "bf60129922d425401714b89cf7568b2b6a793ab4303273b24d1d00ed41ed3565",
+      "cold_ms": 310.2468689903617,
+      "reference_runtime_ms": {
+        "mean": 10.066819826761881,
+        "p50": 10.077280044555664,
+        "p90": 10.117759704589844
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 18,
+      "problem": "18_Matmul_Sum_Max_AvgPool_LogSumExp_LogSumExp.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "0a7391a12a0c88164045b68580b57f51efee843465aa0060d86fbb5f00f65861",
+      "cold_ms": 633.2324016839266,
+      "reference_runtime_ms": {
+        "mean": 2.2612533569335938,
+        "p50": 2.270659923553467,
+        "p90": 2.311880111694336
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 19,
+      "problem": "19_ConvTranspose2d_GELU_GroupNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "b7b68e7498c80dfe9491981ef97feb07aa684ce7229943d2cc701fdb83fb509c",
+      "cold_ms": 580.5854657664895,
+      "reference_runtime_ms": {
+        "mean": 22.647133509318035,
+        "p50": 22.670700073242188,
+        "p90": 22.7397403717041
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 20,
+      "problem": "20_ConvTranspose3d_Sum_ResidualAdd_Multiply_ResidualAdd.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d5977ca8e549aac43aa5b4fd78dcbfc11784961891668ed5008fb0978d3e4a61",
+      "cold_ms": 222.8686260059476,
+      "reference_runtime_ms": {
+        "mean": 24.63727378845215,
+        "p50": 10.2631196975708,
+        "p90": 53.42808151245117
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 21,
+      "problem": "21_Conv2d_Add_Scale_Sigmoid_GroupNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "c6488d1d4bebd1b43893cd490871dea02f97c7962e25aa79f9f70530926ac454",
+      "cold_ms": 311.43033038824797,
+      "reference_runtime_ms": {
+        "mean": 10.285159746805826,
+        "p50": 10.308039665222168,
+        "p90": 10.318499565124512
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 22,
+      "problem": "22_Matmul_Scale_ResidualAdd_Clamp_LogSumExp_Mish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "3ff6a8c5da733c978b3c86bbbba3190e487ae959b63d4501715e60489b6baab9",
+      "cold_ms": 576.5569116920233,
+      "reference_runtime_ms": {
+        "mean": 2.412013371785482,
+        "p50": 2.4201600551605225,
+        "p90": 2.4562599658966064
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 23,
+      "problem": "23_Conv3d_GroupNorm_Mean.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "9677116401cf1ec4ac00eb19cb6f08762d63b87b137e6ed10f2c8ec3741310fb",
+      "cold_ms": 207.72617124021053,
+      "reference_runtime_ms": {
+        "mean": 3.0162866910298667,
+        "p50": 3.049999952316284,
+        "p90": 3.065160036087036
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 24,
+      "problem": "24_Conv3d_Min_Softmax.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "1aad5ff832f3cd5ec353df0d9c040daea4fcddd1bcd6391189a81b94e3fba19a",
+      "cold_ms": 187.39731889218092,
+      "reference_runtime_ms": {
+        "mean": 3.531686703364054,
+        "p50": 3.543440103530884,
+        "p90": 3.571540117263794
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 25,
+      "problem": "25_Conv2d_Min_Tanh_Tanh.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "15e3e645a6012d772f1197e988d8a0ea4f191ad2459229fecdbe3f1d9ae344b3",
+      "cold_ms": 408.6999334394932,
+      "reference_runtime_ms": {
+        "mean": 12.486813227335611,
+        "p50": 12.506440162658691,
+        "p90": 12.52001953125
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 26,
+      "problem": "26_ConvTranspose3d_Add_HardSwish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "807660889baed4d0c4abade85efaec7f9c1c0c2897b812a281c6f8d0d3748852",
+      "cold_ms": 313.90427332371473,
+      "reference_runtime_ms": {
+        "mean": 16.449013392130535,
+        "p50": 16.485279083251953,
+        "p90": 16.489660263061523
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 27,
+      "problem": "27_Conv3d_HardSwish_GroupNorm_Mean.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "29f0c5f4ddc5b3b7db30e61402fcb6aee535e03274b616a11218893a7c7546bb",
+      "cold_ms": 260.4915155097842,
+      "reference_runtime_ms": {
+        "mean": 14.080180168151855,
+        "p50": 14.110580444335938,
+        "p90": 14.13152027130127
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 28,
+      "problem": "28_BMM_InstanceNorm_Sum_ResidualAdd_Multiply.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5ed41cc50c8b2dfe65d03e642cc471dc3ad7cf6858608c65b911c235946ef00e",
+      "cold_ms": 508.0545386299491,
+      "reference_runtime_ms": {
+        "mean": 2.271106719970703,
+        "p50": 2.2780001163482666,
+        "p90": 2.293879985809326
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 29,
+      "problem": "29_Matmul_Mish_Mish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "f7b1c4c4c90d56de3dbd3605ed285d3e68efe5f6d98a245417533371c692b3ec",
+      "cold_ms": 524.2734663188457,
+      "reference_runtime_ms": {
+        "mean": 2.3294599850972495,
+        "p50": 2.3598599433898926,
+        "p90": 2.3630800247192383
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 30,
+      "problem": "30_Gemm_GroupNorm_Hardtanh.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "461335ed064d25b193afd8cee6645eb12b37540ce15baa5170f3d61b765d2a90",
+      "cold_ms": 540.072157047689,
+      "reference_runtime_ms": {
+        "mean": 2.6669999758402505,
+        "p50": 2.6875200271606445,
+        "p90": 2.704659938812256
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 31,
+      "problem": "31_Conv2d_Min_Add_Multiply.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "c66711246404f71123a6edf5ddcd5c0a01e2cd986725d21401424ca0669c85a5",
+      "cold_ms": 312.9981756210327,
+      "reference_runtime_ms": {
+        "mean": 10.418413162231445,
+        "p50": 10.437299728393555,
+        "p90": 10.438799858093262
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 32,
+      "problem": "32_Conv2d_Scaling_Min.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "61653138241c49110250399f1544bf07db3eafa939ed6dbdab77d7f96c0e76e7",
+      "cold_ms": 433.7082840502262,
+      "reference_runtime_ms": {
+        "mean": 61.20061238606771,
+        "p50": 19.05936050415039,
+        "p90": 145.59585571289062
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 33,
+      "problem": "33_Gemm_Scale_BatchNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "50f77c555d65b3cfc908bce9ee4e13fdf2f1ee82f5bbb3c34d9e544e92b1509b",
+      "cold_ms": 532.5769195333123,
+      "reference_runtime_ms": {
+        "mean": 2.4408199787139893,
+        "p50": 2.4730000495910645,
+        "p90": 2.475719928741455
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 34,
+      "problem": "34_ConvTranspose3d_LayerNorm_GELU_Scaling.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "81095e0048e53905573b62f7e2bb37b77505a9fe4913fd8fe736669ffce3f23c",
+      "cold_ms": 267.9114528000355,
+      "reference_runtime_ms": {
+        "mean": 17.43714650472005,
+        "p50": 17.44375991821289,
+        "p90": 17.4622802734375
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 35,
+      "problem": "35_Conv2d_Subtract_HardSwish_MaxPool_Mish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "40a9db82d8b092243d85dce2406c29c087f3bccb371019f8b89a68eb84769b4b",
+      "cold_ms": 310.92540360987186,
+      "reference_runtime_ms": {
+        "mean": 26.624732971191406,
+        "p50": 12.350859642028809,
+        "p90": 55.242279052734375
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 36,
+      "problem": "36_ConvTranspose2d_Min_Sum_GELU_Add.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e8a14171f06b41a2bb5067e1397d2b1afd928c95272916b3c16dfff811f98316",
+      "cold_ms": 337.13514916598797,
+      "reference_runtime_ms": {
+        "mean": 5.581706682840983,
+        "p50": 5.600639820098877,
+        "p90": 5.617080211639404
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 37,
+      "problem": "37_Matmul_Swish_Sum_GroupNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "fe2e8dc5418f1549cb3b6e34535b6f3dee0fc37ecce1b6be19a57ed8733156d4",
+      "cold_ms": 265.04820957779884,
+      "reference_runtime_ms": {
+        "mean": 49.1896858215332,
+        "p50": 49.2115592956543,
+        "p90": 49.21699905395508
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 38,
+      "problem": "38_ConvTranspose3d_AvgPool_Clamp_Softmax_Multiply.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "913b9a28fa2c866a5f62c06b02aab327728679f3139783053e5872ce5e8e99b6",
+      "cold_ms": 320.87977323681116,
+      "reference_runtime_ms": {
+        "mean": 34.20652707417806,
+        "p50": 20.386459350585938,
+        "p90": 61.8769416809082
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 39,
+      "problem": "39_Gemm_Scale_BatchNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "6f7733e04363f470d27a26eadc7c8ab7b94e9c9a4efc3066e42c4e0df4e53e6f",
+      "cold_ms": 273.02246540784836,
+      "reference_runtime_ms": {
+        "mean": 105.65633900960286,
+        "p50": 105.39598083496094,
+        "p90": 106.92449951171875
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 40,
+      "problem": "40_Matmul_Scaling_ResidualAdd.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "333bf992fd77297a4c43f4287b44662dcc43c8036be69d486b28e7a9db7bffd5",
+      "cold_ms": 176.60940159112215,
+      "reference_runtime_ms": {
+        "mean": 9.204700152079264,
+        "p50": 9.210559844970703,
+        "p90": 9.223440170288086
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 41,
+      "problem": "41_Gemm_BatchNorm_GELU_ReLU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e95f261a671d1b5a425ee132a8975f682420c861b97453340131579d212fc7db",
+      "cold_ms": 271.2764758616686,
+      "reference_runtime_ms": {
+        "mean": 104.96392822265625,
+        "p50": 105.77818298339844,
+        "p90": 107.961181640625
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 42,
+      "problem": "42_ConvTranspose2d_GlobalAvgPool_BiasAdd_LogSumExp_Sum_Multiply.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "0eeb1e46e5bacfed11e5bfddffe6f4fdfd981332e0fb56c4e67b219d6faba3a6",
+      "cold_ms": 576.5915531665087,
+      "reference_runtime_ms": {
+        "mean": 18.191613515218098,
+        "p50": 17.612579345703125,
+        "p90": 19.403560638427734
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 43,
+      "problem": "43_Conv3d_Max_LogSumExp_ReLU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e274319f222a8938fe0fe51c0f9093bedc7c90f00f1b684ba9be8f39e5db6b19",
+      "cold_ms": 291.32045432925224,
+      "reference_runtime_ms": {
+        "mean": 5.827133337656657,
+        "p50": 5.844779968261719,
+        "p90": 5.907780170440674
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 44,
+      "problem": "44_ConvTranspose2d_Multiply_GlobalAvgPool_GlobalAvgPool_Mean.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8b08cbe307167cb006a00e6f8309bce56dad016b9bc5346c4484b315cfdb411d",
+      "cold_ms": 327.6111697778106,
+      "reference_runtime_ms": {
+        "mean": 5.238226731618245,
+        "p50": 5.267059803009033,
+        "p90": 5.273680210113525
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 45,
+      "problem": "45_Gemm_Sigmoid_LogSumExp.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "c206fcec5ac6b6253fb2f86992a865ea2f560fe54ebfd7a7bf542fc9852cd2c4",
+      "cold_ms": 229.69069425016642,
+      "reference_runtime_ms": {
+        "mean": 6.464193503061931,
+        "p50": 6.483980178833008,
+        "p90": 6.505360126495361
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 46,
+      "problem": "46_Conv2d_Subtract_Tanh_Subtract_AvgPool.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "b52e744528e32863da06d5a713a9932fc51798c93ee252b57fbde10d769bc0ce",
+      "cold_ms": 354.09212578088045,
+      "reference_runtime_ms": {
+        "mean": 14.790926615397135,
+        "p50": 14.817819595336914,
+        "p90": 14.825779914855957
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 47,
+      "problem": "47_Conv3d_Mish_Tanh.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "dad33b133cc3a085e46d7237887e872c4c7c05dd34b48d742f6edabc87aa8b44",
+      "cold_ms": 222.41257689893246,
+      "reference_runtime_ms": {
+        "mean": 6.985773245493571,
+        "p50": 7.010499954223633,
+        "p90": 7.02209997177124
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 48,
+      "problem": "48_Conv3d_Scaling_Tanh_Multiply_Sigmoid.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "a2f6bc6b97dfff819695956bdfb21f3a1c6873f81eb6c31e19377b1079a0a157",
+      "cold_ms": 183.24705865234137,
+      "reference_runtime_ms": {
+        "mean": 8.55722681681315,
+        "p50": 8.586620330810547,
+        "p90": 8.596500396728516
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 49,
+      "problem": "49_ConvTranspose3d_Softmax_Sigmoid.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "9386889fc80859671b9ef7f3bd3dd182bd0fb5b51067f88407c4e48fb1107f79",
+      "cold_ms": 218.6691239476204,
+      "reference_runtime_ms": {
+        "mean": 22.309273560841877,
+        "p50": 7.031060218811035,
+        "p90": 52.896240234375
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 50,
+      "problem": "50_ConvTranspose3d_Scaling_AvgPool_BiasAdd_Scaling.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "c094d9151eed193c99c1854706203e33d32c7a0e536abf04c81790f873763765",
+      "cold_ms": 319.38896235078573,
+      "reference_runtime_ms": {
+        "mean": 22.78277333577474,
+        "p50": 22.785160064697266,
+        "p90": 22.84872055053711
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 51,
+      "problem": "51_Gemm_Subtract_GlobalAvgPool_LogSumExp_GELU_ResidualAdd.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "0a777c0d54e91a3a20d5cc2781e1678b90e4fcda8ed2c1f5e33009e010792b03",
+      "cold_ms": 237.50359192490578,
+      "reference_runtime_ms": {
+        "mean": 4.259119987487793,
+        "p50": 4.271279811859131,
+        "p90": 4.272140026092529
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 52,
+      "problem": "52_Conv2d_Activation_BatchNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e9b0070822d17b3ba2e80c05f20e8bfd70bcde2f92a21d6d6ef811d8f4ddc898",
+      "cold_ms": 267.23599061369896,
+      "reference_runtime_ms": {
+        "mean": 9.343413352966309,
+        "p50": 9.363280296325684,
+        "p90": 9.409480094909668
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 53,
+      "problem": "53_Gemm_Scaling_Hardtanh_GELU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d296d0b49a0a620b3528506997f600dd7c5635551a13c95b418428bbed50010e",
+      "cold_ms": 179.40732557326555,
+      "reference_runtime_ms": {
+        "mean": 4.331079959869385,
+        "p50": 4.323239803314209,
+        "p90": 4.377500057220459
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 54,
+      "problem": "54_Conv2d_Multiply_LeakyReLU_GELU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "863895c0021967f1c4976bbe0f7c408a6d3e19c92e65255e13c214978c2e67d8",
+      "cold_ms": 351.23181343078613,
+      "reference_runtime_ms": {
+        "mean": 11.398346583048502,
+        "p50": 11.393879890441895,
+        "p90": 11.4173002243042
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 55,
+      "problem": "55_Matmul_MaxPool_Sum_Scale.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "ef3a425677ff103d6080f3f3eddf89cee25f5b54cfa13777de51bc0ab39b41e6",
+      "cold_ms": 577.2242434322834,
+      "reference_runtime_ms": {
+        "mean": 7.936059951782227,
+        "p50": 7.950319766998291,
+        "p90": 7.960720062255859
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 56,
+      "problem": "56_Matmul_Sigmoid_Sum.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "00070bf8cc6a0d0ff1c4cbb78729620575164e67cb03ef1d646bbab332ae1fa3",
+      "cold_ms": 546.455854550004,
+      "reference_runtime_ms": {
+        "mean": 8.313106536865234,
+        "p50": 8.30813980102539,
+        "p90": 8.414779663085938
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 57,
+      "problem": "57_Conv2d_ReLU_HardSwish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "6c3068e8639d0fce90e78d72027434237594eafe9e1c0919b56c30edeae9ff88",
+      "cold_ms": 291.43104515969753,
+      "reference_runtime_ms": {
+        "mean": 7.575273354848226,
+        "p50": 7.470779895782471,
+        "p90": 7.814740180969238
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 58,
+      "problem": "58_ConvTranspose3d_LogSumExp_HardSwish_Subtract_Clamp.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d89693a52be9080caf580e0a21691a19d1cf9ef44c31a9466b6df97178ac9c21",
+      "cold_ms": 315.593427978456,
+      "reference_runtime_ms": {
+        "mean": 14.39650026957194,
+        "p50": 14.420680046081543,
+        "p90": 14.460980415344238
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 59,
+      "problem": "59_Matmul_Swish_Scaling.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "af4bfb47631eb3eee01055c0ae090e7452edacb0aa35fa40d117de2675bc2720",
+      "cold_ms": 512.1620800346136,
+      "reference_runtime_ms": {
+        "mean": 8.314059893290201,
+        "p50": 8.26747989654541,
+        "p90": 8.570260047912598
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 60,
+      "problem": "60_ConvTranspose3d_Swish_GroupNorm_HardSwish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "b5f0476a56ce409c0293a0b68bd9f24ac3558916acdc15576890f8665b551bb6",
+      "cold_ms": 270.4854840412736,
+      "reference_runtime_ms": {
+        "mean": 17.446240107218426,
+        "p50": 17.451980590820312,
+        "p90": 17.466360092163086
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 61,
+      "problem": "61_ConvTranspose3d_ReLU_GroupNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "6ba34e37873d2f6221865d43dc9e73fe1b0f8db4b5ad82f2d9071a38beae9a22",
+      "cold_ms": 176.7088221386075,
+      "reference_runtime_ms": {
+        "mean": 4.94183333714803,
+        "p50": 4.961900234222412,
+        "p90": 4.992459774017334
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 62,
+      "problem": "62_Matmul_GroupNorm_LeakyReLU_Sum.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "9ac23a8651df7ef366e1a9928886bb3fa116fa97d62e5eeba0bc6c138d6bb91e",
+      "cold_ms": 515.8095136284828,
+      "reference_runtime_ms": {
+        "mean": 12.732466697692871,
+        "p50": 12.761420249938965,
+        "p90": 12.778059959411621
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 63,
+      "problem": "63_Gemm_ReLU_Divide.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d4013c4cf5639bd56d28fd036c10c7c9103a6bd3573c3f6f79fd93a79bfc2a5a",
+      "cold_ms": 508.88991728425026,
+      "reference_runtime_ms": {
+        "mean": 2.1683066685994468,
+        "p50": 2.2024800777435303,
+        "p90": 2.2069199085235596
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 64,
+      "problem": "64_Gemm_LogSumExp_LeakyReLU_LeakyReLU_GELU_GELU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "3cb78d4eb7f710768b801f0081fef85a5fb5f119a3e49a00ad97bf4baea33a83",
+      "cold_ms": 593.4977103024721,
+      "reference_runtime_ms": {
+        "mean": 2.2459866205851235,
+        "p50": 2.272239923477173,
+        "p90": 2.2932798862457275
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 65,
+      "problem": "65_Conv2d_AvgPool_Sigmoid_Sum.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "7bd02c41c99f336d8515c06cd299fcd95dcc575f3aa1114b4de84b81cadbe7d4",
+      "cold_ms": 653.153907507658,
+      "reference_runtime_ms": {
+        "mean": 27.94923973083496,
+        "p50": 27.95751953125,
+        "p90": 27.982620239257812
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 66,
+      "problem": "66_Matmul_Dropout_Softmax.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "7a8bcefb75586bbf0acfcdeb0e8391c8881548fe9b55844c0033a96e9f898a29",
+      "cold_ms": 516.9632146134973,
+      "reference_runtime_ms": {
+        "mean": 2.0675666332244873,
+        "p50": 2.082279920578003,
+        "p90": 2.08705997467041
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 67,
+      "problem": "67_Conv2d_GELU_GlobalAvgPool.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "3a9572034d80dd060bb523e1d265aa941113a8044ecd30c614e764fdf029d94a",
+      "cold_ms": 435.5841549113393,
+      "reference_runtime_ms": {
+        "mean": 11.095773696899414,
+        "p50": 11.11970043182373,
+        "p90": 11.133000373840332
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 68,
+      "problem": "68_Matmul_Min_Subtract.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "89b99c3df1d7d0fa49981c9f5aae7755df1d7dfd1e49b85b09d166e486d2670a",
+      "cold_ms": 533.1141306087375,
+      "reference_runtime_ms": {
+        "mean": 2.0422799587249756,
+        "p50": 2.0569798946380615,
+        "p90": 2.0794999599456787
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 69,
+      "problem": "69_Conv2d_HardSwish_ReLU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "442df07c27315075294d997dcd7ce61310a7d41a8dff4033c33ef4cf61b4727e",
+      "cold_ms": 223.56194723397493,
+      "reference_runtime_ms": {
+        "mean": 3.222853422164917,
+        "p50": 3.2481400966644287,
+        "p90": 3.268480062484741
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 70,
+      "problem": "70_Gemm_Sigmoid_Scaling_ResidualAdd.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "a1544425f96477bad2814578d9ba2d928568d952527af98bd6acbbd0c2170fbc",
+      "cold_ms": 563.1391303613782,
+      "reference_runtime_ms": {
+        "mean": 2.1786266962687173,
+        "p50": 2.1948800086975098,
+        "p90": 2.206160068511963
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 71,
+      "problem": "71_Conv2d_Divide_LeakyReLU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "412f9c4244239814ab3cc6d58c0837c7ffbc94e5d63453c88f8388fb28309fad",
+      "cold_ms": 228.14518213272095,
+      "reference_runtime_ms": {
+        "mean": 3.21014666557312,
+        "p50": 3.231559991836548,
+        "p90": 3.247040033340454
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 72,
+      "problem": "72_ConvTranspose3d_BatchNorm_AvgPool_AvgPool.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "cc65e3beca217d11df994ed6beb6476909c234b5b5282a1cbfee0c5312908ea6",
+      "cold_ms": 337.49477937817574,
+      "reference_runtime_ms": {
+        "mean": 26.30135981241862,
+        "p50": 26.314159393310547,
+        "p90": 26.317720413208008
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 73,
+      "problem": "73_Conv2d_BatchNorm_Scaling.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5c2d1c40a5ba00505f8c18579b377052c92ecce39bb3c405dba42ee05a1d7740",
+      "cold_ms": 222.38771710544825,
+      "reference_runtime_ms": {
+        "mean": 3.7752533753712973,
+        "p50": 3.789299964904785,
+        "p90": 3.8317201137542725
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 74,
+      "problem": "74_ConvTranspose3d_LeakyReLU_Multiply_LeakyReLU_Max.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "7d05e9bcc2a444487b190089498e25fdcfd236ea00b844a5459ac13ce8121833",
+      "cold_ms": 171.44974693655968,
+      "reference_runtime_ms": {
+        "mean": 4.0926798184712725,
+        "p50": 4.122799873352051,
+        "p90": 4.127999782562256
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 75,
+      "problem": "75_Gemm_GroupNorm_Min_BiasAdd.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "5485a335508d1a92464b644e2be1d166a9072bb0f62d3e2c3426dd4768e06342",
+      "cold_ms": 513.5000627487898,
+      "reference_runtime_ms": {
+        "mean": 12.768126805623373,
+        "p50": 12.781700134277344,
+        "p90": 12.814640045166016
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 76,
+      "problem": "76_Gemm_Add_ReLU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "88e932ace4f16e0477574c5c99b8d5665393e02f82f664dc99f2e22a2674ea42",
+      "cold_ms": 501.09963957220316,
+      "reference_runtime_ms": {
+        "mean": 2.1074867248535156,
+        "p50": 2.127840042114258,
+        "p90": 2.1550400257110596
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 77,
+      "problem": "77_ConvTranspose3d_Scale_BatchNorm_GlobalAvgPool.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "cc3dcfba9cd5526d515917bbae7ee2af7d7694322a91a96a4461e73ec8a6278b",
+      "cold_ms": 228.91707345843315,
+      "reference_runtime_ms": {
+        "mean": 33.16314697265625,
+        "p50": 33.17367935180664,
+        "p90": 33.19150161743164
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 78,
+      "problem": "78_ConvTranspose3d_Max_Max_Sum.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "72724f4f417c8e598702d327ecb7f22356bde897235b2ac93f0f303b6d9bfefe",
+      "cold_ms": 294.5381077006459,
+      "reference_runtime_ms": {
+        "mean": 45.077658335367836,
+        "p50": 45.11737823486328,
+        "p90": 45.11893844604492
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 79,
+      "problem": "79_Conv3d_Multiply_InstanceNorm_Clamp_Multiply_Max.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "9355597767e42b73adda3ce5f8d60d70a4d8cd823438b782c88b1270d91a3e2d",
+      "cold_ms": 196.04646135121584,
+      "reference_runtime_ms": {
+        "mean": 2.5299600760142007,
+        "p50": 2.5731000900268555,
+        "p90": 2.5825600624084473
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 80,
+      "problem": "80_Gemm_Max_Subtract_GELU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "44dff2e3c3e9b014df3f41f40e3678aa17830ecc7b161d2f142f556f87ee134c",
+      "cold_ms": 574.961332604289,
+      "reference_runtime_ms": {
+        "mean": 2.211073319117228,
+        "p50": 2.214859962463379,
+        "p90": 2.244800090789795
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 81,
+      "problem": "81_Gemm_Swish_Divide_Clamp_Tanh_Clamp.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "291d748f061f23d3bf97e012c69cf321cb8821159cce45e403af7cfaee7f14ed",
+      "cold_ms": 502.5650514289737,
+      "reference_runtime_ms": {
+        "mean": 2.561740001042684,
+        "p50": 2.5888400077819824,
+        "p90": 2.617219924926758
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 82,
+      "problem": "82_Conv2d_Tanh_Scaling_BiasAdd_Max.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "1085dcf3a5845103c4dcdec8b8d3932ca48c729502fb101654bec085dae1dd8d",
+      "cold_ms": 405.4581858217716,
+      "reference_runtime_ms": {
+        "mean": 22.82020632425944,
+        "p50": 22.82938003540039,
+        "p90": 22.879919052124023
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 83,
+      "problem": "83_Conv3d_GroupNorm_Min_Clamp_Dropout.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "223d45d8423c55369bd0b1277abca1d358a28ad77cf7661f1c6e602c856a694a",
+      "cold_ms": 186.27995159476995,
+      "reference_runtime_ms": {
+        "mean": 9.543546676635742,
+        "p50": 9.643059730529785,
+        "p90": 9.766940116882324
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 84,
+      "problem": "84_Gemm_BatchNorm_Scaling_Softmax.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e6f588ca44598dc81bbd2d626d3c40bda2287a1d1cc644f8afe01b288f1babfe",
+      "cold_ms": 541.2511192262173,
+      "reference_runtime_ms": {
+        "mean": 2.5185533364613852,
+        "p50": 2.5436999797821045,
+        "p90": 2.557460069656372
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 85,
+      "problem": "85_Conv2d_GroupNorm_Scale_MaxPool_Clamp.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "ba63b5b156a347f2f92a607c4a612e2bb1963dbcb9e7f04b3e4f0cb4a294fff3",
+      "cold_ms": 223.14957808703184,
+      "reference_runtime_ms": {
+        "mean": 4.59986670811971,
+        "p50": 4.594600200653076,
+        "p90": 4.614739894866943
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 86,
+      "problem": "86_Matmul_Divide_GELU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d6fc788bd7aa852d0740320aa786189d89a6489ed9634ee0b28f488d809b335a",
+      "cold_ms": 487.6831965520978,
+      "reference_runtime_ms": {
+        "mean": 2.1684532960255942,
+        "p50": 2.188699960708618,
+        "p90": 2.216059923171997
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 87,
+      "problem": "87_Conv2d_Subtract_Subtract_Mish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "ab44c31f27a7265867d3842b7b8e5b2ba9d555d597efe6804d474e45c15aa621",
+      "cold_ms": 398.2405783608556,
+      "reference_runtime_ms": {
+        "mean": 18.935347239176433,
+        "p50": 18.963760375976562,
+        "p90": 18.975120544433594
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 88,
+      "problem": "88_Gemm_GroupNorm_Swish_Multiply_Swish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "eda8a47c825eb3fc49836d6cc0c9cd6ba596cc35ece1d22c871bba198009c6e7",
+      "cold_ms": 533.4493508562446,
+      "reference_runtime_ms": {
+        "mean": 7.497113227844238,
+        "p50": 7.516759872436523,
+        "p90": 7.537399768829346
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 89,
+      "problem": "89_ConvTranspose3d_MaxPool_Softmax_Subtract_Swish_Max.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "300030609984e750550fcf6b263c5fe8bba73389cb644cd48085c30be109b0df",
+      "cold_ms": 286.78099997341633,
+      "reference_runtime_ms": {
+        "mean": 14.137180010477701,
+        "p50": 14.117179870605469,
+        "p90": 14.177300453186035
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 90,
+      "problem": "90_Conv3d_LeakyReLU_Sum_Clamp_GELU.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "bd2eaa246f1176ad3bfb887b2ca27666f2f801a648cd4ffe5cf6aae49278dcb2",
+      "cold_ms": 324.80208668857813,
+      "reference_runtime_ms": {
+        "mean": 23.119600296020508,
+        "p50": 23.146080017089844,
+        "p90": 24.156579971313477
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 91,
+      "problem": "91_ConvTranspose2d_Softmax_BiasAdd_Scaling_Sigmoid.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "3b571801aec40ec4214ffd9ae7dc4a099560a6bc35564c792280331951023c71",
+      "cold_ms": 416.35015700012445,
+      "reference_runtime_ms": {
+        "mean": 20.207613627115887,
+        "p50": 20.23625946044922,
+        "p90": 20.258140563964844
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 92,
+      "problem": "92_Conv2d_GroupNorm_Tanh_HardSwish_ResidualAdd_LogSumExp.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d5732faa8c80a56b551b28f064ced01ed0fe640a57f72b117ee19e01dc71952d",
+      "cold_ms": 360.68454291671515,
+      "reference_runtime_ms": {
+        "mean": 7.879966576894124,
+        "p50": 7.894599914550781,
+        "p90": 7.897119998931885
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 93,
+      "problem": "93_ConvTranspose2d_Add_Min_GELU_Multiply.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "3f9c3e542afa320508390c00b28bb407b3999caa919a5885bbd03e2c8f1df547",
+      "cold_ms": 406.0031967237592,
+      "reference_runtime_ms": {
+        "mean": 17.88550631205241,
+        "p50": 17.88521957397461,
+        "p90": 17.95088005065918
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 94,
+      "problem": "94_Gemm_BiasAdd_Hardtanh_Mish_GroupNorm.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "649fe2a6aaefeffcd6209c6afb873586c35751756585a9c1a7ab2a11a546c8d3",
+      "cold_ms": 557.0734338834882,
+      "reference_runtime_ms": {
+        "mean": 7.695493380228679,
+        "p50": 7.729040145874023,
+        "p90": 7.729139804840088
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 95,
+      "problem": "95_Matmul_Add_Swish_Tanh_GELU_Hardtanh.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "0c5123322ffe7a5436f194147612833f0c1ae0ecbd21788515718d720c8e5d96",
+      "cold_ms": 523.2324115931988,
+      "reference_runtime_ms": {
+        "mean": 2.4273800055185952,
+        "p50": 2.4618799686431885,
+        "p90": 2.4624600410461426
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 96,
+      "problem": "96_ConvTranspose3d_Multiply_Max_GlobalAvgPool_Clamp.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "164edd0135adff496adade63a772074630ebf2c13feaa450307d98a9728da2e6",
+      "cold_ms": 288.70042134076357,
+      "reference_runtime_ms": {
+        "mean": 14.006433486938477,
+        "p50": 14.01471996307373,
+        "p90": 14.09160041809082
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 97,
+      "problem": "97_Matmul_BatchNorm_BiasAdd_Divide_Swish.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "49ed9c680b1764ddc4b7dfe42a328923ab5b6685afd7dfa702c0587d1cb59685",
+      "cold_ms": 532.587330788374,
+      "reference_runtime_ms": {
+        "mean": 2.5073333581288657,
+        "p50": 2.520080089569092,
+        "p90": 2.547640085220337
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 98,
+      "problem": "98_Matmul_AvgPool_GELU_Scale_Max.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8e5df29ff246f69cde03ab21ab53c706d58cd082014184641332cbb157607eb7",
+      "cold_ms": 554.8758124932647,
+      "reference_runtime_ms": {
+        "mean": 2.2658799489339194,
+        "p50": 2.2790799140930176,
+        "p90": 2.3089599609375
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 99,
+      "problem": "99_Matmul_GELU_Softmax.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "a27769675f355605c1931433193bbf36a309e050c4b27d3e6375938f22329709",
+      "cold_ms": 534.2839118093252,
+      "reference_runtime_ms": {
+        "mean": 2.196653366088867,
+        "p50": 2.2106399536132812,
+        "p90": 2.234220027923584
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 2,
+      "problem_id": 100,
+      "problem": "100_ConvTranspose3d_Clamp_Min_Divide.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "1f9ce1ae75f5e9986156c1d6e40b525db04d89c11e825c159ef2cc108f7e132e",
+      "cold_ms": 585.8663721010089,
+      "reference_runtime_ms": {
+        "mean": 128.86601765950522,
+        "p50": 47.497581481933594,
+        "p90": 293.59619140625
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 1,
+      "problem": "1_MLP.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "3fabb8e6bb6f0f5a9524a62226ce25fc3a8f5289464e809a29a85919536c4efc",
+      "cold_ms": 501.42479967325926,
+      "reference_runtime_ms": {
+        "mean": 4.973953406016032,
+        "p50": 5.0045599937438965,
+        "p90": 5.007460117340088
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 2,
+      "problem": "2_ShallowWideMLP.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d14b777049a7795a02cf7a3c79438541698692dd512538909908547e39335624",
+      "cold_ms": 581.7762892693281,
+      "reference_runtime_ms": {
+        "mean": 15.360620180765787,
+        "p50": 15.308239936828613,
+        "p90": 15.713680267333984
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 3,
+      "problem": "3_DeepNarrowMLP.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "6945a0e90da524f41fd2f228e6ba1a23f0d6d670feb65f260e6e628f5aacfb1e",
+      "cold_ms": 504.5762127265334,
+      "reference_runtime_ms": {
+        "mean": 1.321839968363444,
+        "p50": 1.3434799909591675,
+        "p90": 1.3584599494934082
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 4,
+      "problem": "4_LeNet5.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "517275f989a3c3b7bb8a9e5a9bf63b843b167bf2c7fb93db147f64ff2c1e16de",
+      "cold_ms": 551.497207954526,
+      "reference_runtime_ms": {
+        "mean": 1.918993353843689,
+        "p50": 1.9096399545669556,
+        "p90": 1.9551000595092773
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 5,
+      "problem": "5_AlexNet.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "021d44956638c6a4f77eb3a60b0fdb4a3cdc50540e0268eb86fb9d22d8dd971e",
+      "cold_ms": 724.8569382354617,
+      "reference_runtime_ms": {
+        "mean": 48.543591817220054,
+        "p50": 48.5640983581543,
+        "p90": 48.58369827270508
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 6,
+      "problem": "6_GoogleNetInceptionModule.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "a3d863c2a2c6f54ca5509ab39bd4c9f2ad31c960a0bb4200ad1acbede9f3ee85",
+      "cold_ms": 501.7632907256484,
+      "reference_runtime_ms": {
+        "mean": 28.581053415934246,
+        "p50": 28.599679946899414,
+        "p90": 28.708860397338867
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 7,
+      "problem": "7_GoogleNetInceptionV1.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "4b9270e248132f8d15215a69f3395b292e25584b89f6054915bfad37d4388c0d",
+      "cold_ms": 597.0371142029762,
+      "reference_runtime_ms": {
+        "mean": 6.214299996693929,
+        "p50": 6.223680019378662,
+        "p90": 6.242340087890625
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 8,
+      "problem": "8_ResNetBasicBlock.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8e1ae06aca5126c9d75e213da14d660b83f2a335059d049cc659b9f0f101a36e",
+      "cold_ms": 204.81230970472097,
+      "reference_runtime_ms": {
+        "mean": 2.2016666730244956,
+        "p50": 2.2197399139404297,
+        "p90": 2.2314600944519043
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 9,
+      "problem": "9_ResNet18.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "7458bb2ffb7e81fe8d9d8bf192e8249f887d6d2436c958480be272629f22be00",
+      "cold_ms": 583.3421805873513,
+      "reference_runtime_ms": {
+        "mean": 6.802473386128743,
+        "p50": 6.818439960479736,
+        "p90": 6.820740222930908
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 10,
+      "problem": "10_ResNet101.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "ab5fab154c73fe7ab056c534c820286ce7ad8e0fc0b3e6bdefb27ffa10f81380",
+      "cold_ms": 601.418986916542,
+      "reference_runtime_ms": {
+        "mean": 36.246620178222656,
+        "p50": 36.10464096069336,
+        "p90": 37.02082061767578
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 11,
+      "problem": "11_VGG16.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "61f70e59d41e85a9b54fa9d060ef1aba3f144d2e4af5859ccba5f82f560a9c81",
+      "cold_ms": 584.5638317987323,
+      "reference_runtime_ms": {
+        "mean": 5.986713409423828,
+        "p50": 5.994080066680908,
+        "p90": 6.019659996032715
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 12,
+      "problem": "12_VGG19.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "688113e05dedf10a1881e549d86559e3cc5b32be1259e976bf98b020f503340e",
+      "cold_ms": 600.5001654848456,
+      "reference_runtime_ms": {
+        "mean": 21.33380651473999,
+        "p50": 7.15556001663208,
+        "p90": 49.74399948120117
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 13,
+      "problem": "13_DenseNet121TransitionLayer.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "bcfebd2d217074b24616b4b4c35ec9a717620b491c296ff40344452f55869429",
+      "cold_ms": 479.5012380927801,
+      "reference_runtime_ms": {
+        "mean": 20.811073303222656,
+        "p50": 20.79361915588379,
+        "p90": 20.878740310668945
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 14,
+      "problem": "14_DenseNet121DenseBlock.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "ddaeba7851ccbe7ff08bf5188a7c3471a503e9a54b4f1c7e4d5e30deb975fb27",
+      "cold_ms": 321.34589459747076,
+      "reference_runtime_ms": {
+        "mean": 13.44817320505778,
+        "p50": 13.46776008605957,
+        "p90": 13.562459945678711
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 15,
+      "problem": "15_DenseNet121.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "06bc981e52eeffd0d48dd86346711a68b392b2d4cf962f75277e0efd788835f5",
+      "cold_ms": 723.2869956642389,
+      "reference_runtime_ms": {
+        "mean": 24.51214027404785,
+        "p50": 24.623640060424805,
+        "p90": 24.770360946655273
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 16,
+      "problem": "16_DenseNet201.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "576b877998f189f731e1dbf06e7189ce34aa2166ea66303d8726ee48ef5c409e",
+      "cold_ms": 741.3372648879886,
+      "reference_runtime_ms": {
+        "mean": 40.926106770833336,
+        "p50": 40.89617919921875,
+        "p90": 41.0181999206543
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 17,
+      "problem": "17_SqueezeNetFireModule.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "99864d7e0e7e3b7c06fc4316dd25c2422fec8ba4413d7e2a55c2c5964f89737b",
+      "cold_ms": 675.0755393877625,
+      "reference_runtime_ms": {
+        "mean": 27.495346705118816,
+        "p50": 27.521860122680664,
+        "p90": 27.52634048461914
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 18,
+      "problem": "18_SqueezeNet.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "690a7f3e49ad8e329e9915b116f834b5cb7223493cff7c04be56416738064638",
+      "cold_ms": 505.23030292242765,
+      "reference_runtime_ms": {
+        "mean": 58.47966639200846,
+        "p50": 58.4416389465332,
+        "p90": 58.56005859375
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 19,
+      "problem": "19_MobileNetV1.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "7c18cb9e79f8fa0e5442b64a472c1a5bfc1b3b5098f4e11fdf1d1c271fe4ce5a",
+      "cold_ms": 643.4826692566276,
+      "reference_runtime_ms": {
+        "mean": 9.172840118408203,
+        "p50": 8.962300300598145,
+        "p90": 9.768560409545898
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 20,
+      "problem": "20_MobileNetV2.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "919ef276726fa3c68f3733fbc818085721bc309513f3b44ddd315773e9a15b85",
+      "cold_ms": 612.4645080417395,
+      "reference_runtime_ms": {
+        "mean": 15.769406954447428,
+        "p50": 15.721500396728516,
+        "p90": 15.905240058898926
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 21,
+      "problem": "21_EfficientNetMBConv.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "24e555726c4856120cceaa8dad2dbbca798a56c0a99313c77fbe84c16e37c20b",
+      "cold_ms": 381.4363731071353,
+      "reference_runtime_ms": {
+        "mean": 21.024606704711914,
+        "p50": 20.83262062072754,
+        "p90": 21.417360305786133
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 22,
+      "problem": "22_EfficientNetB0.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "4c87c629cfa01ee15ec7142ba6ae9d03e8f6e950290e3998c7a7966fab6d68c4",
+      "cold_ms": 636.969362385571,
+      "reference_runtime_ms": {
+        "mean": 12.3761199315389,
+        "p50": 12.388400077819824,
+        "p90": 12.414299964904785
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 23,
+      "problem": "23_EfficientNetB1.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "c71964547b244e26ac4205a46032fe69b8f425cefbf3f92503f5641668a2d34f",
+      "cold_ms": 602.798999287188,
+      "reference_runtime_ms": {
+        "mean": 7.686619917551677,
+        "p50": 7.521100044250488,
+        "p90": 8.231459617614746
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 24,
+      "problem": "24_EfficientNetB2.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "643b34d676eaf2a9367050c3c550aad7bc6669dfb35637f9936bef18331e0de4",
+      "cold_ms": 655.6725706905127,
+      "reference_runtime_ms": {
+        "mean": 6.529593308766683,
+        "p50": 6.565579891204834,
+        "p90": 6.590219974517822
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 25,
+      "problem": "25_ShuffleNetUnit.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "420d20f4b43329d6eafe3fd01faddb0efc08dfe7568fe20dcf8f362a712dcdc8",
+      "cold_ms": 394.904974848032,
+      "reference_runtime_ms": {
+        "mean": 22.83531379699707,
+        "p50": 22.821840286254883,
+        "p90": 22.864900588989258
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 26,
+      "problem": "26_ShuffleNet.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "85a6fbc528ae1cfc55b0040a49e87525fac3ad8a2fa707e2fd34bded17da4f9b",
+      "cold_ms": 612.85852920264,
+      "reference_runtime_ms": {
+        "mean": 18.986813227335613,
+        "p50": 19.002220153808594,
+        "p90": 19.07703971862793
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 27,
+      "problem": "27_RegNet.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "bd51db0cd40f9e3c334f3360500d6ffef66dfd8d1935b76c71700329c77118d3",
+      "cold_ms": 644.1240990534425,
+      "reference_runtime_ms": {
+        "mean": 3.04367995262146,
+        "p50": 3.050839900970459,
+        "p90": 3.068039894104004
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 28,
+      "problem": "28_VisionTransformer.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "f537369b6a72f9e5b976927a74944a272443c509c3db23e1216fd5c8bb2fef8f",
+      "cold_ms": 635.676171630621,
+      "reference_runtime_ms": {
+        "mean": 5.168393452962239,
+        "p50": 5.168900012969971,
+        "p90": 5.181680202484131
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 29,
+      "problem": "29_SwinMLP.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "7ad16631ae633d196f2464e40dc7f5786696421eace938cef23c287e3b61042f",
+      "cold_ms": 668.3863531798124,
+      "reference_runtime_ms": {
+        "mean": 9.6023801167806,
+        "p50": 9.628239631652832,
+        "p90": 9.640640258789062
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 30,
+      "problem": "30_SwinTransformerV2.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "7d1c6195d4f15a88380d5e7e38582361b50b38080f9bb70aff097a9048cd5bd7",
+      "cold_ms": 798.8233398646116,
+      "reference_runtime_ms": {
+        "mean": 23.09359296162923,
+        "p50": 23.061279296875,
+        "p90": 23.202199935913086
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 31,
+      "problem": "31_VisionAttention.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "96c0d2c7a18b4219266b002728e8d03dddba25e9537ee4c5b74598e9857de64a",
+      "cold_ms": 1287.2107587754726,
+      "reference_runtime_ms": {
+        "mean": 89.79303487141927,
+        "p50": 90.56024169921875,
+        "p90": 91.41216278076172
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 32,
+      "problem": "32_ConvolutionalVisionTransformer.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "8ec3e9e2bc98ea22d26857774b1bae578c7c6cf9a0b7f2df3dbdd8469a1033f9",
+      "cold_ms": 671.0116053000093,
+      "reference_runtime_ms": {
+        "mean": 5.3198466300964355,
+        "p50": 5.307499885559082,
+        "p90": 5.346660137176514
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 33,
+      "problem": "33_VanillaRNN.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "00cebeed898faa796b965b29e7031422231a7da4d0a2b609d8f1d73a6988abd2",
+      "cold_ms": 550.9118475019932,
+      "reference_runtime_ms": {
+        "mean": 6.804406642913818,
+        "p50": 6.795720100402832,
+        "p90": 6.970200061798096
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 34,
+      "problem": "34_VanillaRNNHidden.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "6c7ff403e45c644e7d5bc829eb3c950c38edabdca22ffae90276426dd4815749",
+      "cold_ms": 573.2314800843596,
+      "reference_runtime_ms": {
+        "mean": 35.59545389811198,
+        "p50": 35.44430160522461,
+        "p90": 36.09423828125
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 35,
+      "problem": "35_LSTM.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "6bd5d8260dbba650dfd57809e125fc4df10e93db3c6a8c2608e0425075319698",
+      "cold_ms": 698.9130238071084,
+      "reference_runtime_ms": {
+        "mean": 35.92288589477539,
+        "p50": 35.951698303222656,
+        "p90": 36.05815887451172
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 36,
+      "problem": "36_LSTMHn.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "a6737470247611cf52a96c375e9566f967104ba8f8ab017b9e15a793d4efa37b",
+      "cold_ms": 653.824819251895,
+      "reference_runtime_ms": {
+        "mean": 35.940512339274086,
+        "p50": 36.01337814331055,
+        "p90": 36.082340240478516
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 37,
+      "problem": "37_LSTMCn.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "b612d96b0e926560ac48e8766d913dd977fb2f78ac1af62dd85cf3c06c2134cd",
+      "cold_ms": 686.1812006682158,
+      "reference_runtime_ms": {
+        "mean": 35.657073974609375,
+        "p50": 35.66004180908203,
+        "p90": 35.7127799987793
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 38,
+      "problem": "38_LSTMBidirectional.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "84fa50c2d83976b92ef3c0add2b81d08485297afdbd2e4f96702864ec7cd6005",
+      "cold_ms": 678.5651333630085,
+      "reference_runtime_ms": {
+        "mean": 73.90773264567058,
+        "p50": 73.910400390625,
+        "p90": 74.14566040039062
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 39,
+      "problem": "39_GRU.py",
+      "status": "excluded",
+      "failure_type": "unsupported_dtype",
+      "source_hash": "6aabf4586f15af75dd6a429b4ff1ba9b3fdc22604d6bff2315ced96a06d3f88e",
+      "cold_ms": null,
+      "reference_runtime_ms": null,
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": null,
+      "nan_inf": null,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 40,
+      "problem": "40_GRUHidden.py",
+      "status": "excluded",
+      "failure_type": "unsupported_dtype",
+      "source_hash": "7638f1c7f65a235d3c45d105531d0b5037fa13656d0ef6812c1a23b4f741f45b",
+      "cold_ms": null,
+      "reference_runtime_ms": null,
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": null,
+      "nan_inf": null,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 41,
+      "problem": "41_GRUBidirectional.py",
+      "status": "excluded",
+      "failure_type": "unsupported_dtype",
+      "source_hash": "617286deb7371cef38786280af5f7efd5c867fe0d855ee6df99ef39bd86ac350",
+      "cold_ms": null,
+      "reference_runtime_ms": null,
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": null,
+      "nan_inf": null,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 42,
+      "problem": "42_GRUBidirectionalHidden.py",
+      "status": "excluded",
+      "failure_type": "unsupported_dtype",
+      "source_hash": "0f06b7ef896abbfe304bca92e7c9e873df09821609efb1db33d7415cec7007b6",
+      "cold_ms": null,
+      "reference_runtime_ms": null,
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": null,
+      "nan_inf": null,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 43,
+      "problem": "43_MinGPTCausalAttention.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "9d280c98c015edca0e7e521594380f9def43fdea7bbd95f5f71ff83689632900",
+      "cold_ms": 758.2389814779162,
+      "reference_runtime_ms": {
+        "mean": 19.412173589070637,
+        "p50": 19.402040481567383,
+        "p90": 19.487220764160156
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 44,
+      "problem": "44_MiniGPTBlock.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e73093b5d6648474f161cc62c60f121a1468cdacb855cd5ae5ed3056a12ac58e",
+      "cold_ms": 738.4669603779912,
+      "reference_runtime_ms": {
+        "mean": 42.976646423339844,
+        "p50": 43.004798889160156,
+        "p90": 43.054840087890625
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 45,
+      "problem": "45_UNetSoftmax.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "e97cb50d77b1da3040581a3aee376b97e20b3b1dda26f261c5baa0ba1171b9aa",
+      "cold_ms": 360.8672823756933,
+      "reference_runtime_ms": {
+        "mean": 11.012060165405273,
+        "p50": 11.035300254821777,
+        "p90": 11.040639877319336
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 46,
+      "problem": "46_NetVladWithGhostClusters.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "2d2f73d0075a94a2655af1ed1c642363627f9be22c1c5b6dc6149ce3e6b27e2d",
+      "cold_ms": 667.8789826110005,
+      "reference_runtime_ms": {
+        "mean": 6.552280108133952,
+        "p50": 6.575960159301758,
+        "p90": 6.58351993560791
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 47,
+      "problem": "47_NetVladNoGhostClusters.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "c6e7431519d6cb2e974ad354e955674c91f92e96dfef099aa20be1d7148faaea",
+      "cold_ms": 635.7242912054062,
+      "reference_runtime_ms": {
+        "mean": 5.710326512654622,
+        "p50": 5.7445597648620605,
+        "p90": 5.752099990844727
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 48,
+      "problem": "48_Mamba2ReturnY.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "9d002dee6313689d0ba60694e68a5c352e6afec82d1971408dfcd71382ff8e5c",
+      "cold_ms": 801.4762168750167,
+      "reference_runtime_ms": {
+        "mean": 26.89352035522461,
+        "p50": 26.89352035522461,
+        "p90": 26.89352035522461
+      },
+      "input_bytes": 536870912,
+      "repeat_check_skipped": false,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 49,
+      "problem": "49_Mamba2ReturnFinalState.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "d3ab760329c78d78540af79aec556ef9e73c908f3a9e42dadfa84d79bde11e3d",
+      "cold_ms": 628.1813168898225,
+      "reference_runtime_ms": {
+        "mean": 56.593040466308594,
+        "p50": 56.593040466308594,
+        "p90": 56.593040466308594
+      },
+      "input_bytes": 536870912,
+      "repeat_check_skipped": false,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    },
+    {
+      "level": 3,
+      "problem_id": 50,
+      "problem": "50_ReLUSelfAttention.py",
+      "status": "supported",
+      "failure_type": null,
+      "source_hash": "08768b53a425354ef974509119705759398c9cbd3ee8b2553210f73bea223820",
+      "cold_ms": 682.8708471730351,
+      "reference_runtime_ms": {
+        "mean": 8.493406613667807,
+        "p50": 8.495200157165527,
+        "p90": 8.511260032653809
+      },
+      "input_bytes": null,
+      "repeat_check_skipped": null,
+      "outputs_on_npu": true,
+      "nan_inf": false,
+      "fallback_detected": false
+    }
+  ]
+}

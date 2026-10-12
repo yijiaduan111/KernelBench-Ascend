@@ -1,4 +1,89 @@
-# KernelBench: Can LLMs Write Efficient GPU Kernels? [ICML '25]
+# KernelBench-Ascend
+
+A KernelBench extension for evaluating LLM-generated kernels on Huawei Ascend
+NPUs. It adds Torch-NPU reference auditing, an Ascend runtime abstraction, NPU
+Event timing, and an isolated Ascend C build/load/evaluation pipeline while
+retaining the original KernelBench task definitions.
+
+This project is derived from
+[ScalingIntelligence/KernelBench](https://github.com/ScalingIntelligence/KernelBench),
+the ICML 2025 benchmark for LLM-generated GPU kernels. The original paper,
+authors, history, and MIT license are preserved.
+
+## Ascend status
+
+The validated environment is Ascend 910B3, CANN 9.0.1, PyTorch 2.7.1, and
+torch_npu 2.7.1.post4.
+
+| Scope | Official tasks | Active Torch-NPU baseline | Diagnostic/excluded |
+| --- | ---: | ---: | ---: |
+| Level 1 | 100 | 98 | 2 |
+| Level 2 | 100 | 100 | 0 |
+| Level 3 | 50 | 46 | 4 |
+| **Total** | **250** | **244** | **6** |
+
+The active suite is therefore **244 tasks**, not 250. The six exclusions keep
+their original semantics and remain visible as diagnostics. They are not
+counted as candidate-generation failures.
+
+- [Baseline status and methodology](docs/ascend/BASELINE_STATUS.md)
+- [中文基线说明](docs/ascend/BASELINE_STATUS.zh-CN.md)
+- [Sanitized 250-task audit manifest](docs/ascend/compatibility/ascend910b3-cann9.0.1/manifest.json)
+- [Machine-readable active suite](docs/ascend/compatibility/ascend910b3-cann9.0.1/supported.json)
+- [Machine-readable exclusions](docs/ascend/compatibility/ascend910b3-cann9.0.1/excluded.json)
+
+Reference coverage and custom-kernel coverage are deliberately reported
+separately. All 244 active tasks have a runnable Torch-NPU reference. The
+strict, trusted Ascend C ABI contracts currently cover the selected Level 1
+15-task suite, and three golden candidates exercise the generic build path.
+
+## Ascend quick start
+
+Use a CANN image or host whose PyTorch and torch_npu versions are already
+matched. Do not let the upstream CUDA dependency set replace those packages.
+
+```bash
+python -m pip install -r requirements-ascend-runtime.txt
+python -m pip install -e . --no-deps
+```
+
+Audit the unmodified Level 1-3 references on four visible NPUs:
+
+```bash
+python scripts/audit_ascend_level.py \
+  --kernelbench-root . \
+  --levels 1 2 3 \
+  --devices 0 1 2 3 \
+  --output results/ascend910b3/manifest.json \
+  --journal results/ascend910b3/journal.jsonl \
+  --logs-dir results/ascend910b3/logs
+```
+
+Build, load, validate, and time one Ascend C candidate in an isolated private
+OPP directory:
+
+```bash
+python scripts/evaluate_ascendc_candidate.py \
+  --level 1 \
+  --problem-id 25 \
+  --candidate golden/ascendc/level1/25_swish.py \
+  --cache-root cache/ascendc \
+  --output results/p25.json \
+  --validate-task-contract
+```
+
+The candidate evaluator separates compilation and first-call costs from
+steady-state NPU Event latency. A candidate is performance-eligible only after
+correctness, finite-output, input-mutation, RNG-state, and custom-op-call
+checks pass. Generated custom operators are installed into hash-isolated
+private OPP directories; system OPP directories are not modified.
+
+## Upstream project
+
+The remainder of this README documents the original KernelBench benchmark and
+its CUDA/ROCm workflows. Ascend-specific commands above are authoritative for
+this fork.
+
 A benchmark and environment for evaluating LLMs' ability to generate efficient GPU kernels
 
 Specifically we task LLM to generate correct and efficient CUDA / DSL kernels for PyTorch programs on a target GPU.

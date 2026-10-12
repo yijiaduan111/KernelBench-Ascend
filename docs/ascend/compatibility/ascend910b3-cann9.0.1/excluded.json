@@ -1,0 +1,38 @@
+[
+  {
+    "failure_type": "unsupported_operator",
+    "level": 1,
+    "problem": "41_Max_Pooling_1D.py",
+    "problem_id": 41
+  },
+  {
+    "failure_type": "unsupported_operator",
+    "level": 1,
+    "problem": "43_Max_Pooling_3D.py",
+    "problem_id": 43
+  },
+  {
+    "failure_type": "unsupported_dtype",
+    "level": 3,
+    "problem": "39_GRU.py",
+    "problem_id": 39
+  },
+  {
+    "failure_type": "unsupported_dtype",
+    "level": 3,
+    "problem": "40_GRUHidden.py",
+    "problem_id": 40
+  },
+  {
+    "failure_type": "unsupported_dtype",
+    "level": 3,
+    "problem": "41_GRUBidirectional.py",
+    "problem_id": 41
+  },
+  {
+    "failure_type": "unsupported_dtype",
+    "level": 3,
+    "problem": "42_GRUBidirectionalHidden.py",
+    "problem_id": 42
+  }
+]

@@ -1,0 +1,1222 @@
+[
+  {
+    "level": 1,
+    "problem": "1_Square_matrix_multiplication_.py",
+    "problem_id": 1
+  },
+  {
+    "level": 1,
+    "problem": "2_Standard_matrix_multiplication_.py",
+    "problem_id": 2
+  },
+  {
+    "level": 1,
+    "problem": "3_Batched_matrix_multiplication.py",
+    "problem_id": 3
+  },
+  {
+    "level": 1,
+    "problem": "4_Matrix_vector_multiplication_.py",
+    "problem_id": 4
+  },
+  {
+    "level": 1,
+    "problem": "5_Matrix_scalar_multiplication.py",
+    "problem_id": 5
+  },
+  {
+    "level": 1,
+    "problem": "6_Matmul_with_large_K_dimension_.py",
+    "problem_id": 6
+  },
+  {
+    "level": 1,
+    "problem": "7_Matmul_with_small_K_dimension_.py",
+    "problem_id": 7
+  },
+  {
+    "level": 1,
+    "problem": "8_Matmul_with_irregular_shapes_.py",
+    "problem_id": 8
+  },
+  {
+    "level": 1,
+    "problem": "9_Tall_skinny_matrix_multiplication_.py",
+    "problem_id": 9
+  },
+  {
+    "level": 1,
+    "problem": "10_3D_tensor_matrix_multiplication.py",
+    "problem_id": 10
+  },
+  {
+    "level": 1,
+    "problem": "11_4D_tensor_matrix_multiplication.py",
+    "problem_id": 11
+  },
+  {
+    "level": 1,
+    "problem": "12_Matmul_with_diagonal_matrices_.py",
+    "problem_id": 12
+  },
+  {
+    "level": 1,
+    "problem": "13_Matmul_for_symmetric_matrices.py",
+    "problem_id": 13
+  },
+  {
+    "level": 1,
+    "problem": "14_Matmul_for_upper_triangular_matrices.py",
+    "problem_id": 14
+  },
+  {
+    "level": 1,
+    "problem": "15_Matmul_for_lower_triangular_matrices.py",
+    "problem_id": 15
+  },
+  {
+    "level": 1,
+    "problem": "16_Matmul_with_transposed_A.py",
+    "problem_id": 16
+  },
+  {
+    "level": 1,
+    "problem": "17_Matmul_with_transposed_B.py",
+    "problem_id": 17
+  },
+  {
+    "level": 1,
+    "problem": "18_Matmul_with_transposed_both.py",
+    "problem_id": 18
+  },
+  {
+    "level": 1,
+    "problem": "19_ReLU.py",
+    "problem_id": 19
+  },
+  {
+    "level": 1,
+    "problem": "20_LeakyReLU.py",
+    "problem_id": 20
+  },
+  {
+    "level": 1,
+    "problem": "21_Sigmoid.py",
+    "problem_id": 21
+  },
+  {
+    "level": 1,
+    "problem": "22_Tanh.py",
+    "problem_id": 22
+  },
+  {
+    "level": 1,
+    "problem": "23_Softmax.py",
+    "problem_id": 23
+  },
+  {
+    "level": 1,
+    "problem": "24_LogSoftmax.py",
+    "problem_id": 24
+  },
+  {
+    "level": 1,
+    "problem": "25_Swish.py",
+    "problem_id": 25
+  },
+  {
+    "level": 1,
+    "problem": "26_GELU_.py",
+    "problem_id": 26
+  },
+  {
+    "level": 1,
+    "problem": "27_SELU_.py",
+    "problem_id": 27
+  },
+  {
+    "level": 1,
+    "problem": "28_HardSigmoid.py",
+    "problem_id": 28
+  },
+  {
+    "level": 1,
+    "problem": "29_Softplus.py",
+    "problem_id": 29
+  },
+  {
+    "level": 1,
+    "problem": "30_Softsign.py",
+    "problem_id": 30
+  },
+  {
+    "level": 1,
+    "problem": "31_ELU.py",
+    "problem_id": 31
+  },
+  {
+    "level": 1,
+    "problem": "32_HardTanh.py",
+    "problem_id": 32
+  },
+  {
+    "level": 1,
+    "problem": "33_BatchNorm.py",
+    "problem_id": 33
+  },
+  {
+    "level": 1,
+    "problem": "34_InstanceNorm.py",
+    "problem_id": 34
+  },
+  {
+    "level": 1,
+    "problem": "35_GroupNorm_.py",
+    "problem_id": 35
+  },
+  {
+    "level": 1,
+    "problem": "36_RMSNorm_.py",
+    "problem_id": 36
+  },
+  {
+    "level": 1,
+    "problem": "37_FrobeniusNorm_.py",
+    "problem_id": 37
+  },
+  {
+    "level": 1,
+    "problem": "38_L1Norm_.py",
+    "problem_id": 38
+  },
+  {
+    "level": 1,
+    "problem": "39_L2Norm_.py",
+    "problem_id": 39
+  },
+  {
+    "level": 1,
+    "problem": "40_LayerNorm.py",
+    "problem_id": 40
+  },
+  {
+    "level": 1,
+    "problem": "42_Max_Pooling_2D.py",
+    "problem_id": 42
+  },
+  {
+    "level": 1,
+    "problem": "44_Average_Pooling_1D.py",
+    "problem_id": 44
+  },
+  {
+    "level": 1,
+    "problem": "45_Average_Pooling_2D.py",
+    "problem_id": 45
+  },
+  {
+    "level": 1,
+    "problem": "46_Average_Pooling_3D.py",
+    "problem_id": 46
+  },
+  {
+    "level": 1,
+    "problem": "47_Sum_reduction_over_a_dimension.py",
+    "problem_id": 47
+  },
+  {
+    "level": 1,
+    "problem": "48_Mean_reduction_over_a_dimension.py",
+    "problem_id": 48
+  },
+  {
+    "level": 1,
+    "problem": "49_Max_reduction_over_a_dimension.py",
+    "problem_id": 49
+  },
+  {
+    "level": 1,
+    "problem": "50_conv_standard_2D__square_input__square_kernel.py",
+    "problem_id": 50
+  },
+  {
+    "level": 1,
+    "problem": "51_Argmax_over_a_dimension.py",
+    "problem_id": 51
+  },
+  {
+    "level": 1,
+    "problem": "52_Argmin_over_a_dimension.py",
+    "problem_id": 52
+  },
+  {
+    "level": 1,
+    "problem": "53_Min_reduction_over_a_dimension.py",
+    "problem_id": 53
+  },
+  {
+    "level": 1,
+    "problem": "54_conv_standard_3D__square_input__square_kernel.py",
+    "problem_id": 54
+  },
+  {
+    "level": 1,
+    "problem": "55_conv_standard_2D__asymmetric_input__square_kernel.py",
+    "problem_id": 55
+  },
+  {
+    "level": 1,
+    "problem": "56_conv_standard_2D__asymmetric_input__asymmetric_kernel.py",
+    "problem_id": 56
+  },
+  {
+    "level": 1,
+    "problem": "57_conv_transposed_2D__square_input__square_kernel.py",
+    "problem_id": 57
+  },
+  {
+    "level": 1,
+    "problem": "58_conv_transposed_3D__asymmetric_input__asymmetric_kernel.py",
+    "problem_id": 58
+  },
+  {
+    "level": 1,
+    "problem": "59_conv_standard_3D__asymmetric_input__square_kernel.py",
+    "problem_id": 59
+  },
+  {
+    "level": 1,
+    "problem": "60_conv_standard_3D__square_input__asymmetric_kernel.py",
+    "problem_id": 60
+  },
+  {
+    "level": 1,
+    "problem": "61_conv_transposed_3D__square_input__square_kernel.py",
+    "problem_id": 61
+  },
+  {
+    "level": 1,
+    "problem": "62_conv_standard_2D__square_input__asymmetric_kernel.py",
+    "problem_id": 62
+  },
+  {
+    "level": 1,
+    "problem": "63_conv_standard_2D__square_input__square_kernel.py",
+    "problem_id": 63
+  },
+  {
+    "level": 1,
+    "problem": "64_conv_transposed_1D.py",
+    "problem_id": 64
+  },
+  {
+    "level": 1,
+    "problem": "65_conv_transposed_2D__square_input__asymmetric_kernel.py",
+    "problem_id": 65
+  },
+  {
+    "level": 1,
+    "problem": "66_conv_standard_3D__asymmetric_input__asymmetric_kernel.py",
+    "problem_id": 66
+  },
+  {
+    "level": 1,
+    "problem": "67_conv_standard_1D.py",
+    "problem_id": 67
+  },
+  {
+    "level": 1,
+    "problem": "68_conv_transposed_3D__square_input__asymmetric_kernel.py",
+    "problem_id": 68
+  },
+  {
+    "level": 1,
+    "problem": "69_conv_transposed_2D__asymmetric_input__asymmetric_kernel.py",
+    "problem_id": 69
+  },
+  {
+    "level": 1,
+    "problem": "70_conv_transposed_3D__asymmetric_input__square_kernel.py",
+    "problem_id": 70
+  },
+  {
+    "level": 1,
+    "problem": "71_conv_transposed_2D__asymmetric_input__square_kernel.py",
+    "problem_id": 71
+  },
+  {
+    "level": 1,
+    "problem": "72_conv_transposed_3D_asymmetric_input_asymmetric_kernel___strided_padded_grouped_.py",
+    "problem_id": 72
+  },
+  {
+    "level": 1,
+    "problem": "73_conv_transposed_3D_asymmetric_input_square_kernel__strided_padded__grouped.py",
+    "problem_id": 73
+  },
+  {
+    "level": 1,
+    "problem": "74_conv_transposed_1D_dilated.py",
+    "problem_id": 74
+  },
+  {
+    "level": 1,
+    "problem": "75_conv_transposed_2D_asymmetric_input_asymmetric_kernel_strided__grouped____padded____dilated__.py",
+    "problem_id": 75
+  },
+  {
+    "level": 1,
+    "problem": "76_conv_standard_1D_dilated_strided__.py",
+    "problem_id": 76
+  },
+  {
+    "level": 1,
+    "problem": "77_conv_transposed_3D_square_input_square_kernel___padded____dilated____strided__.py",
+    "problem_id": 77
+  },
+  {
+    "level": 1,
+    "problem": "78_conv_transposed_2D_asymmetric_input_asymmetric_kernel___padded__.py",
+    "problem_id": 78
+  },
+  {
+    "level": 1,
+    "problem": "79_conv_transposed_1D_asymmetric_input_square_kernel___padded____strided____dilated__.py",
+    "problem_id": 79
+  },
+  {
+    "level": 1,
+    "problem": "80_conv_standard_2D_square_input_asymmetric_kernel___dilated____padded__.py",
+    "problem_id": 80
+  },
+  {
+    "level": 1,
+    "problem": "81_conv_transposed_2D_asymmetric_input_square_kernel___dilated____padded____strided__.py",
+    "problem_id": 81
+  },
+  {
+    "level": 1,
+    "problem": "82_conv_depthwise_2D_square_input_square_kernel.py",
+    "problem_id": 82
+  },
+  {
+    "level": 1,
+    "problem": "83_conv_depthwise_2D_square_input_asymmetric_kernel.py",
+    "problem_id": 83
+  },
+  {
+    "level": 1,
+    "problem": "84_conv_depthwise_2D_asymmetric_input_square_kernel.py",
+    "problem_id": 84
+  },
+  {
+    "level": 1,
+    "problem": "85_conv_depthwise_2D_asymmetric_input_asymmetric_kernel.py",
+    "problem_id": 85
+  },
+  {
+    "level": 1,
+    "problem": "86_conv_depthwise_separable_2D.py",
+    "problem_id": 86
+  },
+  {
+    "level": 1,
+    "problem": "87_conv_pointwise_2D.py",
+    "problem_id": 87
+  },
+  {
+    "level": 1,
+    "problem": "88_MinGPTNewGelu.py",
+    "problem_id": 88
+  },
+  {
+    "level": 1,
+    "problem": "89_cumsum.py",
+    "problem_id": 89
+  },
+  {
+    "level": 1,
+    "problem": "90_cumprod.py",
+    "problem_id": 90
+  },
+  {
+    "level": 1,
+    "problem": "91_cumsum_reverse.py",
+    "problem_id": 91
+  },
+  {
+    "level": 1,
+    "problem": "92_cumsum_exclusive.py",
+    "problem_id": 92
+  },
+  {
+    "level": 1,
+    "problem": "93_masked_cumsum.py",
+    "problem_id": 93
+  },
+  {
+    "level": 1,
+    "problem": "94_MSELoss.py",
+    "problem_id": 94
+  },
+  {
+    "level": 1,
+    "problem": "95_CrossEntropyLoss.py",
+    "problem_id": 95
+  },
+  {
+    "level": 1,
+    "problem": "96_HuberLoss.py",
+    "problem_id": 96
+  },
+  {
+    "level": 1,
+    "problem": "97_ScaledDotProductAttention.py",
+    "problem_id": 97
+  },
+  {
+    "level": 1,
+    "problem": "98_KLDivLoss.py",
+    "problem_id": 98
+  },
+  {
+    "level": 1,
+    "problem": "99_TripletMarginLoss.py",
+    "problem_id": 99
+  },
+  {
+    "level": 1,
+    "problem": "100_HingeLoss.py",
+    "problem_id": 100
+  },
+  {
+    "level": 2,
+    "problem": "1_Conv2D_ReLU_BiasAdd.py",
+    "problem_id": 1
+  },
+  {
+    "level": 2,
+    "problem": "2_ConvTranspose2d_BiasAdd_Clamp_Scaling_Clamp_Divide.py",
+    "problem_id": 2
+  },
+  {
+    "level": 2,
+    "problem": "3_ConvTranspose3d_Sum_LayerNorm_AvgPool_GELU.py",
+    "problem_id": 3
+  },
+  {
+    "level": 2,
+    "problem": "4_Conv2d_Mish_Mish.py",
+    "problem_id": 4
+  },
+  {
+    "level": 2,
+    "problem": "5_ConvTranspose2d_Subtract_Tanh.py",
+    "problem_id": 5
+  },
+  {
+    "level": 2,
+    "problem": "6_Conv3d_Softmax_MaxPool_MaxPool.py",
+    "problem_id": 6
+  },
+  {
+    "level": 2,
+    "problem": "7_Conv3d_ReLU_LeakyReLU_GELU_Sigmoid_BiasAdd.py",
+    "problem_id": 7
+  },
+  {
+    "level": 2,
+    "problem": "8_Conv3d_Divide_Max_GlobalAvgPool_BiasAdd_Sum.py",
+    "problem_id": 8
+  },
+  {
+    "level": 2,
+    "problem": "9_Matmul_Subtract_Multiply_ReLU.py",
+    "problem_id": 9
+  },
+  {
+    "level": 2,
+    "problem": "10_ConvTranspose2d_MaxPool_Hardtanh_Mean_Tanh.py",
+    "problem_id": 10
+  },
+  {
+    "level": 2,
+    "problem": "11_ConvTranspose2d_BatchNorm_Tanh_MaxPool_GroupNorm.py",
+    "problem_id": 11
+  },
+  {
+    "level": 2,
+    "problem": "12_Gemm_Multiply_LeakyReLU.py",
+    "problem_id": 12
+  },
+  {
+    "level": 2,
+    "problem": "13_ConvTranspose3d_Mean_Add_Softmax_Tanh_Scaling.py",
+    "problem_id": 13
+  },
+  {
+    "level": 2,
+    "problem": "14_Gemm_Divide_Sum_Scaling.py",
+    "problem_id": 14
+  },
+  {
+    "level": 2,
+    "problem": "15_ConvTranspose3d_BatchNorm_Subtract.py",
+    "problem_id": 15
+  },
+  {
+    "level": 2,
+    "problem": "16_ConvTranspose2d_Mish_Add_Hardtanh_Scaling.py",
+    "problem_id": 16
+  },
+  {
+    "level": 2,
+    "problem": "17_Conv2d_InstanceNorm_Divide.py",
+    "problem_id": 17
+  },
+  {
+    "level": 2,
+    "problem": "18_Matmul_Sum_Max_AvgPool_LogSumExp_LogSumExp.py",
+    "problem_id": 18
+  },
+  {
+    "level": 2,
+    "problem": "19_ConvTranspose2d_GELU_GroupNorm.py",
+    "problem_id": 19
+  },
+  {
+    "level": 2,
+    "problem": "20_ConvTranspose3d_Sum_ResidualAdd_Multiply_ResidualAdd.py",
+    "problem_id": 20
+  },
+  {
+    "level": 2,
+    "problem": "21_Conv2d_Add_Scale_Sigmoid_GroupNorm.py",
+    "problem_id": 21
+  },
+  {
+    "level": 2,
+    "problem": "22_Matmul_Scale_ResidualAdd_Clamp_LogSumExp_Mish.py",
+    "problem_id": 22
+  },
+  {
+    "level": 2,
+    "problem": "23_Conv3d_GroupNorm_Mean.py",
+    "problem_id": 23
+  },
+  {
+    "level": 2,
+    "problem": "24_Conv3d_Min_Softmax.py",
+    "problem_id": 24
+  },
+  {
+    "level": 2,
+    "problem": "25_Conv2d_Min_Tanh_Tanh.py",
+    "problem_id": 25
+  },
+  {
+    "level": 2,
+    "problem": "26_ConvTranspose3d_Add_HardSwish.py",
+    "problem_id": 26
+  },
+  {
+    "level": 2,
+    "problem": "27_Conv3d_HardSwish_GroupNorm_Mean.py",
+    "problem_id": 27
+  },
+  {
+    "level": 2,
+    "problem": "28_BMM_InstanceNorm_Sum_ResidualAdd_Multiply.py",
+    "problem_id": 28
+  },
+  {
+    "level": 2,
+    "problem": "29_Matmul_Mish_Mish.py",
+    "problem_id": 29
+  },
+  {
+    "level": 2,
+    "problem": "30_Gemm_GroupNorm_Hardtanh.py",
+    "problem_id": 30
+  },
+  {
+    "level": 2,
+    "problem": "31_Conv2d_Min_Add_Multiply.py",
+    "problem_id": 31
+  },
+  {
+    "level": 2,
+    "problem": "32_Conv2d_Scaling_Min.py",
+    "problem_id": 32
+  },
+  {
+    "level": 2,
+    "problem": "33_Gemm_Scale_BatchNorm.py",
+    "problem_id": 33
+  },
+  {
+    "level": 2,
+    "problem": "34_ConvTranspose3d_LayerNorm_GELU_Scaling.py",
+    "problem_id": 34
+  },
+  {
+    "level": 2,
+    "problem": "35_Conv2d_Subtract_HardSwish_MaxPool_Mish.py",
+    "problem_id": 35
+  },
+  {
+    "level": 2,
+    "problem": "36_ConvTranspose2d_Min_Sum_GELU_Add.py",
+    "problem_id": 36
+  },
+  {
+    "level": 2,
+    "problem": "37_Matmul_Swish_Sum_GroupNorm.py",
+    "problem_id": 37
+  },
+  {
+    "level": 2,
+    "problem": "38_ConvTranspose3d_AvgPool_Clamp_Softmax_Multiply.py",
+    "problem_id": 38
+  },
+  {
+    "level": 2,
+    "problem": "39_Gemm_Scale_BatchNorm.py",
+    "problem_id": 39
+  },
+  {
+    "level": 2,
+    "problem": "40_Matmul_Scaling_ResidualAdd.py",
+    "problem_id": 40
+  },
+  {
+    "level": 2,
+    "problem": "41_Gemm_BatchNorm_GELU_ReLU.py",
+    "problem_id": 41
+  },
+  {
+    "level": 2,
+    "problem": "42_ConvTranspose2d_GlobalAvgPool_BiasAdd_LogSumExp_Sum_Multiply.py",
+    "problem_id": 42
+  },
+  {
+    "level": 2,
+    "problem": "43_Conv3d_Max_LogSumExp_ReLU.py",
+    "problem_id": 43
+  },
+  {
+    "level": 2,
+    "problem": "44_ConvTranspose2d_Multiply_GlobalAvgPool_GlobalAvgPool_Mean.py",
+    "problem_id": 44
+  },
+  {
+    "level": 2,
+    "problem": "45_Gemm_Sigmoid_LogSumExp.py",
+    "problem_id": 45
+  },
+  {
+    "level": 2,
+    "problem": "46_Conv2d_Subtract_Tanh_Subtract_AvgPool.py",
+    "problem_id": 46
+  },
+  {
+    "level": 2,
+    "problem": "47_Conv3d_Mish_Tanh.py",
+    "problem_id": 47
+  },
+  {
+    "level": 2,
+    "problem": "48_Conv3d_Scaling_Tanh_Multiply_Sigmoid.py",
+    "problem_id": 48
+  },
+  {
+    "level": 2,
+    "problem": "49_ConvTranspose3d_Softmax_Sigmoid.py",
+    "problem_id": 49
+  },
+  {
+    "level": 2,
+    "problem": "50_ConvTranspose3d_Scaling_AvgPool_BiasAdd_Scaling.py",
+    "problem_id": 50
+  },
+  {
+    "level": 2,
+    "problem": "51_Gemm_Subtract_GlobalAvgPool_LogSumExp_GELU_ResidualAdd.py",
+    "problem_id": 51
+  },
+  {
+    "level": 2,
+    "problem": "52_Conv2d_Activation_BatchNorm.py",
+    "problem_id": 52
+  },
+  {
+    "level": 2,
+    "problem": "53_Gemm_Scaling_Hardtanh_GELU.py",
+    "problem_id": 53
+  },
+  {
+    "level": 2,
+    "problem": "54_Conv2d_Multiply_LeakyReLU_GELU.py",
+    "problem_id": 54
+  },
+  {
+    "level": 2,
+    "problem": "55_Matmul_MaxPool_Sum_Scale.py",
+    "problem_id": 55
+  },
+  {
+    "level": 2,
+    "problem": "56_Matmul_Sigmoid_Sum.py",
+    "problem_id": 56
+  },
+  {
+    "level": 2,
+    "problem": "57_Conv2d_ReLU_HardSwish.py",
+    "problem_id": 57
+  },
+  {
+    "level": 2,
+    "problem": "58_ConvTranspose3d_LogSumExp_HardSwish_Subtract_Clamp.py",
+    "problem_id": 58
+  },
+  {
+    "level": 2,
+    "problem": "59_Matmul_Swish_Scaling.py",
+    "problem_id": 59
+  },
+  {
+    "level": 2,
+    "problem": "60_ConvTranspose3d_Swish_GroupNorm_HardSwish.py",
+    "problem_id": 60
+  },
+  {
+    "level": 2,
+    "problem": "61_ConvTranspose3d_ReLU_GroupNorm.py",
+    "problem_id": 61
+  },
+  {
+    "level": 2,
+    "problem": "62_Matmul_GroupNorm_LeakyReLU_Sum.py",
+    "problem_id": 62
+  },
+  {
+    "level": 2,
+    "problem": "63_Gemm_ReLU_Divide.py",
+    "problem_id": 63
+  },
+  {
+    "level": 2,
+    "problem": "64_Gemm_LogSumExp_LeakyReLU_LeakyReLU_GELU_GELU.py",
+    "problem_id": 64
+  },
+  {
+    "level": 2,
+    "problem": "65_Conv2d_AvgPool_Sigmoid_Sum.py",
+    "problem_id": 65
+  },
+  {
+    "level": 2,
+    "problem": "66_Matmul_Dropout_Softmax.py",
+    "problem_id": 66
+  },
+  {
+    "level": 2,
+    "problem": "67_Conv2d_GELU_GlobalAvgPool.py",
+    "problem_id": 67
+  },
+  {
+    "level": 2,
+    "problem": "68_Matmul_Min_Subtract.py",
+    "problem_id": 68
+  },
+  {
+    "level": 2,
+    "problem": "69_Conv2d_HardSwish_ReLU.py",
+    "problem_id": 69
+  },
+  {
+    "level": 2,
+    "problem": "70_Gemm_Sigmoid_Scaling_ResidualAdd.py",
+    "problem_id": 70
+  },
+  {
+    "level": 2,
+    "problem": "71_Conv2d_Divide_LeakyReLU.py",
+    "problem_id": 71
+  },
+  {
+    "level": 2,
+    "problem": "72_ConvTranspose3d_BatchNorm_AvgPool_AvgPool.py",
+    "problem_id": 72
+  },
+  {
+    "level": 2,
+    "problem": "73_Conv2d_BatchNorm_Scaling.py",
+    "problem_id": 73
+  },
+  {
+    "level": 2,
+    "problem": "74_ConvTranspose3d_LeakyReLU_Multiply_LeakyReLU_Max.py",
+    "problem_id": 74
+  },
+  {
+    "level": 2,
+    "problem": "75_Gemm_GroupNorm_Min_BiasAdd.py",
+    "problem_id": 75
+  },
+  {
+    "level": 2,
+    "problem": "76_Gemm_Add_ReLU.py",
+    "problem_id": 76
+  },
+  {
+    "level": 2,
+    "problem": "77_ConvTranspose3d_Scale_BatchNorm_GlobalAvgPool.py",
+    "problem_id": 77
+  },
+  {
+    "level": 2,
+    "problem": "78_ConvTranspose3d_Max_Max_Sum.py",
+    "problem_id": 78
+  },
+  {
+    "level": 2,
+    "problem": "79_Conv3d_Multiply_InstanceNorm_Clamp_Multiply_Max.py",
+    "problem_id": 79
+  },
+  {
+    "level": 2,
+    "problem": "80_Gemm_Max_Subtract_GELU.py",
+    "problem_id": 80
+  },
+  {
+    "level": 2,
+    "problem": "81_Gemm_Swish_Divide_Clamp_Tanh_Clamp.py",
+    "problem_id": 81
+  },
+  {
+    "level": 2,
+    "problem": "82_Conv2d_Tanh_Scaling_BiasAdd_Max.py",
+    "problem_id": 82
+  },
+  {
+    "level": 2,
+    "problem": "83_Conv3d_GroupNorm_Min_Clamp_Dropout.py",
+    "problem_id": 83
+  },
+  {
+    "level": 2,
+    "problem": "84_Gemm_BatchNorm_Scaling_Softmax.py",
+    "problem_id": 84
+  },
+  {
+    "level": 2,
+    "problem": "85_Conv2d_GroupNorm_Scale_MaxPool_Clamp.py",
+    "problem_id": 85
+  },
+  {
+    "level": 2,
+    "problem": "86_Matmul_Divide_GELU.py",
+    "problem_id": 86
+  },
+  {
+    "level": 2,
+    "problem": "87_Conv2d_Subtract_Subtract_Mish.py",
+    "problem_id": 87
+  },
+  {
+    "level": 2,
+    "problem": "88_Gemm_GroupNorm_Swish_Multiply_Swish.py",
+    "problem_id": 88
+  },
+  {
+    "level": 2,
+    "problem": "89_ConvTranspose3d_MaxPool_Softmax_Subtract_Swish_Max.py",
+    "problem_id": 89
+  },
+  {
+    "level": 2,
+    "problem": "90_Conv3d_LeakyReLU_Sum_Clamp_GELU.py",
+    "problem_id": 90
+  },
+  {
+    "level": 2,
+    "problem": "91_ConvTranspose2d_Softmax_BiasAdd_Scaling_Sigmoid.py",
+    "problem_id": 91
+  },
+  {
+    "level": 2,
+    "problem": "92_Conv2d_GroupNorm_Tanh_HardSwish_ResidualAdd_LogSumExp.py",
+    "problem_id": 92
+  },
+  {
+    "level": 2,
+    "problem": "93_ConvTranspose2d_Add_Min_GELU_Multiply.py",
+    "problem_id": 93
+  },
+  {
+    "level": 2,
+    "problem": "94_Gemm_BiasAdd_Hardtanh_Mish_GroupNorm.py",
+    "problem_id": 94
+  },
+  {
+    "level": 2,
+    "problem": "95_Matmul_Add_Swish_Tanh_GELU_Hardtanh.py",
+    "problem_id": 95
+  },
+  {
+    "level": 2,
+    "problem": "96_ConvTranspose3d_Multiply_Max_GlobalAvgPool_Clamp.py",
+    "problem_id": 96
+  },
+  {
+    "level": 2,
+    "problem": "97_Matmul_BatchNorm_BiasAdd_Divide_Swish.py",
+    "problem_id": 97
+  },
+  {
+    "level": 2,
+    "problem": "98_Matmul_AvgPool_GELU_Scale_Max.py",
+    "problem_id": 98
+  },
+  {
+    "level": 2,
+    "problem": "99_Matmul_GELU_Softmax.py",
+    "problem_id": 99
+  },
+  {
+    "level": 2,
+    "problem": "100_ConvTranspose3d_Clamp_Min_Divide.py",
+    "problem_id": 100
+  },
+  {
+    "level": 3,
+    "problem": "1_MLP.py",
+    "problem_id": 1
+  },
+  {
+    "level": 3,
+    "problem": "2_ShallowWideMLP.py",
+    "problem_id": 2
+  },
+  {
+    "level": 3,
+    "problem": "3_DeepNarrowMLP.py",
+    "problem_id": 3
+  },
+  {
+    "level": 3,
+    "problem": "4_LeNet5.py",
+    "problem_id": 4
+  },
+  {
+    "level": 3,
+    "problem": "5_AlexNet.py",
+    "problem_id": 5
+  },
+  {
+    "level": 3,
+    "problem": "6_GoogleNetInceptionModule.py",
+    "problem_id": 6
+  },
+  {
+    "level": 3,
+    "problem": "7_GoogleNetInceptionV1.py",
+    "problem_id": 7
+  },
+  {
+    "level": 3,
+    "problem": "8_ResNetBasicBlock.py",
+    "problem_id": 8
+  },
+  {
+    "level": 3,
+    "problem": "9_ResNet18.py",
+    "problem_id": 9
+  },
+  {
+    "level": 3,
+    "problem": "10_ResNet101.py",
+    "problem_id": 10
+  },
+  {
+    "level": 3,
+    "problem": "11_VGG16.py",
+    "problem_id": 11
+  },
+  {
+    "level": 3,
+    "problem": "12_VGG19.py",
+    "problem_id": 12
+  },
+  {
+    "level": 3,
+    "problem": "13_DenseNet121TransitionLayer.py",
+    "problem_id": 13
+  },
+  {
+    "level": 3,
+    "problem": "14_DenseNet121DenseBlock.py",
+    "problem_id": 14
+  },
+  {
+    "level": 3,
+    "problem": "15_DenseNet121.py",
+    "problem_id": 15
+  },
+  {
+    "level": 3,
+    "problem": "16_DenseNet201.py",
+    "problem_id": 16
+  },
+  {
+    "level": 3,
+    "problem": "17_SqueezeNetFireModule.py",
+    "problem_id": 17
+  },
+  {
+    "level": 3,
+    "problem": "18_SqueezeNet.py",
+    "problem_id": 18
+  },
+  {
+    "level": 3,
+    "problem": "19_MobileNetV1.py",
+    "problem_id": 19
+  },
+  {
+    "level": 3,
+    "problem": "20_MobileNetV2.py",
+    "problem_id": 20
+  },
+  {
+    "level": 3,
+    "problem": "21_EfficientNetMBConv.py",
+    "problem_id": 21
+  },
+  {
+    "level": 3,
+    "problem": "22_EfficientNetB0.py",
+    "problem_id": 22
+  },
+  {
+    "level": 3,
+    "problem": "23_EfficientNetB1.py",
+    "problem_id": 23
+  },
+  {
+    "level": 3,
+    "problem": "24_EfficientNetB2.py",
+    "problem_id": 24
+  },
+  {
+    "level": 3,
+    "problem": "25_ShuffleNetUnit.py",
+    "problem_id": 25
+  },
+  {
+    "level": 3,
+    "problem": "26_ShuffleNet.py",
+    "problem_id": 26
+  },
+  {
+    "level": 3,
+    "problem": "27_RegNet.py",
+    "problem_id": 27
+  },
+  {
+    "level": 3,
+    "problem": "28_VisionTransformer.py",
+    "problem_id": 28
+  },
+  {
+    "level": 3,
+    "problem": "29_SwinMLP.py",
+    "problem_id": 29
+  },
+  {
+    "level": 3,
+    "problem": "30_SwinTransformerV2.py",
+    "problem_id": 30
+  },
+  {
+    "level": 3,
+    "problem": "31_VisionAttention.py",
+    "problem_id": 31
+  },
+  {
+    "level": 3,
+    "problem": "32_ConvolutionalVisionTransformer.py",
+    "problem_id": 32
+  },
+  {
+    "level": 3,
+    "problem": "33_VanillaRNN.py",
+    "problem_id": 33
+  },
+  {
+    "level": 3,
+    "problem": "34_VanillaRNNHidden.py",
+    "problem_id": 34
+  },
+  {
+    "level": 3,
+    "problem": "35_LSTM.py",
+    "problem_id": 35
+  },
+  {
+    "level": 3,
+    "problem": "36_LSTMHn.py",
+    "problem_id": 36
+  },
+  {
+    "level": 3,
+    "problem": "37_LSTMCn.py",
+    "problem_id": 37
+  },
+  {
+    "level": 3,
+    "problem": "38_LSTMBidirectional.py",
+    "problem_id": 38
+  },
+  {
+    "level": 3,
+    "problem": "43_MinGPTCausalAttention.py",
+    "problem_id": 43
+  },
+  {
+    "level": 3,
+    "problem": "44_MiniGPTBlock.py",
+    "problem_id": 44
+  },
+  {
+    "level": 3,
+    "problem": "45_UNetSoftmax.py",
+    "problem_id": 45
+  },
+  {
+    "level": 3,
+    "problem": "46_NetVladWithGhostClusters.py",
+    "problem_id": 46
+  },
+  {
+    "level": 3,
+    "problem": "47_NetVladNoGhostClusters.py",
+    "problem_id": 47
+  },
+  {
+    "level": 3,
+    "problem": "48_Mamba2ReturnY.py",
+    "problem_id": 48
+  },
+  {
+    "level": 3,
+    "problem": "49_Mamba2ReturnFinalState.py",
+    "problem_id": 49
+  },
+  {
+    "level": 3,
+    "problem": "50_ReLUSelfAttention.py",
+    "problem_id": 50
+  }
+]
