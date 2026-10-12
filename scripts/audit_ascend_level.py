@@ -279,7 +279,10 @@ def _classify_failure(payload: dict[str, Any], diagnostic: str) -> str:
     message = diagnostic.lower()
     if "out of memory" in message or "memory allocation" in message:
         return "out_of_memory"
-    if "dtype" in message and ("not support" in message or "unsupported" in message):
+    if (
+        ("dtype" in message or "data type" in message or "dt_float" in message)
+        and ("not support" in message or "unsupported" in message)
+    ):
         return "unsupported_dtype"
     if "layout" in message and ("not support" in message or "unsupported" in message):
         return "unsupported_layout"
