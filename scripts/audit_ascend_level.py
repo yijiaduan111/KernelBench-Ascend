@@ -61,6 +61,17 @@ def _clone(value):
     return value
 
 
+def _tensor_bytes(value) -> int:
+    import torch
+    if isinstance(value, torch.Tensor):
+        return int(value.numel() * value.element_size())
+    if isinstance(value, (tuple, list)):
+        return sum(_tensor_bytes(item) for item in value)
+    if isinstance(value, dict):
+        return sum(_tensor_bytes(item) for item in value.values())
+    return 0
+
+
 def _same_structure(left, right) -> bool:
     import torch
     if isinstance(left, torch.Tensor) and isinstance(right, torch.Tensor):
@@ -145,15 +156,24 @@ def worker(path: Path, warmup: int, repeats: int) -> dict[str, Any]:
     cold_inputs = _walk(module.get_inputs())
     torch.npu.synchronize()
     started = time.perf_counter()
+    input_bytes = _tensor_bytes(cold_inputs)
+    # Cloning a large official input only to test determinism can itself cause
+    # an OOM and misclassify an otherwise valid NPU reference.  Keep the memory
+    # safety threshold explicit in the result and skip only that extra check.
+    repeat_check_skipped = input_bytes > 8 * 1024**3
     with torch.inference_mode():
         output = model(*cold_inputs)
         torch.npu.synchronize()
         cold_ms = (time.perf_counter() - started) * 1000.0
-        repeat_output = model(*_clone(cold_inputs))
-        torch.npu.synchronize()
-        repeat_stable = _same_structure(output, repeat_output)
-        finite = _all_finite(output) and _all_finite(repeat_output)
-        outputs_on_npu = _all_on_npu(output) and _all_on_npu(repeat_output)
+        if repeat_check_skipped:
+            repeat_output = None
+            repeat_stable = None
+        else:
+            repeat_output = model(*_clone(cold_inputs))
+            torch.npu.synchronize()
+            repeat_stable = _same_structure(output, repeat_output)
+        finite = _all_finite(output) and (repeat_output is None or _all_finite(repeat_output))
+        outputs_on_npu = _all_on_npu(output) and (repeat_output is None or _all_on_npu(repeat_output))
         for _ in range(warmup):
             model(*_walk(module.get_inputs()))
             torch.npu.synchronize()
@@ -187,10 +207,12 @@ def worker(path: Path, warmup: int, repeats: int) -> dict[str, Any]:
             "p90": ordered[p90_index],
         },
         "output": _output_facts(output),
+        "input_bytes": input_bytes,
+        "repeat_check_skipped": repeat_check_skipped,
         "nan_inf": not finite,
         "outputs_on_npu": outputs_on_npu,
         "repeat_stable": repeat_stable,
-        "stochastic_output": not repeat_stable,
+        "stochastic_output": None if repeat_stable is None else not repeat_stable,
     }
 
 
@@ -261,7 +283,13 @@ def _classify_failure(payload: dict[str, Any], diagnostic: str) -> str:
         return "unsupported_dtype"
     if "layout" in message and ("not support" in message or "unsupported" in message):
         return "unsupported_layout"
-    if "notimplementederror" in message or "not supported on the npu" in message:
+    if (
+        "notimplementederror" in message
+        or "not supported on the npu" in message
+        or "op type" in message and "not found in this op store" in message
+        or "dilation only support" in message
+        or "value of dilation should be equal" in message
+    ):
         return "unsupported_operator"
     if "no module named" in message or "importerror" in message:
         return "environment_error"
