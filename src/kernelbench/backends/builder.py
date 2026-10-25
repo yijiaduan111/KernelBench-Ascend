@@ -19,6 +19,7 @@ from .errors import (
     AscendCCompileError,
     BindingCompileError,
     OPPInstallError,
+    SpecValidationError,
 )
 from .generator import TEMPLATE_VERSION, GeneratedNames, generated_names, render_project
 from .security import validate_candidate_source
@@ -28,6 +29,7 @@ from .spec import (
     extract_literal_assignment,
     extract_literal_tiling,
 )
+from .boundary import BoundaryContract, load_boundary_contract, validate_boundary_spec
 
 
 _SECRET_ENV = {
@@ -109,9 +111,22 @@ class AscendCBuilder:
         problem_id: int | None = None,
     ) -> tuple[AscendCSpec, AscendCTilingSpec, str, dict[str, Any]]:
         spec = validate_candidate_source(candidate_source)
+        boundary_contract = None
+        try:
+            boundary_mapping = extract_literal_assignment(candidate_source, "BOUNDARY_CONTRACT")
+        except SpecValidationError as exc:
+            if "assignment was not found" not in str(exc):
+                raise
+            boundary_mapping = None
+        if boundary_mapping is not None:
+            boundary_contract = BoundaryContract.from_mapping(boundary_mapping)
+            validate_boundary_spec(spec, boundary_contract)
         if (level is None) != (problem_id is None):
             raise ValueError("level and problem_id must be provided together")
-        if level is not None and problem_id is not None:
+        if boundary_contract is not None:
+            if level is not None and boundary_contract.level != level or problem_id is not None and boundary_contract.problem_id != problem_id:
+                raise SpecValidationError("boundary contract task identity does not match build task")
+        elif level is not None and problem_id is not None:
             from .ascendc_tasks import get_ascend_task_contract, validate_spec_for_task
 
             validate_spec_for_task(

@@ -11,7 +11,7 @@ from .errors import SpecValidationError
 from .spec import AscendCSpec, AscendCTilingSpec
 
 
-TEMPLATE_VERSION = "cann-9.0.1-v4"
+TEMPLATE_VERSION = "cann-9.0.1-v5"
 
 
 def _snake(value: str) -> str:
@@ -320,6 +320,7 @@ from setuptools import setup
 from torch.utils.cpp_extension import BuildExtension
 from torch_npu.utils.cpp_extension import NpuExtension
 import torch_npu
+import os
 import sys
 import sysconfig
 
@@ -329,7 +330,8 @@ opp = artifact / "opp" / "vendors" / "customize"
 cann = Path({str(cann_path)!r})
 torch_npu_root = Path(torch_npu.__file__).resolve().parent
 python_version = f"{{sys.version_info.major}}.{{sys.version_info.minor}}"
-python_header_candidates = [
+python_header_override = os.environ.get("KERNELBENCH_PYTHON_INCLUDE_DIR")
+python_header_candidates = ([Path(python_header_override)] if python_header_override else []) + [
     Path(sysconfig.get_path("include")),
     Path(f"/usr/include/python{{python_version}}"),
 ]
@@ -351,7 +353,7 @@ setup(
     ext_modules=[NpuExtension(
         name={names.binding_module!r},
         sources=[str(root / "binding.cpp")],
-        include_dirs=[str(root), str(python_headers), str(opp / "op_api" / "include"), str(cann / "include")],
+        include_dirs=[str(root), str(python_headers), str(python_headers.parent), str(opp / "op_api" / "include"), str(cann / "include")],
         library_dirs=[str(opp / "op_api" / "lib"), str(cann / "lib64")],
         libraries=["cust_opapi", "nnopbase"],
         extra_compile_args=["-O3"],

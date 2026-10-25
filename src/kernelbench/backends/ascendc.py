@@ -16,6 +16,7 @@ from .errors import CandidateTimeoutError, NpuRuntimeError
 from .security import validate_candidate_source
 from .spec import AscendCSpec
 from .ascendc_tasks import get_ascend_task_contract, validate_spec_for_task
+from .boundary import BoundaryContract, validate_boundary_spec
 
 
 def validate_ascendc_candidate(
@@ -28,7 +29,19 @@ def validate_ascendc_candidate(
     if (level is None) != (problem_id is None):
         raise ValueError("level and problem_id must be provided together")
     if level is not None and problem_id is not None:
-        validate_spec_for_task(spec, get_ascend_task_contract(level, problem_id))
+        try:
+            from .spec import extract_literal_assignment
+            boundary = BoundaryContract.from_mapping(extract_literal_assignment(source, "BOUNDARY_CONTRACT"))
+        except Exception as exc:
+            if "assignment was not found" not in str(exc):
+                raise
+            boundary = None
+        if boundary is not None:
+            if boundary.level != level or boundary.problem_id != problem_id:
+                raise ValueError("boundary contract task identity does not match candidate")
+            validate_boundary_spec(spec, boundary)
+        else:
+            validate_spec_for_task(spec, get_ascend_task_contract(level, problem_id))
     return spec
 
 

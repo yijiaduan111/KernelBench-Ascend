@@ -12,6 +12,9 @@ from .spec import AscendCSpec
 class TensorContract:
     dtype: str
     rank: int
+    name: str | None = None
+    shape: tuple[str, ...] | None = None
+    layout: str | None = None
 
 
 @dataclass(frozen=True)
@@ -24,10 +27,23 @@ class AscendTaskContract:
     init_input_count: int
     required_attributes: tuple[tuple[str, str], ...] = ()
     reference_status: str = "supported"
+    attribute_defaults: tuple[tuple[str, int | float | bool], ...] = ()
+    strict_schema: bool = False
+    operator_slug: str | None = None
 
 
 def _tensor(dtype: str, rank: int) -> TensorContract:
     return TensorContract(dtype=dtype, rank=rank)
+
+
+def _pointwise_tensor(name: str) -> TensorContract:
+    return TensorContract(
+        dtype="float32",
+        rank=2,
+        name=name,
+        shape=("input[0].dim(0)", "input[0].dim(1)"),
+        layout="ND",
+    )
 
 
 # These contracts describe full-operator candidates. Hybrid candidates are
@@ -36,12 +52,21 @@ def _tensor(dtype: str, rank: int) -> TensorContract:
 ASCEND_L1_15: dict[int, AscendTaskContract] = {
     1: AscendTaskContract(1, 1, "Square matrix multiplication", (_tensor("float32", 2), _tensor("float32", 2)), (_tensor("float32", 2),), 0),
     10: AscendTaskContract(1, 10, "3D tensor matrix multiplication", (_tensor("float32", 3), _tensor("float32", 2)), (_tensor("float32", 3),), 0),
-    20: AscendTaskContract(1, 20, "LeakyReLU", (_tensor("float32", 2),), (_tensor("float32", 2),), 0, (("negative_slope", "float"),)),
-    25: AscendTaskContract(1, 25, "Swish", (_tensor("float32", 2),), (_tensor("float32", 2),), 0),
+    20: AscendTaskContract(
+        1, 20, "LeakyReLU", (_pointwise_tensor("x"),), (_pointwise_tensor("y"),),
+        0, (("negative_slope", "float"),),
+        attribute_defaults=(("negative_slope", 0.01),), strict_schema=True,
+        operator_slug="leaky_relu",
+    ),
+    25: AscendTaskContract(
+        1, 25, "Swish", (_pointwise_tensor("x"),), (_pointwise_tensor("y"),),
+        0, strict_schema=True,
+        operator_slug="swish",
+    ),
     33: AscendTaskContract(1, 33, "BatchNorm", (_tensor("float32", 4),), (_tensor("float32", 4),), 1),
     40: AscendTaskContract(1, 40, "LayerNorm", (_tensor("float32", 4),), (_tensor("float32", 4),), 1),
     42: AscendTaskContract(1, 42, "MaxPool2d", (_tensor("float32", 4),), (_tensor("float32", 4),), 4),
-    45: AscendTaskContract(1, 45, "AvgPool2d", (_tensor("float32", 4),), (_tensor("float32", 4),), 1, reference_status="resource_timeout"),
+    45: AscendTaskContract(1, 45, "AvgPool2d", (_tensor("float32", 4),), (_tensor("float32", 4),), 1),
     47: AscendTaskContract(1, 47, "Sum reduction dim 1", (_tensor("float32", 3),), (_tensor("float32", 3),), 1, (("dim", "int64_t"),)),
     50: AscendTaskContract(1, 50, "Conv2d", (_tensor("float32", 4),), (_tensor("float32", 4),), 1),
     61: AscendTaskContract(1, 61, "ConvTranspose3d", (_tensor("float32", 5),), (_tensor("float32", 5),), 3),
@@ -62,6 +87,17 @@ def get_ascend_task_contract(level: int, problem_id: int) -> AscendTaskContract:
 
 def validate_spec_for_task(spec: AscendCSpec, contract: AscendTaskContract) -> None:
     """Validate a full-operator candidate against a trusted task ABI."""
+
+    if contract.strict_schema:
+        if not contract.operator_slug:
+            raise SpecValidationError("trusted task contract has no operator name")
+        expected_op_name = f"l{contract.level}_p{contract.problem_id}_{contract.operator_slug}"
+        expected_entrypoint = f"p{contract.problem_id}_{contract.operator_slug}_entry"
+        if spec.op_name != expected_op_name or spec.entrypoint != expected_entrypoint:
+            raise SpecValidationError(
+                f"task P{contract.problem_id} op name and entrypoint must be "
+                f"{expected_op_name!r} and {expected_entrypoint!r}"
+            )
 
     if len(spec.inputs) != len(contract.inputs):
         raise SpecValidationError(
@@ -91,6 +127,21 @@ def validate_spec_for_task(spec: AscendCSpec, contract: AscendTaskContract) -> N
                     f"task P{contract.problem_id} {group_name}[{index}] rank must be "
                     f"{tensor.rank}, got {rank}"
                 )
+            if tensor.name is not None and item.get("name") != tensor.name:
+                raise SpecValidationError(
+                    f"task P{contract.problem_id} {group_name}[{index}] name must be "
+                    f"{tensor.name!r}"
+                )
+            if tensor.shape is not None and tuple(item.get("shape", [])) != tensor.shape:
+                raise SpecValidationError(
+                    f"task P{contract.problem_id} {group_name}[{index}] shape must be "
+                    f"{tensor.shape!r}"
+                )
+            if tensor.layout is not None and item.get("layout") != tensor.layout:
+                raise SpecValidationError(
+                    f"task P{contract.problem_id} {group_name}[{index}] layout must be "
+                    f"{tensor.layout!r}"
+                )
 
     attributes = {
         str(item["name"]): str(item.get("c_type", item.get("type", "float")))
@@ -100,6 +151,20 @@ def validate_spec_for_task(spec: AscendCSpec, contract: AscendTaskContract) -> N
         if attributes.get(name) != c_type:
             raise SpecValidationError(
                 f"task P{contract.problem_id} requires attribute {name!r} with type {c_type}"
+            )
+    if contract.strict_schema and set(attributes) != {
+        name for name, _ in contract.required_attributes
+    }:
+        raise SpecValidationError(
+            f"task P{contract.problem_id} attributes do not match the trusted contract"
+        )
+    defaults = {
+        str(item["name"]): item.get("default") for item in spec.attributes
+    }
+    for name, expected in contract.attribute_defaults:
+        if defaults.get(name) != expected:
+            raise SpecValidationError(
+                f"task P{contract.problem_id} attribute {name!r} default must be {expected!r}"
             )
 
 
