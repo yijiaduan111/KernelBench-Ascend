@@ -40,6 +40,80 @@ def get_error_name(e: Exception) -> str:
     return f"{e.__class__.__module__}.{e.__class__.__name__}"
 
 
+_BACKEND_ERROR_MESSAGE_LIMIT = 6000
+_RUNTIME_FAILURE_TYPES = {
+    "npu_runtime_error",
+    "runtime_error",
+    "timeout",
+    "out_of_memory",
+}
+_CORRECTNESS_FAILURE_TYPES = {
+    "correctness_error",
+    "correctness_issue",
+}
+
+
+def _failure_stage_for_type(failure_type: object, default: str = "compile") -> str:
+    normalized = str(failure_type or "").strip().lower()
+    if normalized in _RUNTIME_FAILURE_TYPES or "runtime" in normalized or "timeout" in normalized:
+        return "runtime"
+    if normalized in _CORRECTNESS_FAILURE_TYPES or "correct" in normalized:
+        return "correctness"
+    return default
+
+
+def _bounded_error_text(value: object, limit: int = _BACKEND_ERROR_MESSAGE_LIMIT) -> str:
+    """Keep evaluator error details useful without sending unbounded logs downstream."""
+    text = "" if value is None else str(value).strip()
+    if len(text) <= limit:
+        return text
+    marker = "\n...[error truncated]...\n"
+    available = max(2, limit - len(marker))
+    head = max(1, available // 2)
+    tail = max(1, available - head)
+    return f"{text[:head]}{marker}{text[-tail:]}"
+
+
+def _record_backend_failure(
+    metadata: dict,
+    *,
+    failure_type: str,
+    failure_stage: str,
+    message: object,
+    exception_name: str | None = None,
+    legacy_key: str | None = None,
+) -> None:
+    """Record a stable failure envelope while preserving legacy metadata keys."""
+    bounded = _bounded_error_text(message)
+    metadata["failure_type"] = str(failure_type or "backend_error")
+    metadata["failure_stage"] = str(failure_stage or "compile")
+    if exception_name:
+        metadata["failure_exception"] = str(exception_name)
+    metadata["failure_message"] = bounded
+    if legacy_key:
+        metadata[legacy_key] = bounded
+
+
+def _record_backend_exception(
+    metadata: dict,
+    exc: Exception,
+    *,
+    default_failure_type: str = "ascendc_error",
+    default_stage: str = "compile",
+    legacy_key: str | None = "ascendc_error",
+) -> None:
+    failure_type = str(getattr(exc, "failure_type", None) or default_failure_type)
+    stage = "runtime" if failure_type in _RUNTIME_FAILURE_TYPES else default_stage
+    _record_backend_failure(
+        metadata,
+        failure_type=failure_type,
+        failure_stage=stage,
+        message=exc,
+        exception_name=exc.__class__.__name__,
+        legacy_key=legacy_key,
+    )
+
+
 def fetch_ref_arch_from_problem_id(problem_id: int, dataset: "BaseDataset", with_name=False) -> Union[str, tuple[str, str]]:
     """
     Fetches the reference architecture for a given problem_id from the dataset.
@@ -528,9 +602,19 @@ def eval_kernel_against_ref(
                     "evaluation_root": report.get("evaluation_root"),
                 }
             )
+            if report.get("failure_type"):
+                metadata["failure_stage"] = _failure_stage_for_type(report["failure_type"])
             if report.get("error"):
                 metadata["runtime_error"] = report["error"]
                 metadata["runtime_traceback"] = report.get("traceback")
+                _record_backend_failure(
+                    metadata,
+                    failure_type=str(report.get("failure_type") or "npu_runtime_error"),
+                    failure_stage="runtime",
+                    message=report["error"],
+                    exception_name=str(report.get("error_type") or "WorkerError"),
+                    legacy_key="ascendc_error",
+                )
             candidate_stats = report.get("candidate", {})
             reference_stats = report.get("reference", {})
             return KernelExecResult(
@@ -543,8 +627,7 @@ def eval_kernel_against_ref(
                 metadata=metadata,
             )
         except Exception as exc:
-            metadata["failure_type"] = getattr(exc, "failure_type", "ascendc_error")
-            metadata["ascendc_error"] = str(exc)
+            _record_backend_exception(metadata, exc)
             return KernelExecResult(compiled=False, correctness=False, metadata=metadata)
 
     if uses_tempfile:

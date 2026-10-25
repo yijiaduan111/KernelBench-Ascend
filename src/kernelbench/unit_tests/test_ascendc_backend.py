@@ -107,12 +107,14 @@ def test_generator_emits_unique_private_project(tmp_path: Path):
     host = (tmp_path / "project/op_host" / f"{names.op_file}.cpp").read_text()
     device = (tmp_path / "project/op_kernel" / f"{names.op_file}.cpp").read_text()
     binding = (tmp_path / "binding/binding.cpp").read_text()
+    setup_script = (tmp_path / "binding/setup.py").read_text()
     preset = json.loads((tmp_path / "project/CMakePresets.json").read_text())
 
     assert names.op_type in host
     assert names.kernel_symbol in device
     assert "kernel_entry" not in device
     assert f"aclnn{names.op_type}GetWorkspaceSize" in binding
+    assert 'os.environ.get("KERNELBENCH_PYTHON_INCLUDE_DIR")' in setup_script
     assert preset["configurePresets"][0]["cacheVariables"]["ASCEND_CANN_PACKAGE_PATH"] == str(Path("/opt/cann"))
 
 
