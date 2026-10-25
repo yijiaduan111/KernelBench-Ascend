@@ -77,7 +77,13 @@ public:
 private:
     __aicore__ inline void CopyIn(uint32_t offset, uint32_t count) {
         auto x = inQueue_.AllocTensor<float>();
-        AscendC::DataCopy(x, xGm_[offset], count);
+        if (count % 8u == 0) {
+            AscendC::DataCopy(x, xGm_[offset], count);
+        } else {
+            AscendC::DataCopyExtParams copy{1, count * 4u, 0, 0, 0};
+            AscendC::DataCopyPadExtParams<float> pad{false, 0, 0, 0.0f};
+            AscendC::DataCopyPad(x, xGm_[offset], copy, pad);
+        }
         inQueue_.EnQue(x);
     }
 
@@ -95,7 +101,12 @@ private:
 
     __aicore__ inline void CopyOut(uint32_t offset, uint32_t count) {
         auto y = outQueue_.DeQue<float>();
-        AscendC::DataCopy(yGm_[offset], y, count);
+        if (count % 8u == 0) {
+            AscendC::DataCopy(yGm_[offset], y, count);
+        } else {
+            AscendC::DataCopyExtParams copy{1, count * 4u, 0, 0, 0};
+            AscendC::DataCopyPad(yGm_[offset], y, copy);
+        }
         outQueue_.FreeTensor(y);
     }
 

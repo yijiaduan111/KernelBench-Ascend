@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import pprint
+import copy
 import re
 from dataclasses import asdict, dataclass, field
 from typing import Any, Literal
@@ -267,13 +268,20 @@ def lower_boundary_contract(contract: BoundaryContract, implementation_config: A
         {"name": item.name, "c_type": item.c_type, "default": item.default}
         for item in contract.attributes
     ]
-    tiling: dict[str, dict[str, Any]] = {}
-    for index, item in enumerate(contract.inputs):
-        tiling[f"input{index}_numel"] = {"c_type": "uint64_t", "expression": f"input[{index}].numel()"}
-        for dim in range(item.rank):
-            tiling[f"input{index}_dim{dim}"] = {"c_type": "uint64_t", "expression": f"input[{index}].dim({dim})"}
-    for item in contract.attributes:
-        tiling[item.name] = {"c_type": item.c_type, "expression": f'attr("{item.name}")'}
+    if implementation_config is not None:
+        tiling = copy.deepcopy(getattr(implementation_config, "tiling", {}))
+        block_dim = getattr(implementation_config, "block_dim", "literal(1)")
+        workspace = getattr(implementation_config, "workspace", "literal(0)")
+    else:
+        tiling: dict[str, dict[str, Any]] = {}
+        for index, item in enumerate(contract.inputs):
+            tiling[f"input{index}_numel"] = {"c_type": "uint64_t", "expression": f"input[{index}].numel()"}
+            for dim in range(item.rank):
+                tiling[f"input{index}_dim{dim}"] = {"c_type": "uint64_t", "expression": f"input[{index}].dim({dim})"}
+        for item in contract.attributes:
+            tiling[item.name] = {"c_type": item.c_type, "expression": f'attr("{item.name}")'}
+        block_dim = "literal(1)"
+        workspace = "literal(0)"
     return AscendCSpec.from_mapping({
         "op_name": f"l{contract.level}_p{contract.problem_id}_boundary",
         "entrypoint": f"p{contract.problem_id}_boundary_entry",
@@ -281,12 +289,19 @@ def lower_boundary_contract(contract: BoundaryContract, implementation_config: A
         "outputs": outputs,
         "attributes": attributes,
         "tiling": tiling,
-        "block_dim": "literal(1)",
-        "workspace": "literal(0)",
+        "block_dim": block_dim,
+        "workspace": workspace,
     })
 
 
 def validate_boundary_spec(spec: Any, contract: BoundaryContract) -> None:
+    from .errors import SpecValidationError
+    from .spec_factory import AscendCImplementationConfig
+
+    expected = lower_boundary_contract(contract, AscendCImplementationConfig.from_spec(spec))
+    for field_name in ("op_name", "entrypoint", "inputs", "outputs", "attributes"):
+        if getattr(spec, field_name) != getattr(expected, field_name):
+            raise SpecValidationError(f"boundary {field_name} differs from canonical contract")
     if contract.status != "supported":
         raise ValueError(f"unsupported boundary contract: {contract.failure_type}: {contract.failure_message}")
     expected_inputs = [item.name for item in contract.inputs]
@@ -317,7 +332,7 @@ def render_boundary_scaffold(info: Any, contract: BoundaryContract, spec: Any) -
         "ASCENDC_TILING = {" + repr("fields") + ": [" + ", ".join(
             repr({"name": name, "c_type": definition.get("c_type", "uint64_t"), "expression": definition.get("expression", definition.get("default", "literal(0)"))})
             for name, definition in spec.tiling.items()
-        ) + "], 'block_dim': 'literal(1)', 'workspace': 'literal(0)'}",
+        ) + f"], 'block_dim': {spec.block_dim!r}, 'workspace': {spec.workspace!r}}}",
         "",
         "# <<<IMPROVE:ascendc_kernel>>>",
         "ASCENDC_KERNEL_SOURCE = r'''",
@@ -348,7 +363,7 @@ def render_boundary_scaffold(info: Any, contract: BoundaryContract, spec: Any) -
     arg_names = []
     try:
         import ast
-        node = ast.parse(f"def forward{info.forward_signature}: pass").body[0]
+        node = ast.parse(f"def {info.forward_signature}: pass").body[0]
         arg_names = [arg.arg for arg in node.args.args if arg.arg != "self"]
     except Exception:
         arg_names = []
@@ -366,6 +381,16 @@ def render_boundary_scaffold(info: Any, contract: BoundaryContract, spec: Any) -
         if attr.source == "module_attribute": call_args.append(_python_path_expr("self", attr.name))
         elif attr.source == "forward_arg" and attr.name in arg_names: call_args.append(attr.name)
         else: call_args.append(repr(attr.default))
+    for item, expression in zip(contract.inputs, call_args):
+        lines += [
+            f"        if tuple({expression}.shape) != {item.shape!r} or {expression}.dtype != torch.{item.dtype} or not {expression}.is_contiguous():",
+            f"            raise ValueError('boundary input guard failed: {item.name}')",
+        ]
+    for attr, expression in zip(contract.attributes, call_args[len(contract.inputs):]):
+        lines += [
+            f"        if {expression} != {attr.default!r}:",
+            f"            raise ValueError('boundary attribute requires recapture: {attr.name}')",
+        ]
     lines += ["        return ascendc_binding." + spec.entrypoint + "(" + ", ".join(call_args) + ")", ""]
     return "\n".join(lines).rstrip() + "\n"
 

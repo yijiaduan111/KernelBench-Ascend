@@ -53,7 +53,8 @@ public:
         const uint32_t blockNum = static_cast<uint32_t>(AscendC::GetBlockNum());
         const uint32_t blockIdx = static_cast<uint32_t>(AscendC::GetBlockIdx());
         const uint32_t usedBlocks = blockNum == 0 ? 1 : blockNum;
-        const uint32_t coreChunk = CeilDivU32(totalLength_, usedBlocks);
+        // Give each core complete 32-byte GM blocks; the final core owns the tail.
+        const uint32_t coreChunk = CeilDivU32(CeilDivU32(totalLength_, usedBlocks), 8u) * 8u;
         const uint32_t coreStart = blockIdx * coreChunk;
         if (coreStart >= totalLength_) {
             coreLen_ = 0;
@@ -92,7 +93,13 @@ private:
     __aicore__ inline void CopyIn(uint32_t tile) {
         const uint32_t length = TileLength(tile);
         auto x = inQueue_.AllocTensor<float>();
-        AscendC::DataCopy(x, xGm_[tile * tileSize_], length);
+        if (length % 8u == 0) {
+            AscendC::DataCopy(x, xGm_[tile * tileSize_], length);
+        } else {
+            AscendC::DataCopyExtParams copy{1, length * 4u, 0, 0, 0};
+            AscendC::DataCopyPadExtParams<float> pad{false, 0, 0, 0.0f};
+            AscendC::DataCopyPad(x, xGm_[tile * tileSize_], copy, pad);
+        }
         inQueue_.EnQue(x);
     }
 
@@ -110,7 +117,12 @@ private:
     __aicore__ inline void CopyOut(uint32_t tile) {
         const uint32_t length = TileLength(tile);
         auto y = outQueue_.DeQue<float>();
-        AscendC::DataCopy(yGm_[tile * tileSize_], y, length);
+        if (length % 8u == 0) {
+            AscendC::DataCopy(yGm_[tile * tileSize_], y, length);
+        } else {
+            AscendC::DataCopyExtParams copy{1, length * 4u, 0, 0, 0};
+            AscendC::DataCopyPad(yGm_[tile * tileSize_], y, copy);
+        }
         outQueue_.FreeTensor(y);
     }
 

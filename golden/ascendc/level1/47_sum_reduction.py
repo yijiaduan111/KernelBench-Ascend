@@ -62,7 +62,8 @@ public:
         const uint64_t blockIdx = static_cast<uint64_t>(AscendC::GetBlockIdx());
         uint64_t blockNum = static_cast<uint64_t>(AscendC::GetBlockNum());
         if (blockNum == 0) blockNum = 1;
-        const uint64_t chunk = (outerCount_ + blockNum - 1) / blockNum;
+        // Scalar stores must not let different cores share a 64-byte cache line.
+        const uint64_t chunk = ((outerCount_ + blockNum - 1) / blockNum + 15u) / 16u * 16u;
         const uint64_t start = blockIdx * chunk;
         uint64_t end = start + chunk;
         if (end > outerCount_) end = outerCount_;
