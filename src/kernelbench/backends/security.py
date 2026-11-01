@@ -38,6 +38,28 @@ _FORBIDDEN_CALLS = {
 }
 _SECRET_ENV = re.compile(r"(?:OPENAI|ANTHROPIC|DASHSCOPE|PYRAMIDKERNEL).*KEY|API_KEY|API_BASE", re.I)
 
+_AICORE_DENIED_MATH = re.compile(
+    r"(?<![A-Za-z0-9_])(?:__builtin_)?"
+    r"(expf|sqrtf|logf|powf|fabsf|fmaf|tanhf|erff|rsqrtf|floorf|ceilf|roundf|exp2f|log2f)\s*\("
+)
+_AICORE_MATH_REPLACEMENTS = {
+    "expf": "AscendC::Exp(dstLocal, srcLocal, calCount)",
+    "sqrtf": "AscendC::Sqrt(dstLocal, srcLocal, calCount), or scalar AscendC::Std::sqrt(x)",
+    "fmaf": "AscendC::FusedMulAdd(dst, src0, src1, calCount), or plain a * b + c",
+    "logf": "AscendC::Ln(dstLocal, srcLocal, calCount)",
+    "powf": "AscendC::Exp(y * AscendC::Ln(x)) over LocalTensors",
+    "tanhf": "(2.0f / (1.0f + Exp(-2.0f * x))) - 1.0f computed with AscendC::Exp",
+    "fabsf": "AscendC::Abs(dstLocal, srcLocal, calCount)",
+    "rsqrtf": "AscendC::Rsqrt(dstLocal, srcLocal, calCount)",
+    "erff": "no aicore erf intrinsic; compose from AscendC::Exp and AscendC::Ln",
+}
+_AICORE_DOUBLE = re.compile(r"(?<![A-Za-z0-9_])double(?![A-Za-z0-9_])")
+
+
+def _strip_c_comments(text: str) -> str:
+    text = re.sub(r"/\*.*?\*/", " ", text, flags=re.S)
+    return re.sub(r"//[^\n]*", "", text)
+
 
 def validate_candidate_source(source: str) -> AscendCSpec:
     try:
@@ -76,6 +98,23 @@ def validate_candidate_source(source: str) -> AscendCSpec:
         raise StaticRejectionError("only #include \\\"kernel_operator.h\\\" is allowed in Ascend C source")
     if re.search(r"\b(?:system|popen|fopen|socket|connect|fork|execv|execve|dlopen|getenv|syscall)\s*\(", kernel_source):
         raise StaticRejectionError("forbidden host/process operation in Ascend C source")
+
+    # The aicore device has no scalar C math library.  Candidates that reach
+    # for expf/sqrtf/fmaf compile-fail or link-fail on every attempt, so the
+    # rejection message names the Ascend C intrinsic that replaces it.
+    device_text = _strip_c_comments(kernel_source)
+    denied = _AICORE_DENIED_MATH.search(device_text)
+    if denied is not None:
+        name = denied.group(1)
+        raise StaticRejectionError(
+            f"aicore has no scalar C math library: '{name}' is undeclared or fails to link; "
+            f"use {_AICORE_MATH_REPLACEMENTS.get(name, 'the equivalent AscendC vector intrinsic')} "
+            "instead of a per-element scalar call"
+        )
+    if _AICORE_DOUBLE.search(device_text) is not None:
+        raise StaticRejectionError(
+            "aicore forbids double precision; use float for every device-side scalar and local"
+        )
     entrypoint_pattern = re.compile(
         rf'extern\s+"C"\s+__global__\s+__aicore__\s+void\s+{re.escape(spec.entrypoint)}\s*\('
     )
