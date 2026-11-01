@@ -273,15 +273,13 @@ def lower_boundary_contract(contract: BoundaryContract, implementation_config: A
         block_dim = getattr(implementation_config, "block_dim", "literal(1)")
         workspace = getattr(implementation_config, "workspace", "literal(0)")
     else:
-        tiling: dict[str, dict[str, Any]] = {}
-        for index, item in enumerate(contract.inputs):
-            tiling[f"input{index}_numel"] = {"c_type": "uint64_t", "expression": f"input[{index}].numel()"}
-            for dim in range(item.rank):
-                tiling[f"input{index}_dim{dim}"] = {"c_type": "uint64_t", "expression": f"input[{index}].dim({dim})"}
-        for item in contract.attributes:
-            tiling[item.name] = {"c_type": item.c_type, "expression": f'attr("{item.name}")'}
-        block_dim = "literal(1)"
-        workspace = "literal(0)"
+        # Use TilingPolicy to automatically infer tiling parameters
+        from .tiling_policy import TilingPolicy
+        policy = TilingPolicy(max_cores=20)
+        decision = policy.infer(contract)
+        tiling = decision.tiling
+        block_dim = decision.block_dim
+        workspace = decision.workspace
     return AscendCSpec.from_mapping({
         "op_name": f"l{contract.level}_p{contract.problem_id}_boundary",
         "entrypoint": f"p{contract.problem_id}_boundary_entry",
