@@ -72,7 +72,11 @@ def _compare(reference: Any, candidate: Any, path: str = "output") -> dict[str, 
             result["ok"] = bool(torch.equal(reference, candidate))
             result["reason"] = None if result["ok"] else "integer/boolean values differ"
             return result
-        tolerance = 1e-4 if reference.dtype == torch.float32 else 1e-2
+        # Keep Ascend C isolated-worker correctness on the same configurable
+        # tolerance as the main evaluator. This used to be hard-coded to
+        # 1e-4 here, so changing kernelbench.eval.py did not affect NPU runs.
+        from kernelbench.eval import get_tolerance_for_precision
+        tolerance = get_tolerance_for_precision(reference.dtype)
         reference_flat = reference.reshape(-1)
         candidate_flat = candidate.reshape(-1)
         # Full-sized temporary tensors can add several GiB for official L1
