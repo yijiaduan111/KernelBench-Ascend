@@ -19,11 +19,25 @@ A candidate is one Python source file containing:
 - A literal `ASCENDC_KERNEL_SOURCE` string containing the Ascend C device
   implementation and the declared entrypoint.
 
+`ModelNew.__init__` receives the same positional arguments returned by the
+official task's `get_init_inputs()`. The evaluator constructs it as
+`ModelNew(*get_init_inputs())`, switches it to evaluation mode, then calls
+`forward(*get_inputs())` for each correctness and timing trial. `forward` must
+preserve the reference output tree and invoke the binding with custom-op tensor
+inputs in spec order, followed by declared scalar attributes. The generated
+device entrypoint receives input and output addresses followed by workspace and
+tiling pointers; scalar attributes are included in the generated tiling data.
+The binding returns one tensor for one declared output, or a tuple for multiple
+outputs.
+
 Tensor descriptors include a name, dtype, shape expressions, and optional
 layout. The expression language is intentionally small and checked before code
-generation. Expressions can read input dimensions and element counts, refer to
-declared scalar attributes, use numeric literals, and compose supported
-arithmetic functions. Tiling expressions use the same checked language. Use
+generation. Supported tensor dtypes are `float32`, `float16`, `bfloat16`,
+`int64`, `int32`, and `bool`; layouts are `ND` and `contiguous`. Expressions can
+read `input[i].dim(j)`, `input[i].size(j)`, and `input[i].numel()`, refer to a
+declared scalar with `attr("name")`, use numbers or booleans with
+`literal(value)`, and compose `add`, `sub`, `mul`, `floor_div`, `ceil_div`,
+`min`, and `max`. Tiling expressions use the same checked language. Use
 `validate_ascendc_candidate()` before building to validate a candidate against
 the published protocol. The [P20 candidate](../../golden/ascendc/level1/20_leaky_relu.py)
 is a complete example.
@@ -32,9 +46,9 @@ Optimizer integrations should use the stable `kernelbench.ascendc` API and
 check `API_VERSION` when integrating. Modules under `kernelbench.backends` are
 implementation details and are not a compatibility promise.
 
-Python-side candidate imports are restricted to PyTorch. Device code may
-include `kernel_operator.h`, and `ModelNew.forward` must call the declared
-binding entrypoint.
+Python-side candidate imports are restricted to PyTorch. The only accepted
+device-code include is exactly `#include "kernel_operator.h"`, and
+`ModelNew.forward` must call the declared binding entrypoint.
 
 The candidate may include additional literal metadata, such as a
 `BOUNDARY_CONTRACT`, but the benchmark does not require or interpret

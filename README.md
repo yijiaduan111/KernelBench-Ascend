@@ -39,6 +39,41 @@ Optimizer ──> ModelNew + ASCENDC_OP_SPEC + tiling + kernel   │
 
 KernelBench owns the task definitions, reference execution, candidate format, generic validation/build steps, and result measurement. It does not generate candidate code, define a task-specific `BoundaryContract`, select tiling, or run an optimizer's search. The candidate interface is documented in [ASCENDC_SUBMISSION_PROTOCOL.md](docs/ascend/ASCENDC_SUBMISSION_PROTOCOL.md).
 
+## Required Ascend C candidate format
+
+To run the Ascend C evaluator, submit **one Python source file** for the selected task. The file must contain all four items below; the evaluator does not accept a standalone `.cpp` kernel or an arbitrary `ModelNew` file.
+
+| Required item | What it must contain |
+| --- | --- |
+| `ModelNew` | A `torch.nn.Module` class. Its constructor must accept the same initialization arguments as the official task's `get_init_inputs()`. Its `forward()` must accept the official test inputs, return the reference-compatible output, and call the declared custom-op binding. |
+| `ASCENDC_OP_SPEC` | A top-level **literal Python dict** declaring `op_name`, `entrypoint`, ordered `inputs`, and ordered `outputs`. Tensor descriptors give `name`, `dtype`, `shape` expressions, and optional `layout`. It may also declare scalar `attributes`, `tiling` fields, `block_dim`, and `workspace`. Supported tensor dtypes are `float32`, `float16`, `bfloat16`, `int64`, `int32`, and `bool`; attribute `c_type` values are `float`, `double`, `int32_t`, `int64_t`, and `bool`. |
+| `ASCENDC_TILING` | A top-level **literal Python dict** giving each declared tiling value. It may also override `block_dim` and `workspace`; otherwise those values come from `ASCENDC_OP_SPEC`. |
+| `ASCENDC_KERNEL_SOURCE` | A top-level **literal string** containing the Ascend C device kernel. Its only allowed include is exactly `#include "kernel_operator.h"`. It must define the exact `entrypoint`, accept tensor addresses in spec order followed by output pointers, workspace, and tiling pointers, and load generated data with `GET_TILING_DATA(...)`. |
+
+For example, the tensor and tiling declarations have this shape:
+
+```python
+ASCENDC_OP_SPEC = {
+    "op_name": "example_op",
+    "entrypoint": "example_entry",
+    "inputs": [
+        {"name": "x", "dtype": "float32", "layout": "ND", "shape": ["input[0].dim(0)"]}
+    ],
+    "outputs": [
+        {"name": "y", "dtype": "float32", "layout": "ND", "shape": ["input[0].dim(0)"]}
+    ],
+    "attributes": [],
+    "tiling": {"tile_size": {"c_type": "uint32_t", "default": 512}},
+    "block_dim": 1,
+    "workspace": 0,
+}
+ASCENDC_TILING = {"tile_size": 512}
+```
+
+The device source must define `example_entry`. The generated host code passes the tensor addresses, output pointers, workspace, and serialized tiling data to that device entrypoint; scalar attributes are carried in tiling data. Separately, `ModelNew.forward()` must call `ascendc_binding.example_entry(...)` with the tensor inputs followed by any declared scalar attributes. The evaluator injects `ascendc_binding`; candidate code must not import or build its own host, registration, or binding project. The complete, executable [P20 LeakyReLU candidate](golden/ascendc/level1/20_leaky_relu.py) shows the full file, including the device implementation and binding call; use it as the starting example rather than submitting the abbreviated declaration above.
+
+The static checker accepts PyTorch imports only and rejects unsafe file/process access, `try/except` fallback paths, and candidates that do not call their declared custom op. Shape and tiling expressions are restricted to `input[i].dim(j)`, `input[i].size(j)`, `input[i].numel()`, `attr("name")`, `literal(value)`, and the documented `add`, `sub`, `mul`, `floor_div`, `ceil_div`, `min`, and `max` functions. Optimizer-only metadata such as `BOUNDARY_CONTRACT` is optional and ignored by the benchmark. See the [full submission protocol](docs/ascend/ASCENDC_SUBMISSION_PROTOCOL.md) for supported dtypes, scalar types, and validation details.
+
 ## Installation
 
 ### Ascend
