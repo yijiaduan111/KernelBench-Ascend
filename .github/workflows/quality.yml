@@ -1,0 +1,30 @@
+name: quality
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  static-and-protocol-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install check tools
+        run: python -m pip install pytest ruff
+      - name: Check formatting and lint
+        run: |
+          python -m ruff check
+          python -m ruff format --check
+      - name: Test Ascend candidate protocol without NPU hardware
+        run: python -m pytest src/kernelbench/unit_tests/test_ascendc_backend.py -q
+      - name: Compile maintained Ascend Python modules
+        run: >-
+          python -m compileall -q
+          src/kernelbench/ascendc.py
+          src/kernelbench/backends
+          src/kernelbench/runtimes
+          scripts/audit_ascend_level.py
+          scripts/evaluate_ascendc_candidate.py

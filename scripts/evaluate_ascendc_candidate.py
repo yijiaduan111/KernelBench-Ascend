@@ -10,7 +10,7 @@ import time
 import traceback
 from pathlib import Path
 
-from kernelbench.backends.ascendc import (
+from kernelbench.ascendc import (
     build_ascendc_artifact,
     evaluate_ascendc_artifact,
     validate_ascendc_candidate,
@@ -32,9 +32,7 @@ def _write_result(result: dict, path: Path | None) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Compile, load, check and time a KernelBench Ascend C candidate."
-    )
+    parser = argparse.ArgumentParser(description="Compile, load, check and time a KernelBench Ascend C candidate.")
     parser.add_argument("--level", type=int, required=True)
     parser.add_argument("--problem-id", type=int, required=True)
     parser.add_argument("--candidate", type=Path, required=True)
@@ -92,9 +90,7 @@ def main() -> int:
             "root": str(artifact.root),
             "cache_hit": bool(artifact.metadata.get("cache_hit", False)),
             "private_opp": True,
-            "system_opp_modified": bool(
-                artifact.metadata.get("system_opp_modified", False)
-            ),
+            "system_opp_modified": bool(artifact.metadata.get("system_opp_modified", False)),
             "build_timings": artifact.metadata.get("timings", {}),
         }
         result["stages"].update(

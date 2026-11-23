@@ -152,7 +152,7 @@ def test_builder_cache_hit_preserves_timings(tmp_path: Path):
     assert cached.metadata["timings"]["compile_seconds"] == 1.0
 
 
-def test_build_environment_removes_api_credentials():
+def test_build_environment_removes_credentials_and_env_file_paths():
     env = scrubbed_environment(
         {
             "PATH": "/bin",
@@ -160,7 +160,9 @@ def test_build_environment_removes_api_credentials():
             "OPENAI_BASE_URL": "https://example.invalid",
             "ANTHROPIC_API_KEY": "secret",
             "DASHSCOPE_API_KEY": "secret",
-            "PYRAMIDKERNEL_ENV_FILE": "/tmp/secrets.env",
+            "HUGGINGFACE_HUB_TOKEN": "secret",
+            "CUSTOM_ACCESS_KEY": "secret",
+            "CUSTOM_ENV_FILE": "/tmp/secrets.env",
         }
     )
     assert env == {"PATH": "/bin"}

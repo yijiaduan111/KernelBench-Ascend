@@ -76,6 +76,7 @@ def _compare(reference: Any, candidate: Any, path: str = "output") -> dict[str, 
         # tolerance as the main evaluator. This used to be hard-coded to
         # 1e-4 here, so changing kernelbench.eval.py did not affect NPU runs.
         from kernelbench.eval import get_tolerance_for_precision
+
         tolerance = get_tolerance_for_precision(reference.dtype)
         reference_flat = reference.reshape(-1)
         candidate_flat = candidate.reshape(-1)
@@ -113,9 +114,7 @@ def _compare(reference: Any, candidate: Any, path: str = "output") -> dict[str, 
         result["nan_count"] = nan_count
         result["inf_count"] = inf_count
         result["max_abs_error"] = max_error
-        result["mean_abs_error"] = (
-            error_sum / reference_flat.numel() if reference_flat.numel() else 0.0
-        )
+        result["mean_abs_error"] = error_sum / reference_flat.numel() if reference_flat.numel() else 0.0
         result["ok"] = bool(close and not nan_count and not inf_count)
         result["reason"] = (
             None
@@ -129,16 +128,13 @@ def _compare(reference: Any, candidate: Any, path: str = "output") -> dict[str, 
         if len(reference) != len(candidate):
             return {"ok": False, "path": path, "reason": "sequence length mismatch"}
         children = [
-            _compare(left, right, f"{path}[{index}]")
-            for index, (left, right) in enumerate(zip(reference, candidate))
+            _compare(left, right, f"{path}[{index}]") for index, (left, right) in enumerate(zip(reference, candidate))
         ]
         return {"ok": all(child["ok"] for child in children), "path": path, "children": children}
     if isinstance(reference, dict) and isinstance(candidate, dict):
         if reference.keys() != candidate.keys():
             return {"ok": False, "path": path, "reason": "mapping keys differ"}
-        children = [
-            _compare(reference[key], candidate[key], f"{path}.{key}") for key in reference
-        ]
+        children = [_compare(reference[key], candidate[key], f"{path}.{key}") for key in reference]
         return {"ok": all(child["ok"] for child in children), "path": path, "children": children}
     if isinstance(reference, (str, int, float, bool, type(None))) and type(reference) is type(candidate):
         return {
@@ -187,10 +183,7 @@ def _exact_equal(reference: Any, candidate: Any, path: str) -> dict[str, Any]:
     if isinstance(reference, dict) and isinstance(candidate, dict):
         if reference.keys() != candidate.keys():
             return {"ok": False, "path": path, "reason": "mapping keys differ"}
-        children = [
-            _exact_equal(reference[key], candidate[key], f"{path}.{key}")
-            for key in reference
-        ]
+        children = [_exact_equal(reference[key], candidate[key], f"{path}.{key}") for key in reference]
         return {"ok": all(child["ok"] for child in children), "path": path, "children": children}
     ok = type(reference) is type(candidate) and reference == candidate
     return {"ok": bool(ok), "path": path, "reason": None if ok else "value was modified"}
@@ -285,9 +278,7 @@ def evaluate(job: dict[str, Any]) -> dict[str, Any]:
             torch.npu.synchronize(device)
             rng_before = _capture_rng_state()
             if trial == 0:
-                candidate_output, first_call_ms, first_host_ms = _event_call(
-                    candidate_model, candidate_inputs, device
-                )
+                candidate_output, first_call_ms, first_host_ms = _event_call(candidate_model, candidate_inputs, device)
             else:
                 candidate_output = candidate_model(*candidate_inputs)
                 torch.npu.synchronize(device)
@@ -296,11 +287,7 @@ def evaluate(job: dict[str, Any]) -> dict[str, Any]:
             comparison["input_unchanged"] = bool(input_check["ok"])
             comparison["input_check"] = input_check
             comparison["rng_unchanged"] = _rng_state_unchanged(rng_before)
-            comparison["ok"] = bool(
-                comparison["ok"]
-                and comparison["input_unchanged"]
-                and comparison["rng_unchanged"]
-            )
+            comparison["ok"] = bool(comparison["ok"] and comparison["input_unchanged"] and comparison["rng_unchanged"])
             comparison["trial"] = trial
             comparison["phase"] = "cold"
             trials.append(comparison)
@@ -331,18 +318,14 @@ def evaluate(job: dict[str, Any]) -> dict[str, Any]:
                 {
                     "trial": len(trials),
                     "phase": "post_warmup",
-                    "input_unchanged": bool(
-                        warmup_mutation["ok"] and post_input_check["ok"]
-                    ),
+                    "input_unchanged": bool(warmup_mutation["ok"] and post_input_check["ok"]),
                     "input_check": post_input_check,
                     "warmup_input_check": warmup_mutation,
                     "rng_unchanged": _rng_state_unchanged(rng_before),
                 }
             )
             post_warmup["ok"] = bool(
-                post_warmup["ok"]
-                and post_warmup["input_unchanged"]
-                and post_warmup["rng_unchanged"]
+                post_warmup["ok"] and post_warmup["input_unchanged"] and post_warmup["rng_unchanged"]
             )
             trials.append(post_warmup)
             del candidate_inputs, reference_output, candidate_output, timing_inputs_before
@@ -412,11 +395,7 @@ def main() -> None:
         job = json.loads(Path(args.job).read_text(encoding="utf-8"))
         report = evaluate(job)
     except Exception as exc:
-        failure_type = (
-            "out_of_memory"
-            if "out of memory" in str(exc).lower()
-            else "npu_runtime_error"
-        )
+        failure_type = "out_of_memory" if "out of memory" in str(exc).lower() else "npu_runtime_error"
         report = {
             "compiled": True,
             "correctness": False,

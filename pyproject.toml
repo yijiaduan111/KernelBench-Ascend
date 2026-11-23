@@ -1,54 +1,77 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
-# this should be our single source of truth for versioning
-
 [project]
-name = "kernelbench"
+name = "kernelbench-ascend"
 version = "0.2.0.dev0"
+description = "KernelBench with an audited Huawei Ascend NPU baseline and Ascend C evaluator"
+readme = "README.md"
 requires-python = "==3.10.*"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["KernelBench", "Ascend", "NPU", "Ascend C", "kernel benchmarking"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Testing",
+]
+
 dependencies = [
-    # Frameworks
-    "torch>=2.9.0",
-
-    "transformers",
-    "datasets>=2.19.0",
-    "modal",
-
-    # helper
-    "tqdm",
-    "packaging",
-    "setuptools",
+    "einops>=0.8.0",
+    "ninja>=1.13.0",
+    "numpy>=1.26.0",
+    "packaging>=23.0",
+    "pydantic>=2.0",
     "pydra-config",
-    "ninja",
-    "tomli",
-    "tabulate",
-
-    # Numerics
-    "einops",
-    "python-dotenv",
-    "numpy",
-
-    # LLM providers
-    "openai",
-    "litellm[proxy]",
+    "python-dotenv>=1.0",
+    "requests>=2.31",
+    "setuptools>=61",
+    "tabulate>=0.9",
+    "tomli>=2.0; python_version < '3.11'",
+    "tqdm>=4.66",
 ]
 
 [project.optional-dependencies]
+ascend = [
+    # CANN and torch_npu are supplied by the matching vendor environment.
+    "attrs>=26.1.0",
+    "decorator>=5.3.1",
+    "psutil>=7.2.2",
+    "scipy>=1.15.3",
+]
 gpu = [
-    # GPU-specific dependencies (requires CUDA)
-    "triton",
+    "torch>=2.9.0",
+    "triton>=3.5.0",
     "nvidia-cutlass-dsl",
     "tilelang",
-    "cupy-cuda12x",
+    "cupy-cuda12x>=13.6.0",
     "nsight-python",
 ]
+huggingface = [
+    "datasets>=2.19.0",
+    "transformers>=4.57.3",
+]
+llm = [
+    "openai>=2.14.0",
+    "litellm[proxy]>=1.80.10",
+]
+modal = ["modal>=1.3.0"]
 dev = [
-    "pytest",
-    "ruff",
+    "build>=1.2",
+    "pytest>=8.0",
+    "ruff>=0.6",
 ]
 
+[project.urls]
+Homepage = "https://github.com/yijiaduan111/KernelBench-Ascend"
+Repository = "https://github.com/yijiaduan111/KernelBench-Ascend"
+Issues = "https://github.com/yijiaduan111/KernelBench-Ascend/issues"
+Upstream = "https://github.com/ScalingIntelligence/KernelBench"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -56,3 +79,25 @@ include = ["kernelbench*"]
 
 [tool.setuptools.package-data]
 kernelbench = ["prompts/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["src/kernelbench/unit_tests"]
+pythonpath = ["src"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+include = [
+    "src/kernelbench/ascendc.py",
+    "src/kernelbench/backends/**/*.py",
+    "src/kernelbench/runtimes/**/*.py",
+    "src/kernelbench/unit_tests/test_ascendc*.py",
+    "src/kernelbench/unit_tests/test_error_metadata.py",
+    "scripts/audit_ascend_level.py",
+    "scripts/evaluate_ascendc_candidate.py",
+]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+ignore = ["E402"]

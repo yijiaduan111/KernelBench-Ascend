@@ -1,6 +1,8 @@
 # Ascend NPU 基线状态
 
-更新时间：2026-10-12
+审计时间：2026-10-12
+
+发布范围复核：2026-11-23
 
 ## 结论
 
@@ -103,7 +105,8 @@ L3/P48 和 L3/P49 最初缺少 `einops`。补齐依赖后两题均已通过。As
 - 题目发现、进程隔离、输出检查和 NPU Event 计时能够批量运行。
 - 通用 Ascend C 流程可以做静态校验、生成 host/device 工程、构建私有 OPP、
   加载 torch_npu binding、检查正确性并报告 speedup。
-- 仓库内候选覆盖 elementwise、reduction 和矩阵乘法构建路径。
+- 仓库内四个已验证候选覆盖 elementwise、reduction 和矩阵乘法路径：
+  L1/P20、P25、P47，以及 L2/P12。
 
 尚未证明：
 

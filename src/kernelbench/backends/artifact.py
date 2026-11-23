@@ -18,9 +18,7 @@ def source_hash(source: str, spec_json: str, cache_context: dict[str, Any] | Non
         "spec": json.loads(spec_json),
         "context": cache_context or {},
     }
-    return hashlib.sha256(
-        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    ).hexdigest()
+    return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
 def environment_fingerprint(target_soc: str = "Ascend910B3") -> dict[str, str]:
@@ -29,6 +27,7 @@ def environment_fingerprint(target_soc: str = "Ascend910B3") -> dict[str, str]:
             return subprocess.check_output(args, text=True, stderr=subprocess.DEVNULL).strip()
         except Exception:
             return "unknown"
+
     return {
         "soc": target_soc,
         "cann_version": os.environ.get("ASCEND_TOOLKIT_VERSION", "9.0.1"),

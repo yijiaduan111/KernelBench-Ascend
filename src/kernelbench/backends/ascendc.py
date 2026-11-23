@@ -77,9 +77,7 @@ def evaluate_ascendc_artifact(
     env.update(private_opp_environment(artifact.opp_root, artifact.binding_path.parent))
     env["ASCEND_RT_VISIBLE_DEVICES"] = str(device_index)
     package_root = str(Path(__file__).resolve().parents[2])
-    env["PYTHONPATH"] = os.pathsep.join(
-        [package_root, env.get("PYTHONPATH", "")]
-    ).rstrip(os.pathsep)
+    env["PYTHONPATH"] = os.pathsep.join([package_root, env.get("PYTHONPATH", "")]).rstrip(os.pathsep)
     command = [
         sys.executable,
         "-m",
@@ -88,14 +86,14 @@ def evaluate_ascendc_artifact(
         str(result_path),
     ]
     process = subprocess.Popen(
-            command,
-            env=env,
-            cwd=artifact.root,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            start_new_session=True,
-        )
+        command,
+        env=env,
+        cwd=artifact.root,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        start_new_session=True,
+    )
     try:
         output, _ = process.communicate(timeout=timeout)
     except subprocess.TimeoutExpired as exc:
@@ -108,9 +106,7 @@ def evaluate_ascendc_artifact(
     (evaluation_root / "worker.log").write_text(output, encoding="utf-8")
     if process.returncode != 0 or not result_path.is_file():
         tail = "\n".join(output.splitlines()[-40:])
-        raise NpuRuntimeError(
-            f"Ascend C worker failed with return code {process.returncode}\n{tail}"
-        )
+        raise NpuRuntimeError(f"Ascend C worker failed with return code {process.returncode}\n{tail}")
     report = json.loads(result_path.read_text(encoding="utf-8"))
     report["evaluation_root"] = str(evaluation_root)
     return report

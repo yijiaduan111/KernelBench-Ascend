@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -30,15 +31,11 @@ from .spec import (
 )
 
 
-_SECRET_ENV = {
-    "OPENAI_API_KEY",
-    "OPENAI_BASE_URL",
-    "OPENAI_MODEL",
-    "OPENAI_WIRE_API",
-    "ANTHROPIC_API_KEY",
-    "DASHSCOPE_API_KEY",
-    "PYRAMIDKERNEL_ENV_FILE",
-}
+_SECRET_ENV = re.compile(
+    r"(?:^|_)(?:API[_-]?(?:KEY|BASE)|BASE[_-]?URL|ACCESS[_-]?(?:KEY|TOKEN)|SECRET|TOKEN)(?:_|$)"
+    r"|(?:^|_)ENV[_-]?FILE$",
+    re.IGNORECASE,
+)
 
 
 @dataclass(frozen=True)
@@ -59,8 +56,9 @@ class AscendCArtifact:
 
 def scrubbed_environment(source: dict[str, str] | None = None) -> dict[str, str]:
     env = dict(os.environ if source is None else source)
-    for name in _SECRET_ENV:
-        env.pop(name, None)
+    for name in tuple(env):
+        if _SECRET_ENV.search(name):
+            env.pop(name, None)
     return env
 
 
@@ -191,9 +189,7 @@ class AscendCBuilder:
         log_path.write_text(completed.stdout, encoding="utf-8")
         if completed.returncode != 0:
             tail = "\n".join(completed.stdout.splitlines()[-40:])
-            raise error_type(
-                f"command failed ({completed.returncode}): {' '.join(command)}\n{tail}"
-            )
+            raise error_type(f"command failed ({completed.returncode}): {' '.join(command)}\n{tail}")
         return elapsed
 
     def _prepare_compile_opp(self, root: Path) -> Path:
@@ -311,13 +307,9 @@ class AscendCBuilder:
                 log_path=artifact.root / "logs" / "binding_compile.log",
                 error_type=BindingCompileError,
             )
-            matches = sorted(
-                (artifact.root / "binding").glob(f"{artifact.names.binding_module}*.so")
-            )
+            matches = sorted((artifact.root / "binding").glob(f"{artifact.names.binding_module}*.so"))
             if len(matches) != 1:
-                raise BindingCompileError(
-                    f"expected one binding shared object, found {len(matches)}"
-                )
+                raise BindingCompileError(f"expected one binding shared object, found {len(matches)}")
             binding_path = matches[0].resolve()
             state = {
                 "status": "built",
@@ -327,9 +319,7 @@ class AscendCBuilder:
                 "custom_vendor_root": str(vendor),
                 "timings": timings,
                 "system_opp_modified": False,
-                "candidate_source_sha256": hashlib.sha256(
-                    candidate_source.encode("utf-8")
-                ).hexdigest(),
+                "candidate_source_sha256": hashlib.sha256(candidate_source.encode("utf-8")).hexdigest(),
             }
             (artifact.root / "success.json").write_text(
                 json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8"

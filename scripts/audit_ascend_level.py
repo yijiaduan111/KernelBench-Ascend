@@ -37,6 +37,7 @@ def _version(module_name: str) -> str:
 
 def _walk(value):
     import torch
+
     if isinstance(value, torch.Tensor):
         return value.to("npu:0")
     if isinstance(value, tuple):
@@ -50,6 +51,7 @@ def _walk(value):
 
 def _clone(value):
     import torch
+
     if isinstance(value, torch.Tensor):
         return value.clone()
     if isinstance(value, tuple):
@@ -63,6 +65,7 @@ def _clone(value):
 
 def _tensor_bytes(value) -> int:
     import torch
+
     if isinstance(value, torch.Tensor):
         return int(value.numel() * value.element_size())
     if isinstance(value, (tuple, list)):
@@ -74,6 +77,7 @@ def _tensor_bytes(value) -> int:
 
 def _same_structure(left, right) -> bool:
     import torch
+
     if isinstance(left, torch.Tensor) and isinstance(right, torch.Tensor):
         if left.shape != right.shape or left.dtype != right.dtype or left.device != right.device:
             return False
@@ -89,6 +93,7 @@ def _same_structure(left, right) -> bool:
 
 def _all_finite(value) -> bool:
     import torch
+
     if isinstance(value, torch.Tensor):
         return not value.is_floating_point() or bool(torch.isfinite(value).all().item())
     if isinstance(value, (tuple, list)):
@@ -100,6 +105,7 @@ def _all_finite(value) -> bool:
 
 def _all_on_npu(value) -> bool:
     import torch
+
     if isinstance(value, torch.Tensor):
         return value.device.type == "npu"
     if isinstance(value, (tuple, list)):
@@ -111,6 +117,7 @@ def _all_on_npu(value) -> bool:
 
 def _output_facts(value, path="output") -> dict[str, Any]:
     import torch
+
     if isinstance(value, torch.Tensor):
         return {
             "path": path,
@@ -121,9 +128,17 @@ def _output_facts(value, path="output") -> dict[str, Any]:
             "finite": bool(torch.isfinite(value).all().item()) if value.is_floating_point() else True,
         }
     if isinstance(value, (tuple, list)):
-        return {"path": path, "type": type(value).__name__, "items": [_output_facts(item, f"{path}[{index}]") for index, item in enumerate(value)]}
+        return {
+            "path": path,
+            "type": type(value).__name__,
+            "items": [_output_facts(item, f"{path}[{index}]") for index, item in enumerate(value)],
+        }
     if isinstance(value, dict):
-        return {"path": path, "type": "dict", "items": {str(key): _output_facts(item, f"{path}[{key!r}]") for key, item in value.items()}}
+        return {
+            "path": path,
+            "type": "dict",
+            "items": {str(key): _output_facts(item, f"{path}[{key!r}]") for key, item in value.items()},
+        }
     return {"path": path, "type": type(value).__name__}
 
 
@@ -147,6 +162,7 @@ def _load(path: Path):
 def worker(path: Path, warmup: int, repeats: int) -> dict[str, Any]:
     import torch
     import torch_npu  # noqa: F401
+
     torch.npu.set_device(0)
     torch.manual_seed(42)
     torch.npu.manual_seed(42)
@@ -220,7 +236,10 @@ def _run_worker(path: Path, warmup: int, repeats: int) -> None:
     try:
         print(json.dumps(worker(path, warmup, repeats), sort_keys=True), flush=True)
     except Exception as exc:
-        print(json.dumps({"status": "failed", "failure_type": type(exc).__name__, "error": str(exc)}, sort_keys=True), flush=True)
+        print(
+            json.dumps({"status": "failed", "failure_type": type(exc).__name__, "error": str(exc)}, sort_keys=True),
+            flush=True,
+        )
         raise
 
 
@@ -279,9 +298,8 @@ def _classify_failure(payload: dict[str, Any], diagnostic: str) -> str:
     message = diagnostic.lower()
     if "out of memory" in message or "memory allocation" in message:
         return "out_of_memory"
-    if (
-        ("dtype" in message or "data type" in message or "dt_float" in message)
-        and ("not support" in message or "unsupported" in message)
+    if ("dtype" in message or "data type" in message or "dt_float" in message) and (
+        "not support" in message or "unsupported" in message
     ):
         return "unsupported_dtype"
     if "layout" in message and ("not support" in message or "unsupported" in message):
@@ -289,7 +307,8 @@ def _classify_failure(payload: dict[str, Any], diagnostic: str) -> str:
     if (
         "notimplementederror" in message
         or "not supported on the npu" in message
-        or "op type" in message and "not found in this op store" in message
+        or "op type" in message
+        and "not found in this op store" in message
         or "dilation only support" in message
         or "value of dilation should be equal" in message
     ):
@@ -394,9 +413,7 @@ def _run_attempt(
     record["worker_returncode"] = process.returncode if process is not None else None
     record["elapsed_wall_s"] = round(time.monotonic() - started, 3)
     logs_dir.mkdir(parents=True, exist_ok=True)
-    log_path = logs_dir / (
-        f"level{level}_p{record['problem_id']:03d}_attempt{attempt}_device{device}.log"
-    )
+    log_path = logs_dir / (f"level{level}_p{record['problem_id']:03d}_attempt{attempt}_device{device}.log")
     log_path.write_text(
         f"command: {' '.join(command)}\nphysical_device: {device}\ntimeout_s: {timeout}\n"
         f"\n--- stdout ---\n{stdout}\n--- stderr ---\n{stderr}",
@@ -526,12 +543,8 @@ def _write_report(
         for item in records
         if item["status"] != "supported"
     ]
-    output.with_name("supported.json").write_text(
-        json.dumps(supported, indent=2, sort_keys=True), encoding="utf-8"
-    )
-    output.with_name("excluded.json").write_text(
-        json.dumps(excluded, indent=2, sort_keys=True), encoding="utf-8"
-    )
+    output.with_name("supported.json").write_text(json.dumps(supported, indent=2, sort_keys=True), encoding="utf-8")
+    output.with_name("excluded.json").write_text(json.dumps(excluded, indent=2, sort_keys=True), encoding="utf-8")
 
 
 def audit(args: argparse.Namespace) -> dict[str, Any]:
@@ -619,8 +632,7 @@ def audit(args: argparse.Namespace) -> dict[str, Any]:
                 work_queue.task_done()
 
     print(
-        f"Starting Ascend audit: {len(pending)} pending / {len(tasks)} total, "
-        f"devices={args.devices}",
+        f"Starting Ascend audit: {len(pending)} pending / {len(tasks)} total, devices={args.devices}",
         flush=True,
     )
     with ThreadPoolExecutor(max_workers=len(args.devices)) as executor:

@@ -22,14 +22,11 @@ class AscendRuntime(DeviceRuntime):
             importlib.import_module("torch_npu")
         except Exception as exc:  # pragma: no cover - depends on host SDK
             raise RuntimeUnavailableError(
-                "torch_npu could not be imported. Install a wheel matching "
-                "the installed PyTorch and CANN versions."
+                "torch_npu could not be imported. Install a wheel matching the installed PyTorch and CANN versions."
             ) from exc
         npu = getattr(torch, "npu", None)
         if npu is None:
-            raise RuntimeUnavailableError(
-                "torch_npu is installed but torch.npu is unavailable."
-            )
+            raise RuntimeUnavailableError("torch_npu is installed but torch.npu is unavailable.")
         return npu
 
     def is_available(self) -> bool:

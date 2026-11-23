@@ -21,14 +21,16 @@ A candidate is one Python source file containing:
 
 Tensor descriptors include a name, dtype, shape expressions, and optional
 layout. The expression language is intentionally small and checked before code
-generation. Supported expressions can read input dimensions and element counts,
-refer to declared scalar attributes, use numeric literals, and compose the
-documented arithmetic functions. Tiling expressions use the same checked
-language. The exact schema and validation errors are implemented by
-`kernelbench.backends.spec` and `kernelbench.backends.security`.
-Optimizer integrations should use the stable `kernelbench.ascendc` API to
-validate, build, and evaluate candidates. Backend implementation modules remain
-internal to KernelBench-Ascend.
+generation. Expressions can read input dimensions and element counts, refer to
+declared scalar attributes, use numeric literals, and compose supported
+arithmetic functions. Tiling expressions use the same checked language. Use
+`validate_ascendc_candidate()` before building to validate a candidate against
+the published protocol. The [P20 candidate](../../golden/ascendc/level1/20_leaky_relu.py)
+is a complete example.
+
+Optimizer integrations should use the stable `kernelbench.ascendc` API and
+check `API_VERSION` when integrating. Modules under `kernelbench.backends` are
+implementation details and are not a compatibility promise.
 
 Python-side candidate imports are restricted to PyTorch. Device code may
 include `kernel_operator.h`, and `ModelNew.forward` must call the declared

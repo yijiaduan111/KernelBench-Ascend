@@ -49,22 +49,16 @@ def generated_names(spec: AscendCSpec, candidate_hash: str) -> GeneratedNames:
 
 
 def rewrite_kernel_entrypoint(source: str, old: str, new: str) -> str:
-    pattern = re.compile(
-        rf'(extern\s+"C"\s+__global__\s+__aicore__\s+void\s+){re.escape(old)}(\s*\()'
-    )
+    pattern = re.compile(rf'(extern\s+"C"\s+__global__\s+__aicore__\s+void\s+){re.escape(old)}(\s*\()')
     rewritten, count = pattern.subn(rf"\g<1>{new}\g<2>", source)
     if count != 1:
-        raise SpecValidationError(
-            f"expected exactly one Ascend C entrypoint definition for {old}, found {count}"
-        )
+        raise SpecValidationError(f"expected exactly one Ascend C entrypoint definition for {old}, found {count}")
     return rewritten
 
 
 def _render_tiling_header(names: GeneratedNames, tiling: AscendCTilingSpec) -> str:
-    fields = "\n".join(
-        f"    TILING_DATA_FIELD_DEF({item.c_type}, {item.name});" for item in tiling.fields
-    )
-    return f'''#pragma once
+    fields = "\n".join(f"    TILING_DATA_FIELD_DEF({item.c_type}, {item.name});" for item in tiling.fields)
+    return f"""#pragma once
 #include "register/tilingdata_base.h"
 
 namespace optiling {{
@@ -73,7 +67,7 @@ BEGIN_TILING_DATA_DEF({names.tiling_class})
 END_TILING_DATA_DEF;
 REGISTER_TILING_DATA_CLASS({names.op_type}, {names.tiling_class})
 }}  // namespace optiling
-'''
+"""
 
 
 def _render_infer_shape(spec: AscendCSpec) -> str:
@@ -89,9 +83,7 @@ def _render_infer_shape(spec: AscendCSpec) -> str:
         )
         for dim_index, expression in enumerate(shape):
             cpp = spec.compile_expression(expression, "infer")
-            lines.append(
-                f"    output_{output_index}->SetDim({dim_index}, static_cast<int64_t>({cpp}));"
-            )
+            lines.append(f"    output_{output_index}->SetDim({dim_index}, static_cast<int64_t>({cpp}));")
     lines.extend(["    return ge::GRAPH_SUCCESS;", "}"])
     return "\n".join(lines)
 
@@ -140,15 +132,11 @@ def _render_registration(spec: AscendCSpec, names: GeneratedNames) -> str:
                 f"attribute {item['name']} requires a default in the first Ascend C backend version"
             )
         rendered = str(default).lower() if isinstance(default, bool) else repr(default)
-        lines.append(
-            f'        this->Attr("{item["name"]}").AttrType(OPTIONAL).{method[c_type]}({rendered});'
-        )
+        lines.append(f'        this->Attr("{item["name"]}").AttrType(OPTIONAL).{method[c_type]}({rendered});')
     return "\n".join(lines)
 
 
-def _render_host(
-    spec: AscendCSpec, tiling: AscendCTilingSpec, names: GeneratedNames
-) -> str:
+def _render_host(spec: AscendCSpec, tiling: AscendCTilingSpec, names: GeneratedNames) -> str:
     field_setters = "\n".join(
         f"    tiling.set_{item.name}(static_cast<{item.c_type}>({spec.compile_expression(item.expression, 'tiling')}));"
         for item in tiling.fields
@@ -163,14 +151,14 @@ namespace optiling {{
 static ge::graphStatus TilingFunc(gert::TilingContext* context) {{
     if (context == nullptr) return ge::GRAPH_FAILED;
     {names.tiling_class} tiling;
-    const uint32_t block_dim = static_cast<uint32_t>({spec.compile_expression(tiling.block_dim, 'tiling')});
+    const uint32_t block_dim = static_cast<uint32_t>({spec.compile_expression(tiling.block_dim, "tiling")});
     if (block_dim == 0) return ge::GRAPH_FAILED;
     context->SetBlockDim(block_dim);
 {field_setters}
     tiling.SaveToBuffer(context->GetRawTilingData()->GetData(),
                         context->GetRawTilingData()->GetCapacity());
     context->GetRawTilingData()->SetDataSize(tiling.GetDataSize());
-    context->GetWorkspaceSizes(1)[0] = static_cast<size_t>({spec.compile_expression(tiling.workspace, 'tiling')});
+    context->GetWorkspaceSizes(1)[0] = static_cast<size_t>({spec.compile_expression(tiling.workspace, "tiling")});
     return ge::GRAPH_SUCCESS;
 }}
 }}  // namespace optiling
@@ -197,7 +185,7 @@ OP_ADD({names.op_type});
 
 
 def _render_common_header() -> str:
-    return r'''#pragma once
+    return r"""#pragma once
 #include <torch/extension.h>
 #include <cstdint>
 #include <vector>
@@ -241,13 +229,11 @@ inline at::Tensor make_workspace(uint64_t bytes, const at::Tensor& reference, vo
     *ptr = workspace.mutable_data_ptr();
     return workspace;
 }
-'''
+"""
 
 
 def _render_binding(spec: AscendCSpec, names: GeneratedNames) -> str:
-    input_parameters = [
-        f"const at::Tensor& input_{index}" for index, _ in enumerate(spec.inputs)
-    ]
+    input_parameters = [f"const at::Tensor& input_{index}" for index, _ in enumerate(spec.inputs)]
     attr_parameters: list[str] = []
     for item in spec.attributes:
         _, binding_type = spec.attribute_types(item)
@@ -257,20 +243,15 @@ def _render_binding(spec: AscendCSpec, names: GeneratedNames) -> str:
     output_lines: list[str] = []
     for index, output in enumerate(spec.outputs):
         shape = ", ".join(
-            f"static_cast<int64_t>({spec.compile_expression(expr, 'binding')})"
-            for expr in output.get("shape", [])
+            f"static_cast<int64_t>({spec.compile_expression(expr, 'binding')})" for expr in output.get("shape", [])
         )
         _, torch_dtype, _ = spec.dtype_info(output)
         output_lines.append(
             f"    auto output_{index} = at::empty({{{shape}}}, input_0.options().dtype({torch_dtype}));"
         )
 
-    guards = [
-        f"    AclTensorGuard input_{index}_acl(input_{index});"
-        for index, _ in enumerate(spec.inputs)
-    ] + [
-        f"    AclTensorGuard output_{index}_acl(output_{index});"
-        for index, _ in enumerate(spec.outputs)
+    guards = [f"    AclTensorGuard input_{index}_acl(input_{index});" for index, _ in enumerate(spec.inputs)] + [
+        f"    AclTensorGuard output_{index}_acl(output_{index});" for index, _ in enumerate(spec.outputs)
     ]
     call_args = (
         [f"input_{index}_acl.value" for index, _ in enumerate(spec.inputs)]
@@ -282,9 +263,7 @@ def _render_binding(spec: AscendCSpec, names: GeneratedNames) -> str:
     if len(spec.outputs) == 1:
         result = "output_0"
     else:
-        result = "std::make_tuple(" + ", ".join(
-            f"output_{index}" for index, _ in enumerate(spec.outputs)
-        ) + ")"
+        result = "std::make_tuple(" + ", ".join(f"output_{index}" for index, _ in enumerate(spec.outputs)) + ")"
     return f'''#include "common.h"
 #include "aclnn_{names.op_file}.h"
 #include <atomic>
@@ -315,7 +294,7 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, module) {{
 
 
 def _render_setup(names: GeneratedNames, cann_path: Path) -> str:
-    return f'''from pathlib import Path
+    return f"""from pathlib import Path
 from setuptools import setup
 from torch.utils.cpp_extension import BuildExtension
 from torch_npu.utils.cpp_extension import NpuExtension
@@ -365,7 +344,7 @@ setup(
     )],
     cmdclass={{"build_ext": BuildExtension.with_options(use_ninja=True)}},
 )
-'''
+"""
 
 
 def render_project(
@@ -384,18 +363,18 @@ def render_project(
         directory.mkdir(parents=True, exist_ok=True)
 
     (project / "CMakeLists.txt").write_text(
-        '''cmake_minimum_required(VERSION 3.16.0)
+        """cmake_minimum_required(VERSION 3.16.0)
 project(opp)
 find_package(ASC REQUIRED)
 set(package_name customize)
 npu_op_package(${package_name} TYPE RUN CONFIG INSTALL_PATH ${CMAKE_BINARY_DIR}/)
 add_subdirectory(op_host)
 add_subdirectory(op_kernel)
-''',
+""",
         encoding="utf-8",
     )
     (project / "CMakePresets.json").write_text(
-        f'''{{
+        f"""{{
   "version": 1,
   "cmakeMinimumRequired": {{"major": 3, "minor": 16, "patch": 0}},
   "configurePresets": [{{
@@ -417,20 +396,20 @@ add_subdirectory(op_kernel)
     }}
   }}]
 }}
-''',
+""",
         encoding="utf-8",
     )
     (project / "build.sh").write_text(
-        f'''#!/bin/bash
+        f"""#!/bin/bash
 set -euo pipefail
 export ASCEND_HOME_PATH="${{ASCEND_HOME_PATH:-{cann_path}}}"
 cmake -S . -B build_out --preset=default
 cmake --build build_out --target binary package -j"${{KERNELBENCH_BUILD_JOBS:-$(nproc)}}"
-''',
+""",
         encoding="utf-8",
     )
     (host / "CMakeLists.txt").write_text(
-        '''aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} ops_srcs)
+        """aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} ops_srcs)
 npu_op_code_gen(SRC ${ops_srcs} PACKAGE ${package_name} OUT_DIR ${ASCEND_AUTOGEN_PATH} JOIN_OP_DEF True)
 file(GLOB autogen_aclnn_src ${ASCEND_AUTOGEN_PATH}/aclnn_*.cpp)
 set_source_files_properties(${autogen_aclnn_src} PROPERTIES GENERATED TRUE)
@@ -441,22 +420,20 @@ npu_op_library(cust_op_proto GRAPH ${ops_srcs} ${group_proto_src} ${proto_src})
 file(GLOB fallback_src ${ASCEND_AUTOGEN_PATH}/fallback_*.cpp)
 npu_op_library(cust_optiling TILING ${ops_srcs} ${fallback_src})
 npu_op_package_add(${package_name} LIBRARY cust_optiling cust_opapi cust_op_proto)
-''',
+""",
         encoding="utf-8",
     )
     (kernel / "CMakeLists.txt").write_text(
-        '''npu_op_kernel_sources(ascendc_kernels KERNEL_DIR ./)
+        """npu_op_kernel_sources(ascendc_kernels KERNEL_DIR ./)
 npu_op_kernel_library(ascendc_kernels SRC_BASE ${CMAKE_CURRENT_SOURCE_DIR}/ TILING_LIBRARY cust_optiling)
 npu_op_package_add(${package_name} LIBRARY ascendc_kernels)
-''',
+""",
         encoding="utf-8",
     )
     tiling_header = _render_tiling_header(names, tiling)
     (host / f"{names.op_file}_tiling.h").write_text(tiling_header, encoding="utf-8")
     (kernel / f"{names.op_file}_tiling.h").write_text(tiling_header, encoding="utf-8")
-    (host / f"{names.op_file}.cpp").write_text(
-        _render_host(spec, tiling, names), encoding="utf-8"
-    )
+    (host / f"{names.op_file}.cpp").write_text(_render_host(spec, tiling, names), encoding="utf-8")
     (kernel / f"{names.op_file}.cpp").write_text(
         rewrite_kernel_entrypoint(kernel_source, spec.entrypoint, names.kernel_symbol),
         encoding="utf-8",

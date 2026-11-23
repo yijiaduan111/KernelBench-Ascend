@@ -48,9 +48,7 @@ def _subscript_index(node: ast.AST) -> int:
 
 
 def _constant(node: ast.AST) -> int | float | bool | str:
-    if not isinstance(node, ast.Constant) or not isinstance(
-        node.value, (int, float, bool, str)
-    ):
+    if not isinstance(node, ast.Constant) or not isinstance(node.value, (int, float, bool, str)):
         raise SpecValidationError("expression literal must be a scalar constant")
     return node.value
 
@@ -58,9 +56,7 @@ def _constant(node: ast.AST) -> int | float | bool | str:
 def _parse_expression(expression: str, input_count: int, attributes: set[str]) -> ast.AST:
     if not isinstance(expression, str) or not expression.strip():
         raise SpecValidationError("expression must be a non-empty string")
-    normalized = expression.replace("literal(true)", "literal(True)").replace(
-        "literal(false)", "literal(False)"
-    )
+    normalized = expression.replace("literal(true)", "literal(True)").replace("literal(false)", "literal(False)")
     try:
         root = ast.parse(normalized, mode="eval").body
     except SyntaxError as exc:
@@ -91,9 +87,11 @@ def _parse_expression(expression: str, input_count: int, attributes: set[str]) -
             attr = node.func
             if attr.attr not in {"dim", "size", "numel"}:
                 raise SpecValidationError(f"input method is not allowed: {attr.attr}")
-            if not isinstance(attr.value, ast.Subscript) or not isinstance(
-                attr.value.value, ast.Name
-            ) or attr.value.value.id != "input":
+            if (
+                not isinstance(attr.value, ast.Subscript)
+                or not isinstance(attr.value.value, ast.Name)
+                or attr.value.value.id != "input"
+            ):
                 raise SpecValidationError("only input[index] methods are allowed")
             index = _subscript_index(attr.value.slice)
             if index >= input_count:
@@ -160,10 +158,7 @@ def compile_expression(
                 return f"(({left}) / ({right}))"
             if name == "ceil_div":
                 return f"((({left}) + ({right}) - 1) / ({right}))"
-            return (
-                f"std::{name}<int64_t>(static_cast<int64_t>({left}), "
-                f"static_cast<int64_t>({right}))"
-            )
+            return f"std::{name}<int64_t>(static_cast<int64_t>({left}), static_cast<int64_t>({right}))"
 
         call = node
         assert isinstance(call, ast.Call) and isinstance(call.func, ast.Attribute)
@@ -243,8 +238,7 @@ class AscendCSpec:
     @property
     def attribute_host_types(self) -> dict[str, str]:
         return {
-            item["name"]: _ATTR_TYPES[str(item.get("c_type", item.get("type", "float")))][0]
-            for item in self.attributes
+            item["name"]: _ATTR_TYPES[str(item.get("c_type", item.get("type", "float")))][0] for item in self.attributes
         }
 
     def validate(self) -> None:

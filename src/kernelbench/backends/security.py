@@ -36,7 +36,11 @@ _FORBIDDEN_CALLS = {
     "write_bytes",
     "write_text",
 }
-_SECRET_ENV = re.compile(r"(?:OPENAI|ANTHROPIC|DASHSCOPE|PYRAMIDKERNEL).*KEY|API_KEY|API_BASE", re.I)
+_SECRET_ENV = re.compile(
+    r"(?:^|_)(?:API[_-]?(?:KEY|BASE)|BASE[_-]?URL|ACCESS[_-]?(?:KEY|TOKEN)|SECRET|TOKEN)(?:_|$)"
+    r"|(?:^|_)ENV[_-]?FILE$",
+    re.IGNORECASE,
+)
 
 _AICORE_DENIED_MATH = re.compile(
     r"(?<![A-Za-z0-9_])(?:__builtin_)?"
@@ -73,9 +77,7 @@ def validate_candidate_source(source: str) -> AscendCSpec:
     assignments = {
         node.targets[0].id
         for node in tree.body
-        if isinstance(node, ast.Assign)
-        and node.targets
-        and isinstance(node.targets[0], ast.Name)
+        if isinstance(node, ast.Assign) and node.targets and isinstance(node.targets[0], ast.Name)
     }
     if "ASCENDC_KERNEL_SOURCE" not in assignments:
         raise StaticRejectionError("ASCENDC_KERNEL_SOURCE assignment is required")
@@ -95,8 +97,10 @@ def validate_candidate_source(source: str) -> AscendCSpec:
         raise StaticRejectionError("ASCENDC_KERNEL_SOURCE must be a literal string") from exc
     includes = [line.strip() for line in kernel_source.splitlines() if line.strip().startswith("#include")]
     if includes != ['#include "kernel_operator.h"']:
-        raise StaticRejectionError("only #include \\\"kernel_operator.h\\\" is allowed in Ascend C source")
-    if re.search(r"\b(?:system|popen|fopen|socket|connect|fork|execv|execve|dlopen|getenv|syscall)\s*\(", kernel_source):
+        raise StaticRejectionError('only #include \\"kernel_operator.h\\" is allowed in Ascend C source')
+    if re.search(
+        r"\b(?:system|popen|fopen|socket|connect|fork|execv|execve|dlopen|getenv|syscall)\s*\(", kernel_source
+    ):
         raise StaticRejectionError("forbidden host/process operation in Ascend C source")
 
     # The aicore device has no scalar C math library.  Candidates that reach
@@ -112,16 +116,12 @@ def validate_candidate_source(source: str) -> AscendCSpec:
             "instead of a per-element scalar call"
         )
     if _AICORE_DOUBLE.search(device_text) is not None:
-        raise StaticRejectionError(
-            "aicore forbids double precision; use float for every device-side scalar and local"
-        )
+        raise StaticRejectionError("aicore forbids double precision; use float for every device-side scalar and local")
     entrypoint_pattern = re.compile(
         rf'extern\s+"C"\s+__global__\s+__aicore__\s+void\s+{re.escape(spec.entrypoint)}\s*\('
     )
     if entrypoint_pattern.search(kernel_source) is None:
-        raise StaticRejectionError(
-            f"Ascend C source does not define entrypoint '{spec.entrypoint}'"
-        )
+        raise StaticRejectionError(f"Ascend C source does not define entrypoint '{spec.entrypoint}'")
     if "GET_TILING_DATA(" not in kernel_source:
         raise StaticRejectionError("Ascend C entrypoint must load generated tiling data")
     # Validate the complete structured tiling contract before any files are
@@ -138,23 +138,14 @@ def validate_candidate_source(source: str) -> AscendCSpec:
     )
     binding_call = rf"\bascendc_binding\s*\.\s*{re.escape(spec.entrypoint)}\s*\("
     if not re.search(binding_call, python_surface):
-        raise StaticRejectionError(
-            f"candidate must call ascendc_binding.{spec.entrypoint}(...)"
-        )
+        raise StaticRejectionError(f"candidate must call ascendc_binding.{spec.entrypoint}(...)")
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
-            bad = {
-                alias.name for alias in node.names
-                if alias.name.split(".")[0] not in _ALLOWED_IMPORT_ROOTS
-            }
+            bad = {alias.name for alias in node.names if alias.name.split(".")[0] not in _ALLOWED_IMPORT_ROOTS}
             if bad:
                 raise StaticRejectionError(f"forbidden import(s): {', '.join(sorted(bad))}")
-        elif (
-            isinstance(node, ast.ImportFrom)
-            and (
-                not node.module
-                or node.module.split(".")[0] not in _ALLOWED_IMPORT_ROOTS
-            )
+        elif isinstance(node, ast.ImportFrom) and (
+            not node.module or node.module.split(".")[0] not in _ALLOWED_IMPORT_ROOTS
         ):
             raise StaticRejectionError(f"forbidden import: {node.module}")
         elif isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in _FORBIDDEN_CALLS:
@@ -174,9 +165,7 @@ def validate_candidate_source(source: str) -> AscendCSpec:
                 while isinstance(root, (ast.Attribute, ast.Subscript)):
                     root = root.value
                 if isinstance(root, ast.Name) and root.id in {"torch", "ascendc_binding"}:
-                    raise StaticRejectionError(
-                        f"candidate cannot modify global module {root.id}"
-                    )
+                    raise StaticRejectionError(f"candidate cannot modify global module {root.id}")
     if re.search(r"(?:torch\.npu\.(?:Event|synchronize)|time\.perf_counter)\s*=", source):
         raise StaticRejectionError("candidate cannot monkey-patch timing")
     return spec

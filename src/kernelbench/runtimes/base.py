@@ -20,9 +20,7 @@ class DeviceRuntime:
 
     def require_available(self) -> None:
         if not self.is_available():
-            raise RuntimeUnavailableError(
-                f"Runtime '{self.name}' is not available on this host."
-            )
+            raise RuntimeUnavailableError(f"Runtime '{self.name}' is not available on this host.")
 
     def device(self, index: int = 0):
         raise NotImplementedError

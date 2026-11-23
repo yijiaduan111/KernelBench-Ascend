@@ -1,6 +1,8 @@
 # Ascend NPU baseline status
 
-Updated: 2026-10-12
+Audit performed: 2026-10-12
+
+Release scope reviewed: 2026-11-23
 
 ## Decision
 
@@ -116,8 +118,8 @@ The following has been demonstrated:
 - The generic Ascend C pipeline performs static validation, generates host and
   device projects, builds a private OPP, loads the torch_npu binding, checks
   correctness, and reports speedup.
-- Checked-in candidates exercise elementwise, reduction, and matrix
-  multiplication paths.
+- Four checked-in candidates exercise elementwise, reduction, and matrix
+  multiplication paths: Level 1/P20, P25, P47, and Level 2/P12.
 
 The following has not yet been demonstrated:
 
@@ -131,6 +133,8 @@ The following has not yet been demonstrated:
 Reference migration and the generic Ascend C submission/evaluation protocol
 are ready for use. Optimizers may provide their own task analysis and candidate
 generation strategy, then submit candidates through the same builder/evaluator.
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the benchmark/optimizer ownership
+boundary and public API map.
 
 ## Evaluation policy
 
