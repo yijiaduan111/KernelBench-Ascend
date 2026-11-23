@@ -504,8 +504,6 @@ def eval_kernel_against_ref(
     device: Union[torch.device, int] = None,
     backend: str = "cuda",  # can be 'cuda', 'triton', 'tilelang', or 'cute'
     precision: torch.dtype = torch.float32,
-    level: int | None = None,
-    problem_id: int | None = None,
 
     # Guard against potential reward hacking [optional but ongoing enhancement]
     check_for_excessive_speedup: bool = True,
@@ -578,11 +576,7 @@ def eval_kernel_against_ref(
 
             artifact = AscendCBuilder(
                 build_dir or os.path.join(REPO_TOP_PATH, "cache", "ascendc")
-            ).build(
-                custom_model_src,
-                level=level,
-                problem_id=problem_id,
-            )
+            ).build(custom_model_src)
             metadata["artifact_root"] = str(artifact.root)
             precision_name = {
                 torch.float32: "fp32",

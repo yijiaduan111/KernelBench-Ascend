@@ -116,20 +116,21 @@ The following has been demonstrated:
 - The generic Ascend C pipeline performs static validation, generates host and
   device projects, builds a private OPP, loads the torch_npu binding, checks
   correctness, and reports speedup.
-- Three checked-in golden candidates exercise elementwise and reduction paths.
+- Checked-in candidates exercise elementwise, reduction, and matrix
+  multiplication paths.
 
 The following has not yet been demonstrated:
 
 - LLM-generated Ascend C candidates compile and pass for all 244 tasks.
 - All active tasks can outperform Torch-NPU eager.
-- Strict trusted Ascend C task contracts cover all 244 tasks. They currently
-  cover the selected Level 1 15-task suite.
+- Task-specific contracts and generated scaffolds are not required by this
+  benchmark; an optimization system may provide them independently.
 - The six diagnostic tasks preserve original semantics on this environment.
 - Level 4 Hugging Face tasks have equivalent Ascend audit coverage.
 
-Reference migration is ready for use. The next engineering focus is expanding
-trusted task contracts and improving Ascend C generation, repair, correctness,
-and performance.
+Reference migration and the generic Ascend C submission/evaluation protocol
+are ready for use. Optimizers may provide their own task analysis and candidate
+generation strategy, then submit candidates through the same builder/evaluator.
 
 ## Evaluation policy
 

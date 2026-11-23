@@ -48,11 +48,6 @@ def main() -> int:
     parser.add_argument("--timeout", type=int, default=300)
     parser.add_argument("--build-timeout", type=int, default=900)
     parser.add_argument("--target-soc", default="Ascend910B3")
-    parser.add_argument(
-        "--validate-task-contract",
-        action="store_true",
-        help="Require the candidate custom op to implement the suite's full-operator ABI.",
-    )
     args = parser.parse_args()
 
     for name in ("correctness_trials", "performance_trials", "timeout", "build_timeout"):
@@ -68,7 +63,7 @@ def main() -> int:
         "target_soc": args.target_soc,
         "device": args.device,
         "precision": args.precision,
-        "task_contract_validated": bool(args.validate_task_contract),
+        "candidate_protocol_validated": False,
     }
     started = time.perf_counter()
     try:
@@ -81,11 +76,8 @@ def main() -> int:
             "binding_compile": "pending",
             "worker": "pending",
         }
-        validate_ascendc_candidate(
-            candidate_source,
-            level=args.level if args.validate_task_contract else None,
-            problem_id=args.problem_id if args.validate_task_contract else None,
-        )
+        validate_ascendc_candidate(candidate_source)
+        result["candidate_protocol_validated"] = True
         result["stages"]["static_validation"] = "passed"
         reference_source = _reference_source(args.level, args.problem_id)
         result["reference_sha256"] = hashlib.sha256(reference_source.encode("utf-8")).hexdigest()
@@ -93,8 +85,6 @@ def main() -> int:
             candidate_source,
             build_dir=args.cache_root,
             target_soc=args.target_soc,
-            level=args.level if args.validate_task_contract else None,
-            problem_id=args.problem_id if args.validate_task_contract else None,
             build_timeout=args.build_timeout,
         )
         result["artifact"] = {

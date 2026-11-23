@@ -103,19 +103,19 @@ L3/P48 和 L3/P49 最初缺少 `einops`。补齐依赖后两题均已通过。As
 - 题目发现、进程隔离、输出检查和 NPU Event 计时能够批量运行。
 - 通用 Ascend C 流程可以做静态校验、生成 host/device 工程、构建私有 OPP、
   加载 torch_npu binding、检查正确性并报告 speedup。
-- 仓库内三道 golden candidate 已覆盖 elementwise 和 reduction 构建路径。
+- 仓库内候选覆盖 elementwise、reduction 和矩阵乘法构建路径。
 
 尚未证明：
 
 - 244 道题都能由 LLM 生成可编译且正确的 Ascend C candidate。
 - 244 道 active task 都能超过 Torch-NPU eager。
-- 严格可信的 Ascend C ABI contract 已覆盖 244 道题；目前覆盖选定的 Level 1
-  十五题。
+- Benchmark 不要求优化器必须采用任务专属 contract 或 scaffold；这些属于优化项目。
 - 6 道 diagnostic task 在当前环境中已有保持原语义的 NPU reference。
 - Level 4 Hugging Face 题目达到同等审计覆盖度。
 
-因此，“NPU 参考基线迁移”已经达到可用阶段。下一阶段的重点应转向扩展可信
-task contract，以及提高 Ascend C 生成、联合修复、正确率和性能。
+因此，“NPU 参考基线迁移”和通用 Ascend C 提交/评测协议已经达到可用阶段。
+优化框架可以自行提供题目分析和候选生成策略，再通过同一 Builder/Evaluator
+提交候选评测。
 
 ## 后续评测规则
 

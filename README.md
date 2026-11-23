@@ -32,10 +32,12 @@ counted as candidate-generation failures.
 - [Machine-readable active suite](docs/ascend/compatibility/ascend910b3-cann9.0.1/supported.json)
 - [Machine-readable exclusions](docs/ascend/compatibility/ascend910b3-cann9.0.1/excluded.json)
 
-Reference coverage and custom-kernel coverage are deliberately reported
-separately. All 244 active tasks have a runnable Torch-NPU reference. The
-strict, trusted Ascend C ABI contracts currently cover the selected Level 1
-15-task suite, and three golden candidates exercise the generic build path.
+Reference coverage and candidate coverage are reported separately. All 244
+active tasks have a runnable Torch-NPU reference. The public Ascend C candidate
+protocol is validated generically; task-specific contracts and scaffolds belong
+to optimization systems that choose to use them. Checked-in candidates exercise
+elementwise, reduction, and matrix-multiplication builds. See the
+[candidate protocol](docs/ascend/ASCENDC_SUBMISSION_PROTOCOL.md).
 
 ## Ascend quick start
 
@@ -68,8 +70,7 @@ python scripts/evaluate_ascendc_candidate.py \
   --problem-id 25 \
   --candidate golden/ascendc/level1/25_swish.py \
   --cache-root cache/ascendc \
-  --output results/p25.json \
-  --validate-task-contract
+  --output results/p25.json
 ```
 
 The candidate evaluator separates compilation and first-call costs from

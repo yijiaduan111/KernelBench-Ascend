@@ -11,3 +11,12 @@
 相关框架位于 `yijiaduan111/PyramidKernel-Ascend`，由其子模块固定本仓库的发布提交。
 
 环境沿用 Ascend 910B3、CANN 9.0.1、PyTorch 2.7.1、torch_npu 2.7.1.post4。Ascend 环境安装应沿用专用约束，不直接使用默认 GPU 依赖覆盖已验证环境。
+
+## 2026-11-23 ownership update
+
+This snapshot included early optimizer-owned BoundaryContract, task-contract,
+spec-factory, and tiling-policy modules alongside the benchmark builder. Those
+modules have since moved to PyramidKernel under `pyramidkernel/ascendc_c3/`.
+KernelBench now owns the public candidate protocol, generic static validation,
+host/OPP/binding generation, and evaluation; it does not parse or enforce
+optimizer-specific BoundaryContract metadata.

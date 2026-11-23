@@ -15,34 +15,10 @@ from .builder import AscendCArtifact, AscendCBuilder, scrubbed_environment
 from .errors import CandidateTimeoutError, NpuRuntimeError
 from .security import validate_candidate_source
 from .spec import AscendCSpec
-from .ascendc_tasks import get_ascend_task_contract, validate_spec_for_task
-from .boundary import BoundaryContract, validate_boundary_spec
 
 
-def validate_ascendc_candidate(
-    source: str,
-    *,
-    level: int | None = None,
-    problem_id: int | None = None,
-) -> AscendCSpec:
-    spec = validate_candidate_source(source)
-    if (level is None) != (problem_id is None):
-        raise ValueError("level and problem_id must be provided together")
-    if level is not None and problem_id is not None:
-        try:
-            from .spec import extract_literal_assignment
-            boundary = BoundaryContract.from_mapping(extract_literal_assignment(source, "BOUNDARY_CONTRACT"))
-        except Exception as exc:
-            if "assignment was not found" not in str(exc):
-                raise
-            boundary = None
-        if boundary is not None:
-            if boundary.level != level or boundary.problem_id != problem_id:
-                raise ValueError("boundary contract task identity does not match candidate")
-            validate_boundary_spec(spec, boundary)
-        else:
-            validate_spec_for_task(spec, get_ascend_task_contract(level, problem_id))
-    return spec
+def validate_ascendc_candidate(source: str) -> AscendCSpec:
+    return validate_candidate_source(source)
 
 
 def build_ascendc_artifact(
@@ -50,24 +26,13 @@ def build_ascendc_artifact(
     build_dir: str | Path = "cache/ascendc",
     target_soc: str = "Ascend910B3",
     *,
-    level: int | None = None,
-    problem_id: int | None = None,
     build_timeout: int = 900,
 ) -> AscendCArtifact:
-    validate_ascendc_candidate(
-        candidate_source,
-        level=level,
-        problem_id=problem_id,
-    )
     return AscendCBuilder(
         build_dir,
         target_soc,
         build_timeout=build_timeout,
-    ).build(
-        candidate_source,
-        level=level,
-        problem_id=problem_id,
-    )
+    ).build(candidate_source)
 
 
 def evaluate_ascendc_artifact(

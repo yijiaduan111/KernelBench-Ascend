@@ -3,19 +3,12 @@ from pathlib import Path
 
 import pytest
 
-from kernelbench.backends.ascendc_tasks import (
-    ASCEND_L1_15,
-    get_ascend_task_contract,
-    validate_spec_for_task,
-)
+from kernelbench.backends.ascendc import validate_ascendc_candidate
 from kernelbench.backends.builder import AscendCBuilder, scrubbed_environment
 from kernelbench.backends.generator import generated_names, render_project
 from kernelbench.backends.security import validate_candidate_source
-from kernelbench.backends.spec import (
-    AscendCSpec,
-    extract_literal_assignment,
-    extract_literal_tiling,
-)
+from kernelbench.backends.spec import extract_literal_assignment, extract_literal_tiling
+from kernelbench.ascendc import API_VERSION
 
 
 VALID = r"""import torch
@@ -58,6 +51,10 @@ def test_ascendc_candidate_contract():
     assert spec.op_name == "add"
     assert [item.name for item in tiling.fields] == ["total", "tile_size"]
     assert "GetShapeSize" in spec.compile_expression(tiling.fields[0].expression, "tiling")
+
+
+def test_public_ascendc_integration_api():
+    assert API_VERSION == 1
 
 
 def test_ascendc_rejects_process_import():
@@ -118,44 +115,15 @@ def test_generator_emits_unique_private_project(tmp_path: Path):
     assert preset["configurePresets"][0]["cacheVariables"]["ASCEND_CANN_PACKAGE_PATH"] == str(Path("/opt/cann"))
 
 
-def test_l1_15_manifest_and_p47_contract():
-    assert tuple(ASCEND_L1_15) == (1, 10, 20, 25, 33, 40, 42, 45, 47, 50, 61, 82, 89, 95, 97)
-    contract = get_ascend_task_contract(1, 47)
-    spec = AscendCSpec.from_mapping(
-        {
-            "op_name": "sum_dim_one",
-            "entrypoint": "sum_entry",
-            "inputs": [
-                {
-                    "name": "x",
-                    "dtype": "float32",
-                    "shape": [
-                        "input[0].dim(0)",
-                        "input[0].dim(1)",
-                        "input[0].dim(2)",
-                    ],
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "y",
-                    "dtype": "float32",
-                    "shape": [
-                        "input[0].dim(0)",
-                        "literal(1)",
-                        "input[0].dim(2)",
-                    ],
-                }
-            ],
-            "attributes": [{"name": "dim", "c_type": "int64_t", "default": 1}],
-        }
-    )
-    validate_spec_for_task(spec, contract)
-    with pytest.raises(Exception, match="requires attribute"):
-        validate_spec_for_task(
-            AscendCSpec.from_mapping({**spec.to_dict(), "attributes": []}),
-            contract,
-        )
+def test_builder_treats_optimizer_metadata_as_opaque(tmp_path: Path):
+    source = VALID + "\nBOUNDARY_CONTRACT = {'optimizer': 'private-format', 'status': 'unsupported'}\n"
+    builder = AscendCBuilder(tmp_path)
+    plain = builder.prepare(VALID)
+    with_metadata = builder.prepare(source)
+
+    assert validate_ascendc_candidate(source) == plain.spec == with_metadata.spec
+    assert plain.tiling == with_metadata.tiling
+    assert (with_metadata.root / "source" / "candidate.py").read_text() == source
 
 
 def test_builder_cache_hit_preserves_timings(tmp_path: Path):
